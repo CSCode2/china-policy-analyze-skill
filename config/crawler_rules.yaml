@@ -1,0 +1,391 @@
+# China Policy Intelligence Skill - Crawler Rules
+# Rate limits, user-agent, robots compliance, retry strategies, timeout settings,
+# content-type handling, encoding handling, dedup rules, error classification
+
+general:
+  project_name: china-policy-intelligence
+  version: "1.0.0"
+  description: "Crawling configuration for Chinese government and policy sources"
+
+rate_limits:
+  default:
+    requests_per_second: 0.5
+    requests_per_minute: 15
+    requests_per_hour: 300
+    concurrent_requests: 2
+    delay_between_requests_ms: 2000
+  by_source_level:
+    S:
+      requests_per_second: 0.3
+      requests_per_minute: 8
+      delay_between_requests_ms: 5000
+      description: "Highest authority sources; be most respectful"
+    A:
+      requests_per_second: 0.4
+      requests_per_minute: 12
+      delay_between_requests_ms: 3000
+    B:
+      requests_per_second: 0.5
+      requests_per_minute: 15
+      delay_between_requests_ms: 2000
+    C:
+      requests_per_second: 0.8
+      requests_per_minute: 20
+      delay_between_requests_ms: 1500
+    D:
+      requests_per_second: 1.0
+      requests_per_minute: 25
+      delay_between_requests_ms: 1000
+    E:
+      requests_per_second: 1.5
+      requests_per_minute: 30
+      delay_between_requests_ms: 500
+      description: "Commercial sources are less sensitive to rate"
+  by_domain:
+    gov.cn:
+      requests_per_minute: 8
+      delay_between_requests_ms: 5000
+    stats.gov.cn:
+      requests_per_minute: 10
+      delay_between_requests_ms: 3000
+    pbc.gov.cn:
+      requests_per_minute: 8
+      delay_between_requests_ms: 4000
+    court.gov.cn:
+      requests_per_minute: 10
+      delay_between_requests_ms: 3000
+    spp.gov.cn:
+      requests_per_minute: 10
+      delay_between_requests_ms: 3000
+    people.com.cn:
+      requests_per_minute: 15
+      delay_between_requests_ms: 2000
+    xinhuanet.com:
+      requests_per_minute: 15
+      delay_between_requests_ms: 2000
+
+user_agent:
+  primary: "ChinaPolicyIntelligenceBot/1.0 (+https://github.com/anomalyco/china-policy-intelligence-skill; research-bot)"
+  rotation_enabled: true
+  agents:
+    - "ChinaPolicyIntelligenceBot/1.0 (+https://github.com/anomalyco/china-policy-intelligence-skill; research-bot)"
+    - "Mozilla/5.0 (compatible; ChinaPolicyBot/1.0; +https://github.com/anomalyco/china-policy-intelligence-skill)"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  rotation_rules:
+    on_block: true
+    on_rate_limit: true
+    on_403: true
+    interval_minutes: 30
+  identification:
+    include_from_header: true
+    from_email: "bot@china-policy-intelligence.example.com"
+
+robots_compliance:
+  respect_robots_txt: true
+  check_frequency_hours: 24
+  override_for_verified_public_api: false
+  cache_duration_hours: 6
+  crawl_delay_override_seconds: null
+  handling:
+    disallowed:
+      action: skip
+      log: true
+      escalate: false
+    crawl_delay_specified:
+      action: honor
+      max_delay_seconds: 30
+    unreachable_robots_txt:
+      action: use_conservative_defaults
+      conservative_rps: 0.2
+
+retry:
+  max_retries: 3
+  strategy: exponential_backoff
+  backoff_base_ms: 1000
+  backoff_max_ms: 60000
+  backoff_multiplier: 2.0
+  jitter: true
+  jitter_range_ms: 500
+  retry_on_status_codes:
+    - 408
+    - 429
+    - 500
+    - 502
+    - 503
+    - 504
+  do_not_retry_on:
+    - 400
+    - 401
+    - 403
+    - 404
+    - 410
+  retry_on_exceptions:
+    - ConnectionError
+    - TimeoutError
+    - ChunkedEncodingError
+    - ConnectionResetError
+  per_source_level:
+    S:
+      max_retries: 5
+      backoff_base_ms: 2000
+    A:
+      max_retries: 4
+      backoff_base_ms: 1500
+    B:
+      max_retries: 3
+      backoff_base_ms: 1000
+    C:
+      max_retries: 2
+      backoff_base_ms: 800
+    D:
+      max_retries: 2
+      backoff_base_ms: 500
+    E:
+      max_retries: 2
+      backoff_base_ms: 500
+
+timeout:
+  connection_timeout_seconds: 10
+  read_timeout_seconds: 30
+  total_timeout_seconds: 60
+  per_source_level:
+    S:
+      connection_timeout_seconds: 15
+      read_timeout_seconds: 45
+      total_timeout_seconds: 90
+    A:
+      connection_timeout_seconds: 12
+      read_timeout_seconds: 35
+      total_timeout_seconds: 75
+    B:
+      connection_timeout_seconds: 10
+      read_timeout_seconds: 30
+      total_timeout_seconds: 60
+    C:
+      connection_timeout_seconds: 8
+      read_timeout_seconds: 25
+      total_timeout_seconds: 50
+    D:
+      connection_timeout_seconds: 8
+      read_timeout_seconds: 20
+      total_timeout_seconds: 40
+    E:
+      connection_timeout_seconds: 5
+      read_timeout_seconds: 15
+      total_timeout_seconds: 30
+
+content_type_handling:
+  allowed_content_types:
+    - "text/html"
+    - "text/xhtml"
+    - "text/xml"
+    - "application/xhtml+xml"
+    - "application/xml"
+    - "application/pdf"
+    - "application/json"
+    - "text/plain"
+  disallowed_content_types:
+    - "application/octet-stream"
+    - "application/zip"
+    - "application/x-rar-compressed"
+    - "video/*"
+    - "audio/*"
+    - "image/*"
+  pdf_handling:
+    enabled: true
+    max_file_size_mb: 20
+    extract_text: true
+    extract_tables: true
+    parser: "pymupdf"
+  html_processing:
+    strip_scripts: true
+    strip_styles: true
+    strip_comments: true
+    extract_main_content: true
+    remove_boilerplate: true
+    preserve_links: true
+
+encoding_handling:
+  default_encoding: "utf-8"
+  fallback_encodings:
+    - "gb2312"
+    - "gbk"
+    - "gb18030"
+    - "big5"
+    - "latin-1"
+  auto_detect: true
+  detection_confidence_threshold: 0.9
+  force_encoding_by_domain:
+    "gov.cn": "utf-8"
+    "stats.gov.cn": "utf-8"
+    "pbc.gov.cn": "utf-8"
+  content_type_charset_override: true
+  html_meta_charset_override: true
+  normalization:
+    nfc_normalize: true
+    strip_bom: true
+    replace_mojibake: true
+
+dedup:
+  strategy: content_hash
+  hash_algorithm: sha256
+  content_extraction_before_hash: true
+  strip_whitespace: true
+  strip_html_tags: true
+  normalize_unicode: true
+  ignore_dynamic_elements:
+    - timestamps
+    - session_ids
+    - csrf_tokens
+    - analytics_parameters
+    - ad_scripts
+  url_normalization:
+    strip_fragment: true
+    strip_tracking_params:
+      - "utm_source"
+      - "utm_medium"
+      - "utm_campaign"
+      - "utm_term"
+      - "utm_content"
+      - "from"
+      - "isfrom"
+      - "spmid"
+    sort_query_params: true
+    trailing_slash_normalize: true
+    scheme_normalize: "https"
+  duplicate_threshold:
+    similarity_percentage: 95
+    action: mark_duplicate
+    keep: "newest"
+  change_detection:
+    min_change_percentage: 5
+    action: flag_for_update
+    track_history: true
+    max_history_versions: 10
+
+error_classification:
+  categories:
+    network_timeout:
+      severity: medium
+      description: "Connection or read timeout"
+      status_codes: [408, 504]
+      exceptions: ["TimeoutError", "ConnectionError"]
+      auto_repair: true
+      max_auto_repair_attempts: 3
+      escalation_after: "3 consecutive failures"
+
+    http_error:
+      severity_by_code:
+        "400":
+          severity: medium
+          description: "Bad request; likely parameter issue"
+          auto_repair: false
+        "401":
+          severity: high
+          description: "Authentication required; possible API key change"
+          auto_repair: false
+        "403":
+          severity: high
+          description: "Forbidden; possible anti-bot block or access restriction"
+          auto_repair: true
+          auto_repair_actions:
+            - rotate_user_agent
+            - reduce_rate
+            - increase_delay
+        "404":
+          severity: high
+          description: "Not found; likely URL change or content removed"
+          auto_repair: true
+          auto_repair_actions:
+            - check_parent_domain
+            - search_for_new_url
+            - update_source_registry
+        "429":
+          severity: medium
+          description: "Rate limited; slow down"
+          auto_repair: true
+          auto_repair_actions:
+            - increase_delay
+            - reduce_rate
+            - backoff
+        "500":
+          severity: low
+          description: "Server error; likely transient"
+          auto_repair: true
+        "502":
+          severity: medium
+          description: "Bad gateway; likely server issue"
+          auto_repair: true
+        "503":
+          severity: medium
+          description: "Service unavailable; server overloaded or in maintenance"
+          auto_repair: true
+
+    content_parsing_failure:
+      severity: medium
+      description: "Page structure has changed; parser needs update"
+      auto_repair: true
+      auto_repair_actions:
+        - download_page
+        - compare_with_last_good_structure
+        - update_parser_if_simple_change
+        - flag_for_manual_update_if_complex
+      max_auto_repair_attempts: 1
+
+    anti_bot_detection:
+      severity: high
+      description: "CAPTCHA, JavaScript challenge, or IP block detected"
+      auto_repair: true
+      auto_repair_actions:
+        - reduce_rate
+        - rotate_user_agent
+        - increase_delay
+        - disable_concurrent_requests
+      escalation_after: "3 consecutive blocks"
+
+    url_change:
+      severity: high
+      description: "Source has moved to a new URL"
+      auto_repair: true
+      auto_repair_actions:
+        - check_parent_domain_redirects
+        - search_for_same_title
+        - check_common_url_patterns
+        - update_source_registry
+
+    encoding_error:
+      severity: low
+      description: "Content encoding does not match declared encoding"
+      auto_repair: true
+      auto_repair_actions:
+        - try_fallback_encodings
+        - auto_detect_encoding
+        - force_gb18030
+
+    stale_data:
+      severity: medium
+      description: "Content has not changed beyond expected update cycle"
+      auto_repair: false
+      escalation_after: "2x update cycle expired"
+
+    data_quality:
+      severity: medium
+      description: "Content appears malformed, incomplete, or inconsistent"
+      auto_repair: false
+      log: true
+
+  severity_response_times:
+    critical: "immediate"
+    high: "4 hours"
+    medium: "24 hours"
+    low: "next scheduled task"
+
+logging:
+  level: INFO
+  log_crawl_events: true
+  log_errors: true
+  log_rate_limit_events: true
+  log_dedup_events: true
+  log_content_changes: true
+  retention_days: 90
+  structured_format: true

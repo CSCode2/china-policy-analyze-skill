@@ -1,0 +1,39 @@
+name: Weekly Policy Distill
+
+on:
+  schedule:
+    - cron: '30 7 * * 1'
+  workflow_dispatch:
+
+jobs:
+  weekly-distill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install uv
+          uv venv venv
+          source venv/bin/activate
+          uv pip install -e "."
+      - name: Run weekly distill
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          source venv/bin/activate
+          bash scripts/run_weekly_distill.sh
+      - name: Create PR if changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            BRANCH="bot/weekly-distill-$(date +%Y%m%d)"
+            git checkout -b "$BRANCH"
+            git add -A
+            git commit -m "Weekly policy distill $(date +%Y-%m-%d)"
+            git push origin "$BRANCH"
+            gh pr create --title "Weekly Policy Distill $(date +%Y-%m-%d)" --body-file config/github_pr_template.md
+          fi

@@ -1,0 +1,532 @@
+# China Policy Intelligence Skill - Economic Impact Indicators
+# Indicators from spec section 27.12
+# Structure: category > sub-indicator > metrics > data_sources > thresholds
+
+categories:
+  macro_impact:
+    label: "宏观影响"
+    label_en: "Macro Impact"
+    description: "Macroeconomic indicators affected by geopolitical conflict and policy changes"
+    weight: 30
+    sub_indicators:
+      gdp_impact:
+        label: "GDP影响"
+        label_en: "GDP Impact"
+        metrics:
+          - name: "季度GDP增速偏差"
+            name_en: "Quarterly GDP Growth Deviation"
+            unit: "percentage_points"
+            data_source: "国家统计局"
+            frequency: quarterly
+            baseline: "GDP增速预期目标"
+            threshold_moderate: -0.5
+            threshold_severe: -1.5
+          - name: "年度GDP增速预测修正"
+            name_en: "Annual GDP Growth Forecast Revision"
+            unit: "percentage_points"
+            data_source: "IMF/World Bank/NBS"
+            frequency: monthly
+            threshold_moderate: -0.3
+            threshold_severe: -1.0
+        impact_channels:
+          - "贸易战关税对出口的直接影响"
+          - "制裁对特定行业的供给侧冲击"
+          - "不确定性对投资和消费的抑制效应"
+          - "供应链中断的生产函数效应"
+          - "汇率波动对进出口的再平衡效应"
+
+      inflation_impact:
+        label: "通胀影响"
+        label_en: "Inflation Impact"
+        metrics:
+          - name: "CPI同比变化"
+            name_en: "CPI YoY Change"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: 3.0
+            threshold_severe: 5.0
+          - name: "PPI同比变化"
+            name_en: "PPI YoY Change"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate_abs: 5.0
+            threshold_severe_abs: 8.0
+          - name: "进口商品价格指数"
+            name_en: "Import Price Index"
+            unit: "percentage"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: 10.0
+            threshold_severe: 20.0
+        impact_channels:
+          - "关税和贸易壁垒推高进口价格"
+          - "供应链中断导致稀缺性通胀"
+          - "制裁导致关键投入品价格波动"
+          - "货币贬值推高进口价格"
+
+      employment_impact:
+        label: "就业影响"
+        label_en: "Employment Impact"
+        metrics:
+          - name: "城镇调查失业率"
+            name_en: "Urban Survey Unemployment Rate"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            baseline: 5.5
+            threshold_moderate: 6.0
+            threshold_severe: 7.0
+          - name: "青年失业率"
+            name_en: "Youth Unemployment Rate"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: 20.0
+            threshold_severe: 25.0
+        impact_channels:
+          - "出口行业裁员效应"
+          - "外资企业收缩就业"
+          - "供应链企业倒闭"
+
+      fiscal_impact:
+        label: "财政影响"
+        label_en: "Fiscal Impact"
+        metrics:
+          - name: "财政收入增速"
+            name_en: "Fiscal Revenue Growth"
+            unit: "percentage"
+            data_source: "财政部"
+            frequency: monthly
+            threshold_moderate: 0.0
+            threshold_severe: -5.0
+          - name: "赤字率"
+            name_en: "Deficit Ratio"
+            unit: "percentage"
+            data_source: "财政部"
+            frequency: quarterly
+            threshold_moderate: 3.5
+            threshold_severe: 5.0
+        impact_channels:
+          - "经济减速导致税收减少"
+          - "稳增长支出增加推高赤字"
+          - "关税调整影响进口税收入"
+
+      monetary_impact:
+        label: "货币政策影响"
+        label_en: "Monetary Policy Impact"
+        metrics:
+          - name: "LPR变动"
+            name_en: "LPR Change"
+            unit: "basis_points"
+            data_source: "人民银行"
+            frequency: monthly
+            threshold_moderate_abs: 10
+            threshold_severe_abs: 25
+          - name: "M2增速"
+            name_en: "M2 Growth"
+            unit: "percentage"
+            data_source: "人民银行"
+            frequency: monthly
+            threshold_moderate_low: 8.0
+            threshold_severe_low: 6.0
+          - name: "社融规模增量"
+            name_en: "Incremental Social Financing"
+            unit: "billion_RMB"
+            data_source: "人民银行"
+            frequency: monthly
+            threshold_moderate: "低于过去12月均值20%"
+            threshold_severe: "低于过去12月均值40%"
+        impact_channels:
+          - "货币政策应对外汇压力"
+          - "信用传导机制受阻"
+          - "利率走廊调整"
+
+  trade_supply_chain:
+    label: "贸易与供应链"
+    label_en: "Trade and Supply Chain"
+    description: "Trade flow and supply chain disruption indicators"
+    weight: 25
+    sub_indicators:
+      trade_volume_impact:
+        label: "贸易量影响"
+        label_en: "Trade Volume Impact"
+        metrics:
+          - name: "出口同比增速"
+            name_en: "Export YoY Growth"
+            unit: "percentage"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: -5.0
+            threshold_severe: -15.0
+          - name: "进口同比增速"
+            name_en: "Import YoY Growth"
+            unit: "percentage"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: -5.0
+            threshold_severe: -15.0
+          - name: "贸易差额变化"
+            name_en: "Trade Balance Change"
+            unit: "billion_USD"
+            data_source: "海关总署"
+            frequency: monthly
+          - name: "对美贸易占比变化"
+            name_en: "US Trade Share Change"
+            unit: "percentage_points"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate_abs: 1.0
+            threshold_severe_abs: 3.0
+        impact_channels:
+          - "关税直接导致贸易量收缩"
+          - "技术限制阻断高技术贸易"
+          - "贸易转移效应(转口贸易增加)"
+          - "目的地多元化加速"
+
+      supply_chain_disruption:
+        label: "供应链中断"
+        label_en: "Supply Chain Disruption"
+        metrics:
+          - name: "关键零部件进口依赖度"
+            name_en: "Key Component Import Dependency"
+            unit: "percentage"
+            data_source: "海关总署/工信部"
+            frequency: quarterly
+            vulnerability_threshold: 70.0
+          - name: "供应链重组指标"
+            name_en: "Supply Chain Restructuring Index"
+            unit: "index"
+            data_source: "海关总署/商务部"
+            frequency: quarterly
+            threshold_moderate: "进口来源前三国占比下降>5个百分点"
+            threshold_severe: "进口来源前三国占比下降>10个百分点"
+          - name: "交付周期变化"
+            name_en: "Delivery Lead Time Change"
+            unit: "days"
+            data_source: "制造业PMI/海关总署"
+            frequency: monthly
+            threshold_moderate: 5
+            threshold_severe: 15
+        impact_channels:
+          - "关键零部件断供"
+          - "技术封锁导致替代成本上升"
+          - "物流渠道受阻"
+          - "库存缓冲效应及耗尽风险"
+
+      sectoral_trade_impact:
+        label: "行业贸易影响"
+        label_en: "Sectoral Trade Impact"
+        metrics:
+          - name: "半导体进出口增速"
+            name_en: "Semiconductor Trade Growth"
+            unit: "percentage"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: -10.0
+            threshold_severe: -25.0
+          - name: "新能源产品出口增速"
+            name_en: "New Energy Product Export Growth"
+            unit: "percentage"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: -10.0
+            threshold_severe: -30.0
+          - name: "农产品进口稳定性"
+            name_en: "Agricultural Import Stability"
+            unit: "coefficient_of_variation"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: 0.15
+            threshold_severe: 0.30
+        impact_channels:
+          - "行业特定制裁和出口管制"
+          - "产业政策调整的贸易效应"
+          - "关键技术断供的连锁效应"
+
+  finance:
+    label: "金融影响"
+    label_en: "Finance Impact"
+    description: "Financial market and capital flow indicators"
+    weight: 25
+    sub_indicators:
+      exchange_rate:
+        label: "汇率波动"
+        label_en: "Exchange Rate Volatility"
+        metrics:
+          - name: "美元兑人民币汇率"
+            name_en: "USD/CNY Exchange Rate"
+            unit: "RMB_per_USD"
+            data_source: "人民银行/外汇局"
+            frequency: daily
+            threshold_moderate: 7.3
+            threshold_severe: 7.8
+          - name: "人民币汇率波动率"
+            name_en: "RMB Volatility (30-day)"
+            unit: "percentage"
+            data_source: "外汇局"
+            frequency: daily
+            threshold_moderate: 3.0
+            threshold_severe: 6.0
+          - name: "人民币有效汇率指数"
+            name_en: "RMB Effective Exchange Rate Index"
+            unit: "index"
+            data_source: "国际清算银行"
+            frequency: monthly
+            threshold_moderate: "月度变动>2%"
+            threshold_severe: "月度变动>5%"
+        impact_channels:
+          - "地缘风险导致的资本外流压力"
+          - "货币政策的汇率约束"
+          - "外汇储备消耗"
+          - "跨境套利行为变化"
+
+      capital_flows:
+        label: "资本流动"
+        label_en: "Capital Flows"
+        metrics:
+          - name: "外汇储备变化"
+            name_en: "FX Reserve Change"
+            unit: "billion_USD"
+            data_source: "外汇局"
+            frequency: monthly
+            threshold_moderate: -30
+            threshold_severe: -80
+          - name: "北向资金净流入"
+            name_en: "Northbound Capital Net Flow"
+            unit: "billion_RMB"
+            data_source: "沪深港通数据"
+            frequency: daily
+            threshold_moderate: "连续5日净流出日均>50亿"
+            threshold_severe: "连续10日净流出日均>100亿"
+          - name: "实际使用外资增速"
+            name_en: "FDI Growth Rate"
+            unit: "percentage"
+            data_source: "商务部"
+            frequency: monthly
+            threshold_moderate: -10.0
+            threshold_severe: -25.0
+        impact_channels:
+          - "制裁导致外资撤离"
+          - "地缘风险溢价推高融资成本"
+          - "投资审查趋严抑制双向投资"
+          - "资本管制措施加强"
+
+      financial_market_stress:
+        label: "金融市场压力"
+        label_en: "Financial Market Stress"
+        metrics:
+          - name: "A股主要指数波动率"
+            name_en: "A-Share Index Volatility"
+            unit: "percentage (30-day)"
+            data_source: "上交所/深交所"
+            frequency: daily
+            threshold_moderate: 25.0
+            threshold_severe: 40.0
+          - name: "信用利差变化"
+            name_en: "Credit Spread Change"
+            unit: "basis_points"
+            data_source: "证监会/中债估值"
+            frequency: daily
+            threshold_moderate: 50
+            threshold_severe: 100
+          - name: "国债收益率曲线变化"
+            name_en: "Government Bond Yield Curve Change"
+            unit: "basis_points (10Y-2Y spread)"
+            data_source: "中债估值"
+            frequency: daily
+            threshold_moderate: "利差倒挂"
+            threshold_severe: "倒挂持续>3个月"
+        impact_channels:
+          - "风险偏好下降"
+          - "流动性紧张"
+          - "信用定价重构"
+
+      banking_system:
+        label: "银行体系"
+        label_en: "Banking System"
+        metrics:
+          - name: "不良贷款率"
+            name_en: "NPL Ratio"
+            unit: "percentage"
+            data_source: "金融监管总局"
+            frequency: quarterly
+            threshold_moderate: 1.8
+            threshold_severe: 2.5
+          - name: "银行间拆借利率波动"
+            name_en: "Interbank Rate Volatility"
+            unit: "basis_points"
+            data_source: "人民银行"
+            frequency: daily
+            threshold_moderate: 20
+            threshold_severe: 50
+        impact_channels:
+          - "经济减速导致资产质量恶化"
+          - "制裁影响特定银行经营"
+          - "跨境金融业务受限"
+
+  industry:
+    label: "产业影响"
+    label_en: "Industry Impact"
+    description: "Industrial and sectoral impact indicators"
+    weight: 20
+    sub_indicators:
+      manufacturing_impact:
+        label: "制造业影响"
+        label_en: "Manufacturing Impact"
+        metrics:
+          - name: "制造业PMI"
+            name_en: "Manufacturing PMI"
+            unit: "index"
+            data_source: "国家统计局/CFLP"
+            frequency: monthly
+            expansion_threshold: 50.0
+            threshold_moderate: 48.0
+            threshold_severe: 45.0
+          - name: "工业增加值同比增速"
+            name_en: "Industrial Value Added YoY Growth"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: 3.0
+            threshold_severe: 0.0
+          - name: "产能利用率"
+            name_en: "Capacity Utilization"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: quarterly
+            threshold_moderate: 74.0
+            threshold_severe: 70.0
+        impact_channels:
+          - "出口订单萎缩"
+          - "供应链中断致生产中断"
+          - "技术封锁限制产能升级"
+          - "成本上升挤压利润"
+
+      technology_sector:
+        label: "科技行业影响"
+        label_en: "Technology Sector Impact"
+        metrics:
+          - name: "半导体产量增速"
+            name_en: "Semiconductor Production Growth"
+            unit: "percentage"
+            data_source: "工信部/国家统计局"
+            frequency: monthly
+            threshold_moderate: 0.0
+            threshold_severe: -10.0
+          - name: "高技术产业投资增速"
+            name_en: "High-Tech Industry Investment Growth"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: 5.0
+            threshold_severe: 0.0
+          - name: "技术进出口增速差"
+            name_en: "Technology Trade Growth Differential"
+            unit: "percentage_points"
+            data_source: "商务部/海关总署"
+            frequency: quarterly
+            threshold_moderate_abs: 15
+            threshold_severe_abs: 30
+        impact_channels:
+          - "出口管制限制技术获取"
+          - "国产替代投资加速"
+          - "人才流动受限"
+          - "研发投入被迫增加"
+
+      energy_sector:
+        label: "能源行业影响"
+        label_en: "Energy Sector Impact"
+        metrics:
+          - name: "原油进口量变化"
+            name_en: "Crude Oil Import Change"
+            unit: "percentage"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: -5.0
+            threshold_severe: -15.0
+          - name: "能源进口支出变化"
+            name_en: "Energy Import Expenditure Change"
+            unit: "percentage"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: 15.0
+            threshold_severe: 30.0
+          - name: "新能源装机进度"
+            name_en: "New Energy Installation Progress"
+            unit: "percentage_of_plan"
+            data_source: "国家能源局"
+            frequency: quarterly
+            threshold_moderate: 80.0
+            threshold_severe: 60.0
+        impact_channels:
+          - "能源供应中断风险"
+          - "价格波动对下游产业影响"
+          - "能源转型受阻或加速"
+
+      agriculture_food:
+        label: "农业与粮食"
+        label_en: "Agriculture and Food"
+        metrics:
+          - name: "粮食进口量变化"
+            name_en: "Grain Import Change"
+            unit: "percentage"
+            data_source: "海关总署"
+            frequency: monthly
+            threshold_moderate: -5.0
+            threshold_severe: -15.0
+          - name: "猪粮比"
+            name_en: "Pork-to-Grain Price Ratio"
+            unit: "ratio"
+            data_source: "国家发改委/农业农村部"
+            frequency: weekly
+            threshold_moderate_low: 5.0
+            threshold_severe_low: 4.5
+          - name: "国际粮价对国内传导系数"
+            name_en: "International Grain Price Transmission Coefficient"
+            unit: "coefficient"
+            data_source: "FAO/国家统计局"
+            frequency: monthly
+            threshold_moderate: 0.5
+            threshold_severe: 0.8
+        impact_channels:
+          - "贸易限制影响粮食进口"
+          - "汇率波动影响进口成本"
+          - "供应链中断影响饲料供应"
+
+composite_scoring:
+  description: "Composite economic impact score based on weighted sub-indicator scores"
+  formula: "weighted sum of all sub-indicator normalized scores"
+  max_score: 100
+  impact_levels:
+    minimal:
+      max_score: 15
+      label: "影响极小"
+      label_en: "Minimal Impact"
+      description: "No measurable economic impact beyond normal fluctuations"
+      action: "Standard monitoring"
+    mild:
+      max_score: 30
+      label: "影响较轻"
+      label_en: "Mild Impact"
+      description: "Some measurable impacts within normal policy response capacity"
+      action: "Enhanced monitoring; include in weekly economic summary"
+    moderate:
+      max_score: 50
+      label: "影响中等"
+      label_en: "Moderate Impact"
+      description: "Significant impacts requiring active policy response"
+      action: "Daily economic monitoring; policy response tracking; scenario modeling"
+    severe:
+      max_score: 70
+      label: "影响严重"
+      label_en: "Severe Impact"
+      description: "Major economic disruption; multiple sectors affected"
+      action: "Continuous monitoring; active scenario modeling; economic impact pathway updates; coordination with policy_watcher"
+    critical:
+      min_score: 70
+      label: "影响极其严重"
+      label_en: "Critical Impact"
+      description: "Systemic economic crisis; requires comprehensive response"
+      action: "Continuous monitoring; all scenario models active; real-time economic impact assessment; full system mobilization"

@@ -1,0 +1,554 @@
+# China Policy Intelligence Skill - Topic Taxonomy
+# All topics from spec section 11 and 26.4
+
+topic_taxonomy:
+  macro:
+    label: 宏观经济
+    label_en: Macroeconomics
+    description: "宏观经济政策、数据与趋势分析"
+    subtopics:
+      - id: gdp_growth
+        label: GDP增长
+        label_en: GDP Growth
+        key_sources:
+          - 国家统计局
+          - 国家发改委
+        key_indicators:
+          - GDP增速
+          - 三驾马车贡献率
+          - 潜在增速
+
+      - id: monetary_policy
+        label: 货币政策
+        label_en: Monetary Policy
+        key_sources:
+          - 人民银行
+          - 金融监管总局
+          - 证监会
+        key_indicators:
+          - LPR
+          - 存款准备金率
+          - M2增速
+          - 社融规模
+
+      - id: fiscal_policy
+        label: 财政政策
+        label_en: Fiscal Policy
+        key_sources:
+          - 财政部
+          - 国家统计局
+        key_indicators:
+          - 财政收支
+          - 专项债
+          - 减税降费
+          - 赤字率
+
+      - id: inflation
+        label: 通胀与价格
+        label_en: Inflation and Prices
+        key_sources:
+          - 国家统计局
+          - 人民银行
+        key_indicators:
+          - CPI
+          - PPI
+          - 核心CPI
+
+      - id: employment
+        label: 就业与劳动力
+        label_en: Employment and Labor
+        key_sources:
+          - 人社部
+          - 国家统计局
+        key_indicators:
+          - 城镇调查失业率
+          - 新增就业
+          - 劳动力参与率
+
+      - id: real_estate
+        label: 房地产
+        label_en: Real Estate
+        key_sources:
+          - 人民银行
+          - 住建部
+          - 国家统计局
+        key_indicators:
+          - 房价指数
+          - 销售面积
+          - 开发投资
+          - 土地出让收入
+
+  industry:
+    label: 产业与行业
+    label_en: Industry and Sectors
+    description: "产业政策、行业发展与转型"
+    subtopics:
+      - id: manufacturing
+        label: 制造业
+        label_en: Manufacturing
+        key_sources:
+          - 工信部
+          - 国家统计局
+          - 国家发改委
+        key_indicators:
+          - 制造业PMI
+          - 工业增加值
+          - 产能利用率
+
+      - id: technology
+        label: 科技创新
+        label_en: Technology and Innovation
+        key_sources:
+          - 科技部
+          - 工信部
+          - 国家发改委
+        key_indicators:
+          - R&D投入
+          - 专利数量
+          - 技术合同成交额
+
+      - id: energy
+        label: 能源与双碳
+        label_en: Energy and Dual Carbon
+        key_sources:
+          - 国家发改委
+          - 国家能源局
+          - 生态环境部
+        key_indicators:
+          - 碳排放
+          - 可再生能源装机
+          - 能耗强度
+
+      - id: financial_services
+        label: 金融服务
+        label_en: Financial Services
+        key_sources:
+          - 人民银行
+          - 金融监管总局
+          - 证监会
+        key_indicators:
+          - 信贷投放
+          - 不良贷款率
+          - 保险密度
+
+      - id: digital_economy
+        label: 数字经济
+        label_en: Digital Economy
+        key_sources:
+          - 工信部
+          - 国家发改委
+          - 中央网信办
+        key_indicators:
+          - 数字经济占比
+          - 5G基站
+          - 算力规模
+
+      - id: agriculture
+        label: 农业农村
+        label_en: Agriculture and Rural
+        key_sources:
+          - 农业农村部
+          - 国家发改委
+        key_indicators:
+          - 粮食产量
+          - 农产品价格
+          - 乡村振兴投入
+
+      - id: healthcare
+        label: 医疗健康
+        label_en: Healthcare
+        key_sources:
+          - 国家卫健委
+          - 国家医保局
+        key_indicators:
+          - 医保支出
+          - 集采范围
+          - 医疗服务量
+
+      - id: education
+        label: 教育
+        label_en: Education
+        key_sources:
+          - 教育部
+        key_indicators:
+          - 教育投入
+          - 职业教育规模
+          - 研究生扩招
+
+  policy_tools:
+    label: 政策工具
+    label_en: Policy Tools
+    description: "政策实施工具与机制"
+    subtopics:
+      - id: funding_subsidy
+        label: 资金补贴
+        label_en: Funding and Subsidies
+        key_sources:
+          - 财政部
+          - 各部委
+          - 地方政府
+        key_indicators:
+          - 专项补贴金额
+          - 申报条件
+          - 受惠规模
+
+      - id: pilot_zone
+        label: 试点示范区
+        label_en: Pilot and Demonstration Zones
+        key_sources:
+          - 国家发改委
+          - 各部委
+          - 地方政府
+        key_indicators:
+          - 试点名单
+          - 试点措施
+          - 复制推广进度
+
+      - id: tax_preference
+        label: 税收优惠
+        label_en: Tax Preferences
+        key_sources:
+          - 税务总局
+          - 财政部
+        key_indicators:
+          - 优惠目录
+          - 减免幅度
+          - 适用条件
+
+      - id: regulatory_reform
+        label: 监管改革
+        label_en: Regulatory Reform
+        key_sources:
+          - 市场监管总局
+          - 国务院办公厅
+        key_indicators:
+          - 放管服措施
+          - 负面清单
+          - 简化审批
+
+      - id: talent_policy
+        label: 人才政策
+        label_en: Talent Policy
+        key_sources:
+          - 人社部
+          - 地方政府
+        key_indicators:
+          - 人才目录
+          - 安居政策
+          - 创新创业支持
+
+  legal_enforcement:
+    label: 法律与执法
+    label_en: Legal and Enforcement
+    description: "法律法规、司法案例与执法动态"
+    subtopics:
+      - id: legislation
+        label: 立法动态
+        label_en: Legislation
+        key_sources:
+          - 全国人大
+          - 司法部
+          - 国家法律法规数据库
+        key_indicators:
+          - 新立法律
+          - 修订法律
+          - 立法计划
+
+      - id: judicial_interpretation
+        label: 司法解释
+        label_en: Judicial Interpretation
+        key_sources:
+          - 最高人民法院
+          - 最高人民检察院
+        key_indicators:
+          - 司法解释数量
+          - 适用范围
+          - 生效时间
+
+      - id: guiding_cases
+        label: 指导性案例
+        label_en: Guiding Cases
+        key_sources:
+          - 最高人民法院
+          - 最高人民检察院
+        key_indicators:
+          - 指导性案例
+          - 典型案例
+          - 裁判规则
+
+      - id: enforcement_trend
+        label: 执法趋势
+        label_en: Enforcement Trends
+        key_sources:
+          - 公安部
+          - 市场监管总局
+          - 各部委
+        key_indicators:
+          - 专项行动
+          - 处罚数量
+          - 关注重心变化
+
+      - id: credit_discipline
+        label: 信用惩戒
+        label_en: Credit Discipline
+        key_sources:
+          - 信用中国
+          - 国家企业信用信息公示系统
+          - 中国执行信息公开网
+        key_indicators:
+          - 失信名单
+          - 限制措施
+          - 修复机制
+
+  foreign_policy:
+    label: 外交政策
+    label_en: Foreign Policy
+    description: "中国外交政策与国际关系"
+    subtopics:
+      - id: diplomatic_stance
+        label: 外交立场
+        label_en: Diplomatic Stance
+        key_sources:
+          - 外交部
+          - 新华网
+        key_indicators:
+          - 发言人表态
+          - 立场文件
+          - 交涉行动
+
+      - id: bilateral_relations
+        label: 双边关系
+        label_en: Bilateral Relations
+        key_sources:
+          - 外交部
+          - 商务部
+        key_indicators:
+          - 高层互访
+          - 协议签署
+          - 关系定位
+
+      - id: multilateral
+        label: 多边外交
+        label_en: Multilateral Diplomacy
+        key_sources:
+          - 外交部
+          - 商务部
+        key_indicators:
+          - 国际组织参与
+          - 条约加入
+          - 中国方案
+
+      - id: national_security
+        label: 国家安全
+        label_en: National Security
+        key_sources:
+          - 外交部
+          - 国防部
+        key_indicators:
+          - 安全声明
+          - 反制措施
+          - 核心利益表述
+
+  foreign_trade:
+    label: 对外贸易
+    label_en: Foreign Trade
+    description: "对外贸易政策与数据"
+    subtopics:
+      - id: trade_policy
+        label: 贸易政策
+        label_en: Trade Policy
+        key_sources:
+          - 商务部
+          - 海关总署
+          - 国家发改委
+        key_indicators:
+          - 进出口总额
+          - 贸易顺差
+          - 主要贸易伙伴
+
+      - id: trade_agreements
+        label: 贸易协定
+        label_en: Trade Agreements
+        key_sources:
+          - 商务部
+          - 外交部
+        key_indicators:
+          - RCEP
+          - CPTPP申请
+          - 双边FTA
+
+      - id: trade_remediy
+        label: 贸易救济
+        label_en: Trade Remedies
+        key_sources:
+          - 商务部
+        key_indicators:
+          - 反倾销调查
+          - 反补贴调查
+          - 保障措施
+
+      - id: trade_facilitation
+        label: 贸易便利化
+        label_en: Trade Facilitation
+        key_sources:
+          - 海关总署
+          - 商务部
+        key_indicators:
+          - 通关时间
+          - 跨境电商政策
+          - 自贸试验区
+
+  foreign_investment:
+    label: 外商投资
+    label_en: Foreign Investment
+    description: "外商投资政策与管理"
+    subtopics:
+      - id: investment_policy
+        label: 投资政策
+        label_en: Investment Policy
+        key_sources:
+          - 商务部
+          - 国家发改委
+        key_indicators:
+          - 负面清单
+          - 鼓励目录
+          - 实际使用外资
+
+      - id: investment_review
+        label: 安全审查
+        label_en: Investment Security Review
+        key_sources:
+          - 国家发改委
+          - 商务部
+        key_indicators:
+          - 审查标准
+          - 审查案例
+          - 敏感领域
+
+      - id: outbound_investment
+        label: 对外投资
+        label_en: Outbound Investment
+        key_sources:
+          - 商务部
+          - 外汇局
+          - 国家发改委
+        key_indicators:
+          - 对外直接投资
+          - 备案审批
+          - 风险提示
+
+  customs_tariff:
+    label: 关税与海关
+    label_en: Customs and Tariffs
+    description: "关税政策与海关管理"
+    subtopics:
+      - id: tariff_policy
+        label: 关税政策
+        label_en: Tariff Policy
+        key_sources:
+          - 海关总署
+          - 财政部
+          - 国务院关税税则委员会
+        key_indicators:
+          - 进口税率
+          - 暂定税率
+          - 协定税率
+
+      - id: hs_code
+        label: HS编码
+        label_en: HS Codes
+        key_sources:
+          - 海关总署
+        key_indicators:
+          - 编码调整
+          - 归类决定
+          - 税则注释
+
+      - id: customs_compliance
+        label: 海关合规
+        label_en: Customs Compliance
+        key_sources:
+          - 海关总署
+        key_indicators:
+          - AEO认证
+          - 海关稽查
+          - 加工贸易管理
+
+  cross_border_finance:
+    label: 跨境金融
+    label_en: Cross-border Finance
+    description: "跨境金融政策与管理"
+    subtopics:
+      - id: forex_policy
+        label: 外汇政策
+        label_en: Foreign Exchange Policy
+        key_sources:
+          - 外汇局
+          - 人民银行
+        key_indicators:
+          - 汇率
+          - 外汇储备
+          - 结售汇
+
+      - id: cross_border_payment
+        label: 跨境支付
+        label_en: Cross-border Payment
+        key_sources:
+          - 外汇局
+          - 人民银行
+        key_indicators:
+          - 人民币跨境结算
+          - CIPS
+          - 数字人民币
+
+      - id: capital_account
+        label: 资本项目
+        label_en: Capital Account
+        key_sources:
+          - 外汇局
+          - 人民银行
+          - 证监会
+        key_indicators:
+          - QFII/RQFII额度
+          - 债券通
+          - 沪港通深港通
+
+  trade_compliance:
+    label: 贸易合规
+    label_en: Trade Compliance
+    description: "贸易合规与制裁应对"
+    subtopics:
+      - id: sanctions
+        label: 制裁应对
+        label_en: Sanctions Response
+        key_sources:
+          - 商务部
+          - 外交部
+          - 外汇局
+        key_indicators:
+          - 反制清单
+          - 不可靠实体清单
+          - 出口管制法
+
+      - id: export_control
+        label: 出口管制
+        label_en: Export Control
+        key_sources:
+          - 商务部
+          - 海关总署
+        key_indicators:
+          - 管制清单
+          - 许可要求
+          - 执法案例
+
+      - id: supply_chain_compliance
+        label: 供应链合规
+        label_en: Supply Chain Compliance
+        key_sources:
+          - 商务部
+          - 工信部
+          - 海关总署
+        key_indicators:
+          - 供应链安全审查
+          - 关键物资管理
+          - 产地规则

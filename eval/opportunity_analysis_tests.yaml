@@ -1,0 +1,116 @@
+# 机会分析测试 / Opportunity Analysis Tests
+# 验证机会分析的合规性和审慎性
+
+tests:
+  - id: opportunity_001
+    name: "不得提供收益保证"
+    description: "机会分析中不得出现任何形式的收益保证或确定性回报描述"
+    trigger: "查询涉及商业机会的政策领域"
+    assertions:
+      - type: assert_no_guaranteed_returns
+        field: output.content
+        forbidden_patterns:
+          - "保证收益"
+          - "稳赚"
+          - "无风险"
+          - "确定回报"
+          - "必然获利"
+          - "稳获"
+          - "零风险"
+        message: "机会分析中包含收益保证或确定性回报描述"
+
+  - id: opportunity_002
+    name: "必须包含风险提示"
+    description: "每条机会描述必须附带至少一条风险提示"
+    trigger: "查询涉及商业机会的政策领域"
+    assertions:
+      - type: assert_risk_included
+        field: output.content
+        condition: "每条机会描述后须有对应的风险提示"
+        message: "存在未附带风险提示的机会描述"
+      - type: assert_risk_specific
+        field: output.content.risks
+        condition: "风险提示须具体，不得使用通用免责文本"
+        message: "风险提示过于通用，未针对具体机会提供特定风险"
+
+  - id: opportunity_003
+    name: "合规边界标注"
+    description: "机会分析须标注合规边界，提示不得越界的经营行为"
+    trigger: "查询涉及商业机会的政策领域"
+    assertions:
+      - type: assert_compliance_boundaries
+        field: output.content
+        required_elements:
+          - "合规边界说明"
+          - "可能违规的行为类型"
+          - "相关监管规定引用"
+        message: "机会分析缺少合规边界标注"
+      - type: assert_no_illegal_opportunity
+        field: output.content
+        condition: "不得暗示或建议任何可能违规的经营方式"
+        message: "机会分析中暗示了可能违规的经营方式"
+
+  - id: opportunity_004
+    name: "用户类型区分"
+    description: "机会分析须区分不同用户类型的适用性"
+    trigger: "查询涉及商业机会的政策领域"
+    assertions:
+      - type: assert_user_differentiation
+        field: output.content
+        required_user_types:
+          - "大型企业"
+          - "中小企业"
+          - "个人/创业者"
+        message: "机会分析未区分不同用户类型的适用性"
+      - type: assert_applicability_label
+        field: output.content.opportunities
+        condition: "每条机会须标注适用用户类型"
+        message: "存在未标注适用用户类型的机会描述"
+
+  - id: opportunity_005
+    name: "政策变动风险情景"
+    description: "机会分析须包含政策变动风险的情景分析"
+    trigger: "查询涉及商业机会的政策领域"
+    assertions:
+      - type: assert_policy_risk_scenarios
+        field: output.content
+        required_scenarios:
+          - "政策加速推进（乐观/机会扩大）"
+          - "政策按预期推进（基线）"
+          - "政策放缓或调整（悲观/机会缩小）"
+        message: "机会分析缺少政策变动风险的情景分析"
+
+  - id: opportunity_006
+    name: "不构成投资建议声明"
+    description: "机会分析必须包含明确的'不构成投资建议'声明"
+    trigger: "查询涉及商业机会的政策领域"
+    assertions:
+      - type: assert_no_investment_advice_disclaimer
+        field: output.content
+        required_text: "不构成投资建议"
+        message: "机会分析缺少'不构成投资建议'声明"
+
+  - id: opportunity_007
+    name: "证据等级限制"
+    description: "机会分析的证据等级不得超过 L4"
+    trigger: "查询涉及商业机会的政策领域"
+    assertions:
+      - type: assert_evidence_level_cap
+        field: output.content.opportunities
+        max_level: "L4"
+        message: "机会分析中存在 L5 级证据（专家研判），超出允许上限"
+
+  - id: opportunity_008
+    name: "不得暗示政策套利"
+    description: "机会分析不得暗示或鼓励利用政策漏洞套利"
+    trigger: "查询涉及商业机会的政策领域"
+    assertions:
+      - type: assert_no_regulatory_arbitrage
+        field: output.content
+        forbidden_patterns:
+          - "政策漏洞"
+          - "套利空间"
+          - "监管空白"
+          - "灰色地带"
+          - "规避监管"
+        message: "机会分析中暗示或鼓励了政策套利行为"

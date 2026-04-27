@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "china-policy-intelligence-skill"
+version = "0.1.0"
+description = "开源中国政策智能分析系统 — 证据优先、可审计的公共政策基础设施"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "China Policy Intelligence Skill Contributors"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Social Sciences",
+]
+
+dependencies = [
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=4.9.0",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.0.0",
+    "pandas>=2.0.0",
+    "tqdm>=4.65.0",
+    "tenacity>=8.2.0",
+    "readability-lxml>=0.4.0",
+    "markdownify>=0.11.0",
+    "pdfplumber>=0.9.0",
+    "pymupdf>=1.23.0",
+    "jieba>=0.42.0",
+    "rank-bm25>=0.2.2",
+]
+
+[project.optional-dependencies]
+rag = [
+    "qdrant-client>=1.7.0",
+    "sentence-transformers>=2.2.0",
+    "openai>=1.0.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+
+[project.scripts]
+cpi = "cpi.cli:main"
+cpi-monitor = "cpi.cli:monitor_main"
+cpi-interpret = "cpi.cli:interpret_main"
+cpi-assess = "cpi.cli:assess_main"
+cpi-alert = "cpi.cli:alert_main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow",
+    "integration: marks integration tests",
+    "eval: marks evaluation tests",
+]

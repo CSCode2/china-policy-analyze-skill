@@ -1,0 +1,987 @@
+# China Policy Intelligence Skill - Geopolitical Risk Indicators
+# ALL risk indicators from spec section 27.5
+# Structure: category > sub-indicator > weight > thresholds > examples
+
+risk_categories:
+  political_signals:
+    label: "政治信号"
+    label_en: "Political Signals"
+    weight: 15
+    description: "Political rhetoric, diplomatic posture, and leadership signals indicating intent or escalation"
+    sub_indicators:
+      leader_rhetoric_escalation:
+        label: "领导人措辞升级"
+        label_en: "Leader Rhetoric Escalation"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Standard diplomatic language; routine speeches"
+            examples:
+              - "一贯立场"
+              - "相互尊重"
+              - "双赢/共赢"
+          medium:
+            score: 3
+            description: "Escalated rhetoric; stronger-than-usual language"
+            examples:
+              - "坚决反对"
+              - "强烈谴责"
+              - "不可接受"
+              - "严正交涉"
+          high:
+            score: 5
+            description: "Highest-level escalation rhetoric; red lines declared"
+            examples:
+              - "核心利益受损"
+              - "底线被突破"
+              - "予以反击"
+              - "立即停止"
+              - "不惜代价"
+        detection_sources:
+          - 人民网习近平讲话数据库
+          - 新华网
+          - 外交部
+        update_frequency: daily
+
+      diplomatic_posture_change:
+        label: "外交姿态变化"
+        label_en: "Diplomatic Posture Change"
+        weight: 3
+        thresholds:
+          low:
+            score: 1
+            description: "Normal diplomatic engagement; routine meetings"
+            examples:
+              - "Regular bilateral meetings"
+              - "Standard UN engagement"
+              - "Routine ambassador statements"
+          medium:
+            score: 3
+            description: "Reduced engagement; public criticism; cancelled meetings"
+            examples:
+              - "召见大使提出严正交涉"
+              - "取消高层对话"
+              - "公开批评对方政策"
+              - "限制外交交流范围"
+          high:
+            score: 5
+            description: "Severed or near-severed diplomatic contact; ambassador recalled"
+            examples:
+              - "召回大使"
+              - "驱逐外交官"
+              - "暂停所有对话机制"
+              - "外交关系降级"
+        detection_sources:
+          - 外交部
+          - 新华网
+        update_frequency: daily
+
+      central_meeting_signals:
+        label: "中央会议信号"
+        label_en: "Central Meeting Signals"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "No unusual national security or foreign affairs meetings"
+          medium:
+            score: 3
+            description: "Emergency or unusual meetings on national security or foreign affairs"
+            examples:
+              - "中央外事工作会议紧急召开"
+              - "政治局会议专题讨论安全形势"
+              - "国家安全委员会公开会议"
+          high:
+            score: 5
+            description: "Multiple consecutive emergency meetings; leadership visits to military"
+            examples:
+              - "连续多次安全相关会议"
+              - "领导人视察战区部队"
+              - "全国动员部署会议"
+        detection_sources:
+          - 新华网
+          - 中国政府网
+          - 人民网
+        update_frequency: daily
+
+      nationalism_mobilization:
+        label: "民族主义动员"
+        label_en: "Nationalism Mobilization"
+        weight: 2
+        thresholds:
+          low:
+            score: 1
+            description: "Normal media tone; no unusual nationalist content"
+          medium:
+            score: 3
+            description: "Increased nationalist content; historical grievances emphasized"
+            examples:
+              - "官媒密集发布历史纪念文章"
+              - "社交媒体民族主义情绪升温"
+              - "抵制运动舆论引导"
+          high:
+            score: 5
+            description: "Active mobilization; mass rallies; organized campaigns"
+            examples:
+              - "有组织的群众集会"
+              - "官方推动的抵制运动"
+              - "全境反对方抗议活动"
+        detection_sources:
+          - 人民网
+          - 新华网
+          - 环球时报
+        update_frequency: daily
+
+      party_unity_signals:
+        label: "党内统一信号"
+        label_en: "Party Unity Signals"
+        weight: 2
+        thresholds:
+          low:
+            score: 1
+            description: "Standard party messaging; unified tone"
+          medium:
+            score: 3
+            description: "Unusual emphasis on unity, loyalty, or ideological alignment"
+            examples:
+              - "密集强调两个维护"
+              - "全军政治工作会议"
+              - "意识形态领域部署"
+          high:
+            score: 5
+            description: "Public struggle sessions, loyalty campaigns, or anti-faction drives"
+            examples:
+              - "公开整肃高级干部"
+              - "全军效忠宣誓"
+              - "全国整顿运动"
+        detection_sources:
+          - 中国共产党新闻网
+          - 求是网
+          - 人民网
+        update_frequency: weekly
+
+  legal_institutional_signals:
+    label: "法律制度信号"
+    label_en: "Legal and Institutional Signals"
+    weight: 15
+    description: "Legal and institutional changes that signal policy hardening or preparation for escalation"
+    sub_indicators:
+      emergency_legislation:
+        label: "紧急立法"
+        label_en: "Emergency Legislation"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Normal legislative schedule; no unusual legislative activity"
+          medium:
+            score: 3
+            description: "Accelerated or emergency legislation on security or sovereignty"
+            examples:
+              - "反外国制裁法修订"
+              - "出口管制法紧急修正"
+              - "国家安全相关法律加速审议"
+              - "海警法实施"
+          high:
+            score: 5
+            description: "Wartime legislation; national mobilization law activated"
+            examples:
+              - "国防动员法启动"
+              - "战时特别措施法"
+              - "紧急状态法令"
+              - "全面经济制裁授权法"
+        detection_sources:
+          - 国家法律法规数据库
+          - 中国政府网
+          - 全国人大
+        update_frequency: daily
+
+      sanctions_countermeasures:
+        label: "制裁反制措施"
+        label_en: "Sanctions and Countermeasures"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "No new sanctions or countermeasures"
+          medium:
+            score: 3
+            description: "New targeted sanctions or countermeasures"
+            examples:
+              - "不可靠实体清单新增条目"
+              - "反制清单新增外国实体"
+              - "对等限制措施"
+              - "出口管制清单扩大"
+          high:
+            score: 5
+            description: "Broad, escalating sanctions or countermeasures with significant disruption"
+            examples:
+              - "全面禁止关键原材料出口"
+              - "大规模反制清单扩充"
+              - "金融制裁反制"
+              - "断绝关键经济合作"
+        detection_sources:
+          - 商务部
+          - 外交部
+          - 海关总署
+        update_frequency: daily
+
+      institutional_restructuring:
+        label: "机构重组"
+        label_en: "Institutional Restructuring"
+        weight: 3
+        thresholds:
+          low:
+            score: 1
+            description: "No unusual institutional changes"
+          medium:
+            score: 3
+            description: "Reorganization of security, foreign affairs, or trade institutions"
+            examples:
+              - "国家安全机构扩编"
+              - "商务部对美贸易新设专班"
+              - "海警指挥权调整"
+              - "外事工作领导体制变化"
+          high:
+            score: 5
+            description: "Major restructuring for wartime or crisis posture"
+            examples:
+              - "成立战时经济指挥机构"
+              - "军民融合体制升级"
+              - "全面动员指挥部成立"
+        detection_sources:
+          - 中国政府网
+          - 新华网
+        update_frequency: weekly
+
+      judicial_instruction_change:
+        label: "司法指令变化"
+        label_en: "Judicial Instruction Change"
+        weight: 2
+        thresholds:
+          low:
+            score: 1
+            description: "Normal judicial guidance"
+          medium:
+            score: 3
+            description: "New judicial guidance on security, trade secrets, or sanctions cases"
+            examples:
+              - "新司法解释涉及国家安全"
+              - "指导性案例涉及贸易管制违反"
+              - "法院受案范围调整"
+          high:
+            score: 5
+            description: "Wartime judicial measures; summary procedures; expanded detention"
+            examples:
+              - "战时司法特别程序"
+              - "国家安全案件特殊审理规则"
+              - "扩大侦查权限"
+        detection_sources:
+          - 最高人民法院
+          - 最高人民检察院
+        update_frequency: weekly
+
+      regulatory_tightening:
+        label: "监管收紧"
+        label_en: "Regulatory Tightening"
+        weight: 2
+        thresholds:
+          low:
+            score: 1
+            description: "Normal regulatory activity"
+          medium:
+            score: 3
+            description: "Tightened regulation on data, technology, or financial flows"
+            examples:
+              - "数据出境安全审查加强"
+              - "技术出口限制新增条目"
+              - "跨境资本管制收紧"
+          high:
+            score: 5
+            description: "Comprehensive regulatory blockade"
+            examples:
+              - "全面禁止特定技术出口"
+              - "全面数据出境限制"
+              - "冻结特定跨国金融交易"
+        detection_sources:
+          - 商务部
+          - 外汇局
+          - 市场监管总局
+        update_frequency: weekly
+
+  military_signals:
+    label: "军事信号"
+    label_en: "Military Signals"
+    weight: 25
+    description: "Military posture, deployments, exercises, and procurement indicating escalation preparation"
+    sub_indicators:
+      exercise_frequency_scale:
+        label: "演习频率与规模"
+        label_en: "Exercise Frequency and Scale"
+        weight: 5
+        thresholds:
+          low:
+            score: 1
+            description: "Regular, planned military exercises"
+          medium:
+            score: 3
+            description: "Increased frequency or scale of exercises near flashpoints"
+            examples:
+              - "台海周边演习频率增加"
+              - "南海联合演习规模扩大"
+              - "东部战区实战化演训加强"
+          high:
+            score: 5
+            description: "Large-scale, multi-theater exercises with mobilization characteristics"
+            examples:
+              - "多战区联合实战演习"
+              - "联合作战实弹演训"
+              - "民用设施转为军事用途演习"
+              - "全国性防空演习"
+        detection_sources:
+          - 国防部
+          - 解放军报
+          - 东部战区
+          - 南部战区
+        update_frequency: daily
+
+      troop_deployment_changes:
+        label: "部队部署变化"
+        label_en: "Troop Deployment Changes"
+        weight: 6
+        thresholds:
+          low:
+            score: 1
+            description: "Normal deployment patterns"
+          medium:
+            score: 3
+            description: "Observable deployment changes near flashpoints"
+            examples:
+              - "沿海地区部队增调"
+              - "火箭军前沿部署调整"
+              - "预备役动员试点的展开"
+          high:
+            score: 5
+            description: "Major deployment indicating combat readiness"
+            examples:
+              - "大规模部队向沿海集结"
+              - "战略预备队激活"
+              - "战区级指挥前移"
+              - "全面战备等级转换"
+        detection_sources:
+          - 国防部
+          - 解放军报
+          - 台湾防务部门
+          - US DoD
+        update_frequency: daily
+
+      equipment_readiness:
+        label: "装备战备状态"
+        label_en: "Equipment Readiness"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Normal procurement and maintenance schedule"
+          medium:
+            score: 3
+            description: "Accelerated procurement or deployment of key systems"
+            examples:
+              - "高超音速武器加速部署"
+              - "战略导弹部队战备提升"
+              - "无人机集群采购加速"
+          high:
+            score: 5
+            description: "Wartime production activation or emergency procurement"
+            examples:
+              - "国防工业战时生产体制"
+              - "大规模弹药储备"
+              - "民用造船厂转军产"
+        detection_sources:
+          - 国防部
+          - 解放军报
+        update_frequency: weekly
+
+      military_communication_change:
+        label: "军事通信变化"
+        label_en: "Military Communication Change"
+        weight: 3
+        thresholds:
+          low:
+            score: 1
+            description: "Normal military media and communication patterns"
+          medium:
+            score: 3
+            description: "Increased military media activity; unusual transparency or opacity"
+            examples:
+              - "国防部每日发布会频率增加"
+              - "军事报道突然减少(可能意味着行动)"
+              - "不寻常的军事信息公开"
+          high:
+            score: 5
+            description: "Silence indicating operations; or explicit combat communications"
+            examples:
+              - "军事通信突然静默"
+              - "战区级公告发布"
+              - "全频段军事通信加密"
+        detection_sources:
+          - 国防部
+          - 解放军报
+          - 中央电视台军事频道
+        update_frequency: daily
+
+      reserve_mobilization:
+        label: "预备役与动员"
+        label_en: "Reserve and Mobilization"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Normal reserve training schedule"
+          medium:
+            score: 3
+            description: "Increased reserve training; militia activation"
+            examples:
+              - "预备役大规模集中训练"
+              - "民兵海上动员训练"
+              - "退役军人召回演练"
+          high:
+            score: 5
+            description: "Actual mobilization orders; national defense mobilization"
+            examples:
+              - "国防动员令发布"
+              - "预备役集体转现役"
+              - "民用设施征用"
+              - "战略物资配给制"
+        detection_sources:
+          - 国防部
+          - 解放军报
+          - 地方政府征兵通知
+        update_frequency: daily
+
+      military_civilian_fusion_acceleration:
+        label: "军民融合加速"
+        label_en: "Military-Civilian Fusion Acceleration"
+        weight: 3
+        thresholds:
+          low:
+            score: 1
+            description: "Normal MCF development pace"
+          medium:
+            score: 3
+            description: "Accelerated MCF policy and implementation"
+            examples:
+              - "军民融合重大项目加速推进"
+              - "民用技术征用法律框架完善"
+              - "国防动员体系与民用体系对接加强"
+          high:
+            score: 5
+            description: "Wholesale conversion of civilian capacity to military use"
+            examples:
+              - "民用工厂全面转军工"
+              - "民航机队征用"
+              - "民用通信网络军事化"
+              - "港口全面军事管控"
+        detection_sources:
+          - 国家发改委
+          - 工信部
+          - 国防部
+        update_frequency: weekly
+
+  maritime_airspace_signals:
+    label: "海空域信号"
+    label_en: "Maritime and Airspace Signals"
+    weight: 20
+    description: "Maritime and airspace activities around flashpoints indicating coercion or escalation"
+    sub_indicators:
+      adiz_violation_frequency:
+        label: "防空识别区侵入频率"
+        label_en: "ADIZ Violation Frequency"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Normal military aviation activity levels"
+          medium:
+            score: 3
+            description: "Increased incursions or proximity flights"
+            examples:
+              - "军机越过海峡中线频率增加"
+              - "防空识别区巡逻架次显著上升"
+              - "轰炸机绕台飞行常态化"
+          high:
+            score: 5
+            description: "Mass flights; systematic airspace dominance operations"
+            examples:
+              - "数十架军机同时侵入防空识别区"
+              - "全面空中封锁演习"
+              - "实弹射击禁航区划定"
+        detection_sources:
+          - 台湾防务部门
+          - 国防部
+          - 日本防卫省
+        update_frequency: daily
+
+      coast_guard_activity:
+        label: "海警活动"
+        label_en: "Coast Guard Activity"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Normal coast guard patrol patterns"
+          medium:
+            score: 3
+            description: "Increased coast guard presence or aggressive tactics"
+            examples:
+              - "钓鱼岛周边海警巡航频次增加"
+              - "南海争议海域海警船数量增加"
+              - "海警对民用船只拦截行动"
+          high:
+            score: 5
+            description: "Coast guard blockade or armed confrontation"
+            examples:
+              - "海警封锁特定海域"
+              - "海警使用武力"
+              - "海上对峙升级为武装冲突"
+              - "宣布禁航区"
+        detection_sources:
+          - 中国海警局
+          - 日本海上保安厅
+          - 台湾海巡署
+        update_frequency: daily
+
+      naval_deployment:
+        label: "海军部署"
+        label_en: "Naval Deployment"
+        weight: 5
+        thresholds:
+          low:
+            score: 1
+            description: "Normal naval deployment patterns"
+          medium:
+            score: 3
+            description: "Increased naval presence near flashpoints"
+            examples:
+              - "航母编队进入相关海域"
+              - "潜艇活动增加"
+              - "两栖作战舰艇前沿部署"
+          high:
+            score: 5
+            description: "Large naval formation indicating combat operations"
+            examples:
+              - "多航母编队同时出击"
+              - "全面海上封锁"
+              - "两栖登陆演习升级为实战部署"
+              - "战略核潜艇战备巡航"
+        detection_sources:
+          - 国防部
+          - 台湾防务部门
+          - US INDOPACOM
+        update_frequency: daily
+
+      grey_zone_operations:
+        label: "灰色地带行动"
+        label_en: "Grey Zone Operations"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Minimum grey zone activity"
+          medium:
+            score: 3
+            description: "Maritime militia activity; lawfare; economic coercion"
+            examples:
+              - "海上民兵渔船大规模集结"
+              - "国际法诉讼或仲裁"
+              - "经济制裁威胁"
+              - "网络攻击增加"
+          high:
+            score: 5
+            description: "Systematic grey zone campaign near threshold of armed conflict"
+            examples:
+              - "海上民兵与海警协同封锁"
+              - "关键基础设施网络攻击"
+              - "大规模经济断供"
+              - "信息战全面展开"
+        detection_sources:
+          - 中国海警局
+          - 台湾防务部门
+          - 外交部
+          - 商务部
+        update_frequency: daily
+
+      airspace_closure_navigational_warnings:
+        label: "空域关闭与航行警告"
+        label_en: "Airspace Closure and Navigational Warnings"
+        weight: 3
+        thresholds:
+          low:
+            score: 1
+            description: "No unusual airspace or maritime navigation warnings"
+          medium:
+            score: 3
+            description: "NOTAM or navigational warnings near flashpoints"
+            examples:
+              - "台海周边禁航区公告"
+              - "南海实弹射击禁航"
+              - "民航航线调整"
+          high:
+            score: 5
+            description: "Large-scale airspace closure; shipping lane closure"
+            examples:
+              - "大范围空域禁航"
+              - "主要航道封航"
+              - "国际民航全面绕行"
+              - "港口关闭"
+        detection_sources:
+          - 中国海事局
+          - 台湾民航局
+          - 国际民航组织
+        update_frequency: daily
+
+  economic_warfare_signals:
+    label: "经济战信号"
+    label_en: "Economic Warfare Signals"
+    weight: 15
+    description: "Economic measures used as coercion or warfare tools"
+    sub_indicators:
+      trade_restriction_escalation:
+        label: "贸易限制升级"
+        label_en: "Trade Restriction Escalation"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Normal trade flow; routine trade frictions"
+          medium:
+            score: 3
+            description: "New tariffs, export controls, or trade restrictions on strategic goods"
+            examples:
+              - "关键矿产出口限制"
+              - "新增对华出口管制条目"
+              - "关税升级"
+              - "稀土出口配额收紧"
+          high:
+            score: 5
+            description: "Comprehensive trade embargo or decoupling measures"
+            examples:
+              - "全面禁止关键原材料出口"
+              - "全面技术封锁"
+              - "贸易禁运"
+              - "全面脱钩立法"
+        detection_sources:
+          - 商务部
+          - 海关总署
+          - USTR
+          - BIS
+          - OFAC
+        update_frequency: daily
+
+      financial_sanctions:
+        label: "金融制裁"
+        label_en: "Financial Sanctions"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "No new financial sanctions"
+          medium:
+            score: 3
+            description: "Targeted financial sanctions on individuals or entities"
+            examples:
+              - "OFAC SDN清单新增中国实体"
+              - "中国银行机构被限制美元清算"
+              - "投资限制新增行业"
+          high:
+            score: 5
+            description: "Systemic financial sanctions; SWIFT ban; sovereign sanctions"
+            examples:
+              - "主要银行被排除在SWIFT之外"
+              - "主权财富基金冻结"
+              - "全面金融封锁"
+              - "央行储备冻结"
+        detection_sources:
+          - OFAC
+          - 外汇局
+          - 人民银行
+        update_frequency: daily
+
+      investment_decoupling:
+        label: "投资脱钩"
+        label_en: "Investment Decoupling"
+        weight: 3
+        thresholds:
+          low:
+            score: 1
+            description: "Normal investment flows"
+          medium:
+            score: 3
+            description: "Investment restrictions expanding; forced divestment"
+            examples:
+              - "CFIUS审查扩大范围"
+              - "中国对美投资限制行业增加"
+              - "外资安全审查标准提高"
+              - "上市公司退市压力"
+          high:
+            score: 5
+            description: "Comprehensive investment ban or forced decoupling"
+            examples:
+              - "全面禁止双向投资"
+              - "强制剥离所有在华资产"
+              - "全面退市"
+              - "金融账户冻结"
+        detection_sources:
+          - 商务部
+          - 证监会
+          - 外汇局
+          - USTR
+        update_frequency: weekly
+
+      technology_blockade:
+        label: "技术封锁"
+        label_en: "Technology Blockade"
+        weight: 4
+        thresholds:
+          low:
+            score: 1
+            description: "Normal technology trade and cooperation"
+          medium:
+            score: 3
+            description: "Expanded export controls on key technologies"
+            examples:
+              - "半导体设备出口管制扩展"
+              - "AI芯片出口限制"
+              - "量子计算技术限制"
+              - "EDA工具禁运"
+          high:
+            score: 5
+            description: "Comprehensive technology embargo"
+            examples:
+              - "全面高端芯片禁运"
+              - "所有先进技术出口禁止"
+              - "人才交流全面终止"
+              - "学术合作全面中断"
+        detection_sources:
+          - BIS
+          - 商务部
+          - 工信部
+          - 科技部
+        update_frequency: daily
+
+  macro_supply_chain_signals:
+    label: "宏观供应链信号"
+    label_en: "Macro and Supply Chain Signals"
+    weight: 5
+    description: "Macroeconomic and supply chain disruptions linked to geopolitical tension"
+    sub_indicators:
+      strategic_stockpiling:
+        label: "战略储备"
+        label_en: "Strategic Stockpiling"
+        weight: 2
+        thresholds:
+          low:
+            score: 1
+            description: "Normal stockpiling levels"
+          medium:
+            score: 3
+            description: "Increased strategic reserves procurement"
+            examples:
+              - "粮食储备异常增加"
+              - "能源战略储备扩大"
+              - "关键矿产收储行动"
+              - "药品战略储备加强"
+          high:
+            score: 5
+            description: "Emergency stockpiling; rationing preparations"
+            examples:
+              - "全面战略物资管制"
+              - "配给制准备"
+              - "战略物资优先军工"
+        detection_sources:
+          - 国家发改委
+          - 海关总署
+          - 国家统计局
+        update_frequency: weekly
+
+      supply_chain_diversion:
+        label: "供应链转移"
+        label_en: "Supply Chain Diversion"
+        weight: 2
+        thresholds:
+          low:
+            score: 1
+            description: "Normal supply chain patterns"
+          medium:
+            score: 3
+            description: "Observable supply chain restructuring or diversification"
+            examples:
+              - "进口来源国多元化加速"
+              - "友岸外包趋势加强"
+              - "关键零部件国产替代加速"
+          high:
+            score: 5
+            description: "Forced supply chain disconnection"
+            examples:
+              - "关键供应链完全切断"
+              - "全面进口替代紧急实施"
+              - "产业链大规模外迁"
+        detection_sources:
+          - 海关总署
+          - 商务部
+          - 工信部
+        update_frequency: weekly
+
+      capital_flow_anomaly:
+        label: "资本流动异常"
+        label_en: "Capital Flow Anomaly"
+        weight: 1
+        thresholds:
+          low:
+            score: 1
+            description: "Normal capital flows"
+          medium:
+            score: 3
+            description: "Unusual capital outflow or inflow patterns"
+            examples:
+              - "外汇储备异常变动"
+              - "跨境资本流出加速"
+              - "外资持债规模异常下降"
+          high:
+            score: 5
+            description: "Capital flight; currency crisis; payment system disruption"
+            examples:
+              - "大规模资本外逃"
+              - "人民币急剧贬值"
+              - "跨境支付系统中断"
+        detection_sources:
+          - 外汇局
+          - 人民银行
+        update_frequency: daily
+
+  third_party_signals:
+    label: "第三方信号"
+    label_en: "Third-Party Signals"
+    weight: 5
+    description: "Signals from third-party actors (allies, international organizations, neutral observers)"
+    sub_indicators:
+      ally_coordination:
+        label: "盟友协调"
+        label_en: "Allied Coordination"
+        weight: 2
+        thresholds:
+          low:
+            score: 1
+            description: "Normal allied engagement"
+          medium:
+            score: 3
+            description: "Increased allied coordination on China policy"
+            examples:
+              - "G7联合声明涉华措辞加强"
+              - "QUAD合作具体化"
+              - "AUKUS军事合作推进"
+              - "北约首次将中国列为系统性挑战"
+          high:
+            score: 5
+            description: "Allied coalition announcing collective action against China"
+            examples:
+              - "多国联合制裁"
+              - "集体军事部署"
+              - "全面科技封锁联盟"
+              - "联合海上封锁"
+        detection_sources:
+          - US Department of State
+          - 日本外务省
+          - 欧盟对外行动署
+          - NATO
+        update_frequency: weekly
+
+      international_organization_posture:
+        label: "国际组织姿态"
+        label_en: "International Organization Posture"
+        weight: 1
+        thresholds:
+          low:
+            score: 1
+            description: "Normal international engagement"
+          medium:
+            score: 3
+            description: "International organizations taking unusual positions"
+            examples:
+              - "联合国决议涉及中国主权问题"
+              - "WTO争端密集爆发"
+              - "IMF特别报告对中国施压"
+          high:
+            score: 5
+            description: "International organization sanctions or expulsion"
+            examples:
+              - "国际组织成员资格争议"
+              - "系统性国际制度对抗"
+              - "多边机制分裂"
+        detection_sources:
+          - WTO
+          - UN
+          - IMF
+          - World Bank
+        update_frequency: weekly
+
+      neutral_actor_repositioning:
+        label: "中立方重新站位"
+        label_en: "Neutral Actor Repositioning"
+        weight: 2
+        thresholds:
+          low:
+            score: 1
+            description: "Neutral actors maintain positions"
+          medium:
+            score: 3
+            description: "Previously neutral actors showing alignment"
+            examples:
+              - "东盟国家选边站压力增加"
+              - "中东国家调整对华立场"
+              - "非洲国家外交表态变化"
+              - "不结盟运动分化"
+          high:
+            score: 5
+            description: "Broad international alignment against or for China"
+            examples:
+              - "全球性阵营对抗形成"
+              - "中立国家全面选边"
+              - "新冷战格局确立"
+        detection_sources:
+          - 外交部
+          - MFA statements from third countries
+          - Reuters
+          - AP
+        update_frequency: weekly
+
+composite_scoring:
+  formula: "weighted_sum of all sub-indicator scores"
+  max_score: 100
+  risk_levels:
+    low:
+      max_score: 30
+      color: "green"
+      description: "Normal geopolitical environment; no significant escalation signals"
+      action: "Standard monitoring; weekly review"
+    moderate:
+      max_score: 50
+      color: "yellow"
+      description: "Elevated tension; some escalation signals present"
+      action: "Enhanced monitoring; daily review; include in foreign policy briefing"
+    elevated:
+      max_score: 70
+      color: "orange"
+      description: "Significant escalation signals; conflict risk materially increased"
+      action: "Intensive monitoring; twice-daily review; escalation alerts; scenario activation"
+    high:
+      max_score: 85
+      color: "red"
+      description: "Conflict appears increasingly likely; multiple converging signals"
+      action: "Continuous monitoring; real-time alerts; all scenario models active; economic impact tracking"
+    critical:
+      min_score: 85
+      color: "dark_red"
+      description: "Conflict imminent or ongoing; maximum alert"
+      action: "Continuous monitoring; real-time alerts; full economic impact assessment; coordination with all stakeholders"

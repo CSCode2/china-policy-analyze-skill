@@ -1,0 +1,1266 @@
+# China Policy Intelligence Skill - Source Registry
+# All sources from spec sections 6.1-6.4, 7.1-7.2, 26.3, 27.6
+
+central_policy_sources:
+  - name: 中国政府网
+    name_en: Gov.cn
+    url: https://www.gov.cn
+    level: S
+    priority: 1
+    topics:
+      - 中央政策文件
+      - 国务院政策
+      - 领导人活动
+      - 政策解读
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 国务院政策文件库
+    name_en: State Council Policy Document Database
+    url: https://www.gov.cn/zhengce/
+    level: S
+    priority: 1
+    topics:
+      - 国务院文件
+      - 行政法规
+      - 国务院令
+      - 国务院意见
+      - 国务院通知
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 国家发改委
+    name_en: National Development and Reform Commission (NDRC)
+    url: https://www.ndrc.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 宏观经济政策
+      - 产业政策
+      - 投资审批
+      - 价格政策
+      - 外资准入
+      - 十五五规划
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 十五五规划纲要
+    name_en: 15th Five-Year Plan Outline
+    url: https://www.gov.cn/gongbao/2025/issue_0001.htm
+    level: S
+    priority: 1
+    topics:
+      - 国民经济发展规划
+      - 社会发展规划
+      - 重大战略
+      - 重点项目
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 人民网习近平讲话数据库
+    name_en: People.cn Xi Jinping Speech Database
+    url: http://jhsjk.people.cn
+    level: S
+    priority: 1
+    topics:
+      - 习近平重要讲话
+      - 领导人讲话全文
+      - 重要文章
+      - 指示批示
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 求是网
+    name_en: Qiushi
+    url: http://www.qstheory.cn
+    level: A
+    priority: 2
+    topics:
+      - 习近平文章
+      - 理论文章
+      - 党的理论
+      - 政策解读
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 新华网
+    name_en: Xinhua News Agency
+    url: http://www.xinhuanet.com
+    level: A
+    priority: 2
+    topics:
+      - 官方新闻通稿
+      - 领导人讲话全文
+      - 政策发布
+      - 外交声明
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 人民网
+    name_en: People's Daily Online
+    url: http://www.people.com.cn
+    level: A
+    priority: 2
+    topics:
+      - 社论评论
+      - 领导人活动报道
+      - 政策解读
+      - 头版要闻
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 中国共产党新闻网
+    name_en: CPC News
+    url: http://cpc.people.com.cn
+    level: A
+    priority: 2
+    topics:
+      - 中央文件
+      - 党建政策
+      - 组织人事
+      - 党内法规
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 共产党员网
+    name_en: Communist Party Member Network
+    url: https://www.12371.cn
+    level: A
+    priority: 3
+    topics:
+      - 党建工作
+      - 基层组织
+      - 党员教育
+      - 党内法规
+    crawl_frequency: weekly
+    encoding: utf-8
+
+ministry_sources:
+  - name: 国家统计局
+    name_en: National Bureau of Statistics (NBS)
+    url: https://www.stats.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - GDP
+      - CPI
+      - PPI
+      - 工业增加值
+      - 社会消费品零售总额
+      - 固定资产投资
+      - 进出口
+      - 人口数据
+      - 就业数据
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 人民银行
+    name_en: People's Bank of China (PBOC)
+    url: https://www.pbc.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 货币政策
+      - 利率政策
+      - 存款准备金
+      - 社融数据
+      - 信贷数据
+      - 汇率政策
+      - 金融稳定
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 财政部
+    name_en: Ministry of Finance (MOF)
+    url: https://www.mof.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 财政政策
+      - 税收政策
+      - 政府债务
+      - 财政收支
+      - 专项债
+      - 转移支付
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 工信部
+    name_en: Ministry of Industry and Information Technology (MIIT)
+    url: https://www.miit.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 工业政策
+      - 信息化政策
+      - 中小企业政策
+      - 新能源汽车
+      - 半导体
+      - 人工智能
+      - 5G
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 科技部
+    name_en: Ministry of Science and Technology (MOST)
+    url: https://www.most.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 科技政策
+      - 创新驱动
+      - 重点研发计划
+      - 高新技术
+      - 产学研合作
+      - 科技体制改革
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 商务部
+    name_en: Ministry of Commerce (MOFCOM)
+    url: https://www.mofcom.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 内贸政策
+      - 外贸政策
+      - 外资政策
+      - 自贸区
+      - 跨境电商
+      - 服务贸易
+      - 反倾销
+      - 制裁应对
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 金融监管总局
+    name_en: National Financial Regulatory Administration (NFRA)
+    url: https://www.cbirc.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 银行保险监管
+      - 金融风险
+      - 消费者保护
+      - 合规要求
+      - 金融开放
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 证监会
+    name_en: China Securities Regulatory Commission (CSRC)
+    url: https://www.csrc.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 证券监管
+      - 上市公司
+      - 资本市场改革
+      - IPO政策
+      - 基金监管
+      - 期货监管
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 外汇局
+    name_en: State Administration of Foreign Exchange (SAFE)
+    url: https://www.safe.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 外汇政策
+      - 跨境资金流动
+      - 外汇储备
+      - QFII/RQFII
+      - 跨境支付
+      - 资本项目开放
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 市场监管总局
+    name_en: State Administration for Market Regulation (SAMR)
+    url: https://www.samr.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 反垄断
+      - 反不正当竞争
+      - 市场准入
+      - 质量监管
+      - 食品药品安全
+      - 知识产权
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 海关总署
+    name_en: General Administration of Customs (GACC)
+    url: https://www.customs.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 进出口数据
+      - 关税政策
+      - HS编码
+      - 加工贸易
+      - 通关便利化
+      - 走私打击
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 税务总局
+    name_en: State Taxation Administration (STA)
+    url: https://www.chinatax.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 税收政策
+      - 减税降费
+      - 增值税
+      - 企业所得税
+      - 税收征管
+      - 税收优惠
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 人社部
+    name_en: Ministry of Human Resources and Social Security (MOHRSS)
+    url: https://www.mohrss.gov.cn
+    level: A
+    priority: 3
+    topics:
+      - 就业政策
+      - 社保政策
+      - 养老金
+      - 人才政策
+      - 劳动关系
+      - 职业技能培训
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 教育部
+    name_en: Ministry of Education (MOE)
+    url: https://www.moe.gov.cn
+    level: A
+    priority: 3
+    topics:
+      - 教育政策
+      - 高等教育改革
+      - 职业教育
+      - 双减政策
+      - 学科调整
+      - 研究生教育
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 司法部
+    name_en: Ministry of Justice (MOJ)
+    url: https://www.moj.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 法律法规草案
+      - 行政执法
+      - 公共法律服务
+      - 司法改革
+      - 律师管理
+      - 法治建设
+    crawl_frequency: weekly
+    encoding: utf-8
+
+legal_enforcement_sources:
+  - name: 国家法律法规数据库
+    name_en: National Laws and Regulations Database
+    url: https://flk.npc.gov.cn
+    level: S
+    priority: 1
+    topics:
+      - 法律
+      - 行政法规
+      - 地方性法规
+      - 部门规章
+      - 司法解释
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 最高人民法院
+    name_en: Supreme People's Court (SPC)
+    url: https://www.court.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 司法解释
+      - 指导性案例
+      - 典型案例
+      - 审判指导
+      - 司法改革
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 人民法院案例库
+    name_en: People's Court Case Database
+    url: https://rmfyalk.court.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 参考案例
+      - 裁判规则
+      - 审判参考
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 中国裁判文书网
+    name_en: China Judgements Online
+    url: https://wenshu.court.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 判决书
+      - 裁定书
+      - 调解书
+      - 执行文书
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 中国执行信息公开网
+    name_en: China Execution Information Disclosure
+    url: https://zxgk.court.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 失信被执行人
+      - 限制消费
+      - 执行案件
+      - 财产查封
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 最高人民检察院
+    name_en: Supreme People's Procuratorate (SPP)
+    url: https://www.spp.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 检察指导
+      - 典型案例
+      - 公益诉讼
+      - 检察建议
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 最高检典型案例
+    name_en: SPP Typical Cases
+    url: https://www.spp.gov.cn/spp/dxal/
+    level: A
+    priority: 2
+    topics:
+      - 经济犯罪案例
+      - 金融犯罪案例
+      - 知识产权案例
+      - 环境保护案例
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 公安部
+    name_en: Ministry of Public Security (MPS)
+    url: https://www.mps.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 治安管理
+      - 经济犯罪侦查
+      - 网络安全
+      - 刑事执法
+      - 户籍管理
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 网络违法犯罪举报网站
+    name_en: Cybercrime Reporting Platform
+    url: https://www.cyberpolice.cn
+    level: A
+    priority: 3
+    topics:
+      - 网络犯罪
+      - 网络安全执法
+      - 举报受理
+    crawl_frequency: weekly
+    encoding: utf-8
+
+project_credit_sources:
+  - name: 中国政府采购网
+    name_en: China Government Procurement
+    url: https://www.ccgp.gov.cn
+    level: C
+    priority: 4
+    topics:
+      - 政府采购
+      - 招标公告
+      - 中标结果
+      - 采购预算
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 全国公共资源交易平台
+    name_en: National Public Resource Trading Platform
+    url: https://www.ggzy.gov.cn
+    level: C
+    priority: 4
+    topics:
+      - 工程建设
+      - 土地出让
+      - 产权交易
+      - 政府采购
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 国家企业信用信息公示系统
+    name_en: National Enterprise Credit Information Publicity System
+    url: https://www.gsxt.gov.cn
+    level: C
+    priority: 4
+    topics:
+      - 企业信用
+      - 行政处罚
+      - 经营异常
+      - 严重违法
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 信用中国
+    name_en: Credit China
+    url: https://www.creditchina.gov.cn
+    level: C
+    priority: 4
+    topics:
+      - 失信惩戒
+      - 信用修复
+      - 行政许可
+      - 行政处罚
+      - 红黑名单
+    crawl_frequency: daily
+    encoding: utf-8
+
+provincial_government_sources:
+  - name: 北京市
+    url: https://www.beijing.gov.cn
+    level: B
+    priority: 3
+  - name: 天津市
+    url: https://www.tj.gov.cn
+    level: B
+    priority: 3
+  - name: 河北省
+    url: https://www.hebei.gov.cn
+    level: B
+    priority: 3
+  - name: 山西省
+    url: https://www.shanxi.gov.cn
+    level: B
+    priority: 3
+  - name: 内蒙古自治区
+    url: https://www.nmg.gov.cn
+    level: B
+    priority: 3
+  - name: 辽宁省
+    url: https://www.ln.gov.cn
+    level: B
+    priority: 3
+  - name: 吉林省
+    url: https://www.jl.gov.cn
+    level: B
+    priority: 3
+  - name: 黑龙江省
+    url: https://www.hlj.gov.cn
+    level: B
+    priority: 3
+  - name: 上海市
+    url: https://www.shanghai.gov.cn
+    level: B
+    priority: 3
+  - name: 江苏省
+    url: https://www.jiangsu.gov.cn
+    level: B
+    priority: 3
+  - name: 浙江省
+    url: https://www.zj.gov.cn
+    level: B
+    priority: 3
+  - name: 安徽省
+    url: https://www.ah.gov.cn
+    level: B
+    priority: 3
+  - name: 福建省
+    url: https://www.fujian.gov.cn
+    level: B
+    priority: 3
+  - name: 江西省
+    url: https://www.jiangxi.gov.cn
+    level: B
+    priority: 3
+  - name: 山东省
+    url: https://www.shandong.gov.cn
+    level: B
+    priority: 3
+  - name: 河南省
+    url: https://www.henan.gov.cn
+    level: B
+    priority: 3
+  - name: 湖北省
+    url: https://www.hubei.gov.cn
+    level: B
+    priority: 3
+  - name: 湖南省
+    url: https://www.hunan.gov.cn
+    level: B
+    priority: 3
+  - name: 广东省
+    url: https://www.gd.gov.cn
+    level: B
+    priority: 3
+  - name: 广西壮族自治区
+    url: https://www.gxzf.gov.cn
+    level: B
+    priority: 3
+  - name: 海南省
+    url: https://www.hainan.gov.cn
+    level: B
+    priority: 3
+  - name: 重庆市
+    url: https://www.cq.gov.cn
+    level: B
+    priority: 3
+  - name: 四川省
+    url: https://www.sc.gov.cn
+    level: B
+    priority: 3
+  - name: 贵州省
+    url: https://www.guizhou.gov.cn
+    level: B
+    priority: 3
+  - name: 云南省
+    url: https://www.yn.gov.cn
+    level: B
+    priority: 3
+  - name: 西藏自治区
+    url: https://www.xizang.gov.cn
+    level: B
+    priority: 3
+  - name: 陕西省
+    url: https://www.shaanxi.gov.cn
+    level: B
+    priority: 3
+  - name: 甘肃省
+    url: https://www.gansu.gov.cn
+    level: B
+    priority: 3
+  - name: 青海省
+    url: https://www.qh.gov.cn
+    level: B
+    priority: 3
+  - name: 宁夏回族自治区
+    url: https://www.nx.gov.cn
+    level: B
+    priority: 3
+  - name: 新疆维吾尔自治区
+    url: https://www.xinjiang.gov.cn
+    level: B
+    priority: 3
+
+key_city_sources:
+  - name: 深圳
+    url: https://www.sz.gov.cn
+    level: B
+    priority: 3
+  - name: 广州
+    url: https://www.gz.gov.cn
+    level: B
+    priority: 3
+  - name: 成都
+    url: https://www.chengdu.gov.cn
+    level: B
+    priority: 3
+  - name: 杭州
+    url: https://www.hangzhou.gov.cn
+    level: B
+    priority: 3
+  - name: 武汉
+    url: https://www.wuhan.gov.cn
+    level: B
+    priority: 3
+  - name: 南京
+    url: https://www.nanjing.gov.cn
+    level: B
+    priority: 3
+  - name: 苏州
+    url: https://www.suzhou.gov.cn
+    level: B
+    priority: 3
+  - name: 青岛
+    url: https://www.qingdao.gov.cn
+    level: B
+    priority: 3
+  - name: 长沙
+    url: https://www.changsha.gov.cn
+    level: B
+    priority: 3
+  - name: 郑州
+    url: https://www.zhengzhou.gov.cn
+    level: B
+    priority: 3
+  - name: 西安
+    url: https://www.xa.gov.cn
+    level: B
+    priority: 3
+  - name: 合肥
+    url: https://www.hefei.gov.cn
+    level: B
+    priority: 3
+  - name: 厦门
+    url: https://www.xm.gov.cn
+    level: B
+    priority: 3
+  - name: 大连
+    url: https://www.dl.gov.cn
+    level: B
+    priority: 3
+  - name: 宁波
+    url: https://www.ningbo.gov.cn
+    level: B
+    priority: 3
+  - name: 济南
+    url: https://www.jinan.gov.cn
+    level: B
+    priority: 3
+  - name: 沈阳
+    url: https://www.shenyang.gov.cn
+    level: B
+    priority: 3
+  - name: 无锡
+    url: https://www.wuxi.gov.cn
+    level: B
+    priority: 3
+  - name: 珠海
+    url: https://www.zhuhai.gov.cn
+    level: B
+    priority: 3
+  - name: 东莞
+    url: https://www.dg.gov.cn
+    level: B
+    priority: 3
+  - name: 佛山
+    url: https://www.foshan.gov.cn
+    level: B
+    priority: 3
+  - name: 温州
+    url: https://www.wenzhou.gov.cn
+    level: B
+    priority: 3
+
+foreign_trade_policy_sources:
+  - name: 外交部
+    name_en: Ministry of Foreign Affairs (MFA)
+    url: https://www.fmprc.gov.cn
+    level: FP-A
+    priority: 2
+    topics:
+      - 外交政策声明
+      - 发言人表态
+      - 立场文件
+      - 双边关系
+      - 国际组织
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 商务部各司
+    name_en: MOFCOM Departments
+    url: https://www.mofcom.gov.cn/article/sgkong/
+    level: FP-A
+    priority: 2
+    topics:
+      - 贸易政策
+      - 外资管理
+      - 对外投资
+      - 反倾销反补贴
+      - 服务贸易
+      - 电子商务
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 海关总署
+    name_en: General Administration of Customs (GACC)
+    url: https://www.customs.gov.cn
+    level: FP-C
+    priority: 3
+    topics:
+      - 进出口法规
+      - HS编码变更
+      - 通关政策
+      - 加工贸易
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 外汇局
+    name_en: State Administration of Foreign Exchange (SAFE)
+    url: https://www.safe.gov.cn
+    level: FP-C
+    priority: 3
+    topics:
+      - 外汇政策
+      - 跨境支付
+      - 资本项目
+      - QFII/RQFII
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 贸促会
+    name_en: China Council for the Promotion of International Trade (CCPIT)
+    url: https://www.ccpit.org
+    level: FP-B
+    priority: 3
+    topics:
+      - 贸易促进
+      - 展览会议
+      - 法律服务
+      - 原产地证
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 一带一路网
+    name_en: Belt and Road Portal
+    url: https://www.yidaiyilu.gov.cn
+    level: FP-B
+    priority: 3
+    topics:
+      - 一带一路合作
+      - 双边协议
+      - 项目信息
+      - 政策措施
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 自贸区服务网
+    name_en: Free Trade Zone Service Portal
+    url: https://www.china-ftz.com
+    level: FP-C
+    priority: 3
+    topics:
+      - 自贸区政策
+      - 负面清单
+      - 试点措施
+      - 创新案例
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: WTO
+    name_en: World Trade Organization
+    url: https://www.wto.org
+    level: FP-E
+    priority: 4
+    topics:
+      - 贸易政策审议
+      - 争端解决
+      - 贸易协定
+      - 关税数据
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: World Bank
+    name_en: World Bank
+    url: https://www.worldbank.org
+    level: FP-E
+    priority: 4
+    topics:
+      - 中国经济报告
+      - 营商环境
+      - 发展指标
+      - 国别分析
+    crawl_frequency: monthly
+    encoding: utf-8
+
+  - name: IMF
+    name_en: International Monetary Fund
+    url: https://www.imf.org
+    level: FP-E
+    priority: 4
+    topics:
+      - Article IV consultation
+      - 中国经济展望
+      - 金融稳定评估
+      - 全球经济展望
+    crawl_frequency: monthly
+    encoding: utf-8
+
+  - name: UNCTAD
+    name_en: United Nations Conference on Trade and Development
+    url: https://unctad.org
+    level: FP-E
+    priority: 4
+    topics:
+      - 贸易与发展报告
+      - 投资趋势
+      - 数字经济
+      - 最不发达国家
+    crawl_frequency: monthly
+    encoding: utf-8
+
+  - name: OECD
+    name_en: Organisation for Economic Co-operation and Development
+    url: https://www.oecd.org
+    level: FP-E
+    priority: 4
+    topics:
+      - 中国经济调查
+      - 贸易政策
+      - 税收政策
+      - 创新政策
+    crawl_frequency: monthly
+    encoding: utf-8
+
+geo_conflict_sources_china:
+  - name: 国防部
+    name_en: Ministry of National Defense (MND)
+    url: https://www.mod.gov.cn
+    level: FP-A
+    priority: 2
+    topics:
+      - 国防政策
+      - 军事声明
+      - 台海局势
+      - 南海局势
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 国台办
+    name_en: Taiwan Affairs Office (TAO)
+    url: https://www.gwytb.gov.cn
+    level: FP-A
+    priority: 2
+    topics:
+      - 台湾政策
+      - 两岸关系
+      - 台海声明
+      - 统一方针
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 外交部
+    name_en: Ministry of Foreign Affairs (MFA)
+    url: https://www.fmprc.gov.cn
+    level: FP-A
+    priority: 2
+    topics:
+      - 外交声明
+      - 领土主权
+      - 国际争端
+      - 反制措施
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 中国海警局
+    name_en: China Coast Guard (CCG)
+    url: https://www.ccg.gov.cn
+    level: FP-A
+    priority: 2
+    topics:
+      - 海上执法
+      - 南海巡航
+      - 钓鱼岛巡航
+      - 海上争议
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 中国海事局
+    name_en: China Maritime Safety Administration (MSA)
+    url: https://www.msa.gov.cn
+    level: FP-A
+    priority: 3
+    topics:
+      - 航行警告
+      - 海事声明
+      - 管辖声明
+      - 海上安全
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 解放军报
+    name_en: PLA Daily
+    url: https://www.81.cn
+    level: FP-A
+    priority: 3
+    topics:
+      - 军事动态
+      - 国防建设
+      - 军事演习
+      - 战略部署
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 中央电视台军事频道
+    name_en: CCTV Military Channel
+    url: https://military.cctv.com
+    level: FP-A
+    priority: 3
+    topics:
+      - 军事报道
+      - 演习新闻
+      - 武器装备
+      - 国防教育
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 东部战区
+    name_en: Eastern Theater Command
+    url: https://www.mod.gov.cn/dbzq/
+    level: FP-A
+    priority: 2
+    topics:
+      - 台海军事
+      - 东海防空
+      - 联合演习
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 南部战区
+    name_en: Southern Theater Command
+    url: https://www.mod.gov.cn/nbzq/
+    level: FP-A
+    priority: 2
+    topics:
+      - 南海军事
+      - 边防事务
+      - 联合演习
+    crawl_frequency: daily
+    encoding: utf-8
+
+geo_conflict_sources_taiwan:
+  - name: 台湾防务部门
+    name_en: Taiwan Ministry of National Defense (MND)
+    url: https://www.mnd.gov.tw
+    level: FP-E
+    priority: 4
+    topics:
+      - 共机扰台
+      - 军事动态
+      - 国防报告
+      - 汉光演习
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 台湾陆委会
+    name_en: Mainland Affairs Council (MAC)
+    url: https://www.mac.gov.tw
+    level: FP-E
+    priority: 4
+    topics:
+      - 两岸政策
+      - 大陆情势评估
+      - 两岸关系声明
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 台湾外事部门
+    name_en: Taiwan Ministry of Foreign Affairs
+    url: https://www.mofa.gov.tw
+    level: FP-E
+    priority: 4
+    topics:
+      - 外交声明
+      - 国际参与
+      - 双边关系
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 台湾"国安会"
+    name_en: Taiwan National Security Council
+    url: https://www.president.gov.tw
+    level: FP-E
+    priority: 4
+    topics:
+      - 国家安全战略
+      - 总统声明
+      - 安全评估
+    crawl_frequency: weekly
+    encoding: utf-8
+
+geo_conflict_sources_us:
+  - name: 美国国防部
+    name_en: US Department of Defense (DoD)
+    url: https://www.defense.gov
+    level: FP-E
+    priority: 4
+    topics:
+      - 中国军力报告
+      - 印太战略
+      - 军事部署
+      - 台海评估
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 美国国务院
+    name_en: US Department of State
+    url: https://www.state.gov
+    level: FP-E
+    priority: 4
+    topics:
+      - 对华政策声明
+      - 制裁公告
+      - 外交声明
+      - 人权报告
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 美国贸易代表办公室
+    name_en: Office of the US Trade Representative (USTR)
+    url: https://ustr.gov
+    level: FP-E
+    priority: 4
+    topics:
+      - 关税政策
+      - 301调查
+      - 贸易谈判
+      - 出口管制
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 美国海外资产控制办公室
+    name_en: Office of Foreign Assets Control (OFAC)
+    url: https://ofac.treasury.gov
+    level: FP-E
+    priority: 4
+    topics:
+      - 制裁名单
+      - 实体清单
+      - SDN清单
+      - 许可证
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 美国商务部工业与安全局
+    name_en: Bureau of Industry and Security (BIS)
+    url: https://www.bis.doc.gov
+    level: FP-E
+    priority: 4
+    topics:
+      - 出口管制
+      - 实体清单
+      - 技术限制
+      - 最终用途审查
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 美国印太司令部
+    name_en: US Indo-Pacific Command (INDOPACOM)
+    url: https://www.pacom.mil
+    level: FP-E
+    priority: 4
+    topics:
+      - 军事演习
+      - 自由航行
+      - 态势评估
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 美国国会
+    name_en: US Congress
+    url: https://www.congress.gov
+    level: FP-E
+    priority: 4
+    topics:
+      - 涉台法案
+      - 涉华法案
+      - 制裁立法
+      - 委员会报告
+    crawl_frequency: weekly
+    encoding: utf-8
+
+geo_conflict_sources_japan:
+  - name: 日本防卫省
+    name_en: Japan Ministry of Defense (MOD)
+    url: https://www.mod.go.jp
+    level: FP-E
+    priority: 4
+    topics:
+      - 防卫白皮书
+      - 中国军事动态
+      - 东海局势
+      - 防卫力整备
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 日本外务省
+    name_en: Japan Ministry of Foreign Affairs (MOFA)
+    url: https://www.mofa.go.jp
+    level: FP-E
+    priority: 4
+    topics:
+      - 外交蓝皮书
+      - 对华政策
+      - 领土问题
+      - 安全保障
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 日本海上保安厅
+    name_en: Japan Coast Guard (JCG)
+    url: https://www.kaiho.mlit.go.jp
+    level: FP-E
+    priority: 4
+    topics:
+      - 钓鱼岛周边动态
+      - 海上执法
+      - 领海警备
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 日本内阁官房
+    name_en: Cabinet Secretariat of Japan
+    url: https://www.cas.go.jp
+    level: FP-E
+    priority: 4
+    topics:
+      - 国家安全保障
+      - 首相声明
+      - 危机管理
+      - 经济安保
+    crawl_frequency: weekly
+    encoding: utf-8
+
+geo_conflict_sources_research_secondary:
+  - name: CSIS
+    name_en: Center for Strategic and International Studies
+    url: https://www.csis.org
+    level: FP-E
+    priority: 5
+    topics:
+      - 台海冲突分析
+      - 中美关系
+      - 技术竞争
+      - 印太战略
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: IISS
+    name_en: International Institute for Strategic Studies
+    url: https://www.iiss.org
+    level: FP-E
+    priority: 5
+    topics:
+      - 军事力量对比
+      - 战略评估
+      - 亚太安全
+      - 军费分析
+    crawl_frequency: monthly
+    encoding: utf-8
+
+  - name: SIPRI
+    name_en: Stockholm International Peace Research Institute
+    url: https://www.sipri.org
+    level: FP-E
+    priority: 5
+    topics:
+      - 军费数据
+      - 武器贸易
+      - 军控条约
+      - 和平与冲突
+    crawl_frequency: monthly
+    encoding: utf-8

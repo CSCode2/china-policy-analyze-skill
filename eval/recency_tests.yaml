@@ -1,0 +1,102 @@
+# 时效性测试 / Recency Tests
+# 验证系统输出是否使用最新的政策来源
+
+tests:
+  - id: recency_001
+    name: "来源时效性检查 — 90 天窗口"
+    description: "验证所有引用来源均在 90 天内发布"
+    trigger: "任意政策查询"
+    assertions:
+      - type: assert_source_within_days
+        field: source.publish_date
+        max_days: 90
+        message: "引用的来源发布日期超过 90 天，可能非最新信息"
+      - type: assert_source_count
+        field: sources
+        min_recent: 1
+        recent_days: 90
+        message: "至少需要一个 90 天内的来源"
+
+  - id: recency_002
+    name: "过期数据检测"
+    description: "验证系统不使用已废止政策作为当前依据"
+    trigger: "查询现行有效的政策"
+    assertions:
+      - type: assert_no_stale_data
+        field: source.policy_status
+        excluded_statuses:
+          - "已废止"
+          - "已失效"
+        message: "引用了已废止的政策作为现行依据"
+      - type: assert_status_labeled
+        field: source.policy_status
+        required_labels:
+          - "生效中"
+          - "已修订"
+          - "已废止"
+          - "征求意见中"
+          - "有效期即将届满"
+        message: "来源未标注政策时效性状态"
+
+  - id: recency_003
+    name: "日期引用检查"
+    description: "验证输出中明确引用了来源的发布日期"
+    trigger: "任意政策查询"
+    assertions:
+      - type: assert_date_cited
+        field: output.citations
+        required: true
+        message: "输出中未引用来源的发布日期"
+      - type: assert_date_format
+        field: output.citations.date
+        format: "YYYY-MM-DD"
+        message: "日期格式不规范，应为 YYYY-MM-DD"
+
+  - id: recency_004
+    name: "修订政策替换检查"
+    description: "验证系统优先使用最新修订版本而非原始版本"
+    trigger: "查询已被修订的政策"
+    assertions:
+      - type: assert_latest_version
+        field: source.version
+        message: "引用了旧版本政策而非最新修订版本"
+      - type: assert_amendment_noted
+        field: output.content
+        message: "未标注该政策已被修订及修订日期"
+
+  - id: recency_005
+    name: "征求意见稿标注检查"
+    description: "验证征求意见稿被正确标注，不作为生效政策处理"
+    trigger: "查询包含征求意见稿的政策领域"
+    assertions:
+      - type: assert_draft_labeled
+        field: source.policy_status
+        draft_label: "征求意见中"
+        message: "征求意见稿未标注'征求意见中'状态"
+      - type: assert_draft_not_effective
+        field: output.content
+        message: "将征求意见稿作为生效政策引用"
+
+  - id: recency_006
+    name: "数据截止时间标注"
+    description: "验证输出中标注了数据的截止时间"
+    trigger: "任意时间敏感的政策查询"
+    assertions:
+      - type: assert_cutoff_date
+        field: output.metadata
+        required: true
+        message: "输出未标注数据截止时间"
+      - type: assert_cutoff_recent
+        field: output.metadata.cutoff_date
+        max_days: 7
+        message: "数据截止时间超过 7 天，系统可能需要更新"
+
+  - id: recency_007
+    name: "即将到期政策提醒"
+    description: "验证系统提醒即将到期（90天内）的政策"
+    trigger: "查询涉及时效性政策的领域"
+    assertions:
+      - type: assert_expiry_alert
+        field: output.alerts
+        condition: "policy_expiry_within_90_days"
+        message: "存在 90 天内即将到期的政策但未发出提醒"

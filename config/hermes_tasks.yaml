@@ -1,0 +1,414 @@
+# China Policy Intelligence Skill - Hermes Agent Tasks
+# All tasks from spec sections 13, 20, 26.10, 27.14, 28.9
+
+tasks:
+  policy_watcher:
+    name: "政策监控器"
+    name_en: "Policy Watcher"
+    description: "Monitors S-level and A-level sources daily for new policy documents, speeches, and official statements"
+    schedule: "08:00 UTC daily"
+    source_groups:
+      - daily_check
+    operations:
+      - id: check_source_availability
+        description: "Run availability check against all S/A-level URLs"
+        success_criteria: "> 95% return 200 with expected content"
+      - id: detect_new_content
+        description: "Compare content hashes with previous check to identify new or changed content"
+        output: "List of new/changed documents with source, URL, and hash delta"
+      - id: classify_new_content
+        description: "Classify each new document by source level, document type, and topic"
+        uses:
+          - importance_rules.yaml
+          - topic_taxonomy.yaml
+      - id: flag_for_processing
+        description: "Flag high-importance items for immediate processing, medium for weekly, low for archival"
+        importance_threshold:
+          immediate: 80
+          weekly: 50
+          archival: 25
+    error_handling:
+      on_source_down: "Flag unavailable source; retry with exponential backoff (3 attempts over 15 minutes)"
+      on_parse_failure: "Log error; flag for manual inspection"
+    outputs:
+      - daily_availability_report
+      - new_content_list
+      - flagged_items_for_distiller
+
+  policy_distiller:
+    name: "政策蒸馏器"
+    name_en: "Policy Distiller"
+    description: "Processes flagged content: downloads, parses, indexes, cross-references, and extracts policy language"
+    schedule: "Triggered by policy_watcher; also Monday 06:00 UTC for weekly batch"
+    source_groups:
+      - weekly_distill
+    operations:
+      - id: download_new_content
+        description: "Download all flagged documents"
+      - id: parse_and_extract
+        description: "Parse content and extract structured data (title, date, body, key phrases, issuing body)"
+      - id: index_content
+        description: "Index with source level, date, keywords, and topic tags"
+      - id: update_content_cache
+        description: "Store in content cache with content hash"
+      - id: run_policy_language_extraction
+        description: "Scan for policy phrases from lexicon; tag each occurrence with document context"
+        uses:
+          - ../skill/policy_language_lexicon.md
+      - id: update_phrase_occurrence_index
+        description: "Update phrase occurrence index with new extractions"
+      - id: run_cross_reference_detection
+        description: "Check whether new docs reference/implement/supersede existing docs"
+      - id: update_document_relationship_graph
+        description: "Update the relationship graph with new cross-references"
+    error_handling:
+      on_download_failure: "Retry with backoff; if persistent, flag source as unavailable"
+      on_parse_failure: "Flag for parser update; if simple change, auto-update parser; if complex, flag for manual fix"
+      on_extraction_anomaly: "Log anomaly; if phrase count exceeds normal range, flag for review"
+    outputs:
+      - processed_content_index
+      - updated_phrase_index
+      - updated_relationship_graph
+      - processing_summary_report
+
+  policy_evaluator:
+    name: "政策评估器"
+    name_en: "Policy Evaluator"
+    description: "Evaluates policy importance, assigns scores, tracks policy stages, and generates weekly policy review"
+    schedule: "Friday 14:00 UTC weekly"
+    depends_on:
+      - policy_distiller
+    operations:
+      - id: score_new_policies
+        description: "Apply importance scoring rules to all new and updated policy documents"
+        uses:
+          - importance_rules.yaml
+      - id: assess_policy_stages
+        description: "For each active policy topic, assess current implementation stage (Stage 0-6)"
+        uses:
+          - ../skill/policy_reasoning_framework.md
+      - id: detect_stage_changes
+        description: "Compare current stage assessment with previous; flag any stage changes"
+      - id: check_for_replication
+        description: "Check for 复制推广 language in previously pilot-stage policies"
+        flag_for: manual_review
+      - id: check_for_direction_shift
+        description: "Check for Stage 6 (adjusting) signals; flag for manual review if detected"
+        flag_for: manual_review
+      - id: generate_weekly_policy_review
+        description: "Generate summary of key policy developments, stage changes, and importance scores"
+      - id: post_review
+        description: "Post the weekly review to the designated channel"
+    error_handling:
+      on_stage_ambiguity: "Present range and evidence for each possible stage"
+      on_scoring_anomaly: "Flag for manual review if score differs from expectation by > 20 points"
+    outputs:
+      - scored_policy_list
+      - stage_assessment_report
+      - stage_change_alerts
+      - weekly_policy_review
+
+  skill_maintainer:
+    name: "技能维护器"
+    name_en: "Skill Maintainer"
+    description: "Maintains the skill documents: lexicon updates, source registry updates, and system health checks"
+    schedule: "Monthly (various dates)"
+    operations:
+      - id: lexicon_update_review
+        schedule: "20th of month 06:00 UTC"
+        description: "Scan new documents for policy phrases not in lexicon; draft entries for frequent new phrases (>5 occurrences)"
+        uses:
+          - ../skill/policy_language_lexicon.md
+        self_merge: false
+        requires: human_review
+      - id: source_registry_update
+        schedule: "15th of month 06:00 UTC"
+        description: "Review flagged URL changes; verify new URLs; archive dead sources; add new source candidates"
+        self_merge: true
+        merge_conditions:
+          - "Non-breaking changes to source registry"
+          - "URL updates for existing sources"
+          - "New source additions that pass accessibility test"
+        requires_human_review_for:
+          - "Changes to source_priority.md hierarchy"
+          - "Removal of sources from registry"
+      - id: full_system_health_check
+        schedule: "Last Sunday of month 06:00 UTC"
+        description: "End-to-end system test covering all components"
+        subtasks:
+          - "Source availability for all levels (S/A/B/C/D)"
+          - "Crawl and parse pipeline for each source type"
+          - "Index search and retrieval accuracy"
+          - "Policy language extraction and tagging"
+          - "Cross-reference and relationship graph integrity"
+        sample_test:
+          question_count: 10
+          source: question_bank
+          min_score: 4.0
+      - id: quality_metric_collection
+        schedule: "Sunday 18:00 UTC weekly"
+        description: "Collect and store weekly quality metrics"
+        metrics:
+          - answer_count
+          - average_evidence_level
+          - citation_rate
+          - source_availability_percentage
+          - crawl_error_rate
+          - data_freshness_percentage
+          - hallucination_incident_count
+          - anti_overinterpretation_warning_count
+        alert_threshold: "Any metric below target for 2 consecutive weeks"
+    outputs:
+      - lexicon_update_pr
+      - source_registry_update
+      - monthly_health_report
+      - weekly_quality_metrics
+
+  foreign_policy_watcher:
+    name: "外交政策监控器"
+    name_en: "Foreign Policy Watcher"
+    description: "Monitors foreign policy and international economic policy sources daily"
+    schedule: "09:00 UTC daily"
+    source_groups:
+      - foreign_policy_daily
+    operations:
+      - id: check_foreign_policy_sources
+        description: "Check all foreign policy sources for new statements, documents, and position changes"
+      - id: detect_new_statements
+        description: "Identify new official statements, spokesperson remarks, and position papers"
+      - id: detect_position_changes
+        description: "Compare current statements with previous positions; flag any changes in language or stance"
+        language_escalation_markers:
+          - "关切 → 严重关切 → 抗议"
+          - "反对 → 坚决反对 → 强烈谴责"
+          - "不可接受 → 予以反击"
+      - id: classify_foreign_content
+        description: "Classify by FP-S through FP-E levels and topic tags"
+        uses:
+          - topic_taxonomy.yaml
+          - importance_rules.yaml
+      - id: cross_reference_with_domestic
+        description: "Cross-reference foreign policy statements with domestic policy documents for consistency"
+    error_handling:
+      on_source_down: "Standard retry protocol; flag if FP-A source is down for >24 hours"
+      on_translation_issue: "Log; use original language for evidence"
+    outputs:
+      - foreign_policy_daily_briefing
+      - position_change_alerts
+      - foreign_content_flagged_for_distiller
+
+  foreign_trade_distiller:
+    name: "对外贸易蒸馏器"
+    name_en: "Foreign Trade Distiller"
+    description: "Processes and analyzes foreign trade, sanctions, export control, and cross-border finance developments"
+    schedule: "Triggered by foreign_policy_watcher; also Tuesday 06:00 UTC for weekly batch"
+    depends_on:
+      - foreign_policy_watcher
+    operations:
+      - id: process_trade_content
+        description: "Download and parse flagged foreign trade content"
+      - id: sanctions_update_tracking
+        description: "Track changes to sanctions lists, entity lists, and export control regulations"
+        sources:
+          - OFAC SDN list
+          - BIS Entity List
+          - 中国反制清单
+          - 不可靠实体清单
+      - id: tariff_change_detection
+        description: "Detect changes in tariff rates, HS code classifications, and trade remedy actions"
+      - id: cross_border_finance_analysis
+        description: "Analyze changes in forex policy, capital controls, and cross-border payment rules"
+      - id: supply_chain_impact_assessment
+        description: "Assess supply chain disruption risk from trade policy changes"
+      - id: generate_trade_impact_report
+        description: "Generate structured report linking trade policy changes to domestic economic impact"
+    error_handling:
+      on_sanctions_data_format_change: "Flag for parser update; do not guess"
+      on_conflicting_sources: "Present both Chinese and foreign positions; note conflict"
+    outputs:
+      - trade_impact_report
+      - sanctions_change_alert
+      - tariff_update_notice
+      - supply_chain_risk_assessment
+
+  geo_conflict_watcher:
+    name: "地缘冲突监控器"
+    name_en: "Geo-Conflict Watcher"
+    description: "Monitors all geopolitical conflict sources for escalation and de-escalation signals"
+    schedule: "07:00 UTC daily"
+    source_groups:
+      - geo_conflict_daily
+    operations:
+      - id: check_all_geo_sources
+        description: "Check all geopolitical conflict sources across China, Taiwan, US, Japan, and research sources"
+      - id: check_geo_risk_indicators
+        description: "Evaluate all risk indicators from geo_risk_indicators.yaml against current signals"
+        uses:
+          - geo_risk_indicators.yaml
+      - id: detect_signal_changes
+        description: "Compare current risk indicator readings with previous; detect escalation or de-escalation"
+        escalation_threshold:
+          description: "Any single indicator moving from low/medium to high"
+          action: "Immediate alert"
+        de_escalation_threshold:
+          description: "Multiple indicators moving from high/medium to low"
+          action: "Include in daily briefing"
+      - id: assess_overall_risk_level
+        description: "Compute composite risk level based on weighted indicator scores"
+        risk_levels:
+          low:
+            max_score: 30
+            color: "green"
+          moderate:
+            max_score: 50
+            color: "yellow"
+          elevated:
+            max_score: 70
+            color: "orange"
+          high:
+            max_score: 85
+            color: "red"
+          critical:
+            min_score: 85
+            color: "dark_red"
+      - id: check_escalation_triggers
+        description: "Monitor for specific escalation trigger events"
+        triggers:
+          - new_military_exercise_announcement
+          - sanctions_list_update
+          - territorial_statement_change
+          - military_deployment_change
+          - diplomatic_recall_or_expulsion
+          - trade_restriction_escalation
+          - new_joint_statement_from_allies
+          - military_budget_change_announcement
+      - id: generate_daily_geo_briefing
+        description: "Generate daily geopolitical risk briefing with signal changes and risk level"
+    error_handling:
+      on_source_unavailable: "Retry; if FP-A source down >24h, escalate"
+      on_ambiguous_signal: "Present both readings; do not resolve ambiguity"
+    outputs:
+      - daily_geo_risk_briefing
+      - escalation_alert
+      - risk_level_update
+      - signal_change_log
+
+  geo_conflict_distiller:
+    name: "地缘冲突蒸馏器"
+    name_en: "Geo-Conflict Distiller"
+    description: "Processes and deep-analyzes geopolitical conflict content for pattern detection and scenario modeling"
+    schedule: "Wednesday 06:00 UTC weekly"
+    depends_on:
+      - geo_conflict_watcher
+    operations:
+      - id: aggregate_weekly_geo_data
+        description: "Aggregate all geopolitical content collected during the week"
+      - id: historical_pattern_matching
+        description: "Compare current signal patterns with historical precedent database"
+        historical_references:
+          - "1996 Taiwan Strait Crisis"
+          - "2012 Senkaku/Diaoyu confrontation"
+          - "2017 Doklam standoff"
+          - "2020 India-China border clash"
+          - "2022 Russia-Ukraine war signals"
+          - "2023 balloon incident"
+      - id: scenario_modeling
+        description: "Generate and update escalation/de-escalation scenario models"
+        scenario_types:
+          - short_term_escalation
+          - medium_term_stalemate
+          - long_term_de_escalation
+      - id: economic_impact_pathway_analysis
+        description: "Map geopolitical developments to domestic economic impact pathways"
+        uses:
+          - economic_impact_indicators.yaml
+      - id: update_geo_risk_dashboard
+        description: "Update the geopolitical risk dashboard with weekly analysis"
+    error_handling:
+      on_historical_analogy_overreach: "Flag; apply anti-overinterpretation Rule 10"
+      on_scenario_overlap: "Merge if >80% overlap; keep separate if divergent"
+    outputs:
+      - weekly_geo_analysis_report
+      - scenario_models
+      - economic_impact_pathway_map
+      - updated_risk_dashboard
+
+  geo_conflict_evaluator:
+    name: "地缘冲突评估器"
+    name_en: "Geo-Conflict Evaluator"
+    description: "Evaluates geopolitical conflict forecasts, calibrates risk assessments, and reviews signal quality"
+    schedule: "Monthly (1st of month)"
+    depends_on:
+      - geo_conflict_distiller
+    operations:
+      - id: review_geo_forecasts
+        description: "Review all geopolitical forecasts made in the previous month"
+      - id: calibrate_risk_assessments
+        description: "Compare predicted risk levels with actual outcomes"
+        calibration_metrics:
+          - direction_accuracy
+          - escalation_detection_rate
+          - false_positive_rate
+          - false_negative_rate
+      - id: assess_signal_quality
+        description: "Evaluate whether risk indicators are producing reliable signals"
+        quality_metrics:
+          - signal_to_noise_ratio
+          - lead_time_accuracy
+          - false_alarm_rate
+      - id: update_indicator_weights
+        description: "Adjust risk indicator weights based on calibration results"
+        self_merge: false
+        requires: human_review
+        conditions:
+          - "Consistent miscalibration over 2+ months"
+          - "New signal types identified that need indicator additions"
+      - id: generate_calibration_report
+        description: "Generate monthly calibration report with recommendations"
+    outputs:
+      - monthly_geo_calibration_report
+      - signal_quality_assessment
+      - weight_adjustment_recommendations
+
+  general_opportunity_distiller:
+    name: "通用机会蒸馏器"
+    name_en: "General Opportunity Distiller"
+    description: "Identifies opportunity signals across all policy domains by combining implementation evidence, funding, and project data"
+    schedule: "Saturday 06:00 UTC weekly"
+    depends_on:
+      - policy_distiller
+      - foreign_trade_distiller
+    operations:
+      - id: aggregate_implementation_evidence
+        description: "Collect all implementation evidence from policy_distiller output"
+      - id: identify_funding_opportunities
+        description: "Extract funding and project application opportunities with deadlines"
+        data_sources:
+          - 中国政府采购网
+          - 全国公共资源交易平台
+          - 项目申报通知 (C-level)
+        extraction_fields:
+          - funding_amount
+          - application_deadline
+          - eligibility_criteria
+          - application_channel
+          - responsible_unit
+      - id: identify_pilot_opportunities
+        description: "Identify new pilot programs and demonstration zones with application windows"
+      - id: identify_tax_preference_changes
+        description: "Detect changes in tax preference catalogs and compliance simplification"
+      - id: cross_reference_policy_direction_with_implementation
+        description: "Match high-direction-score policies with concrete implementation evidence"
+      - id: generate_opportunity_digest
+        description: "Generate weekly opportunity digest organized by topic and user type"
+        uses:
+          - ../skill/user_profile_adapter.md
+          - ../skill/output_templates.md
+    error_handling:
+      on_deadline_uncertainty: "Flag; do not assume deadline from incomplete information"
+      on_funding_amount_uncertainty: "Report range if available; otherwise report as unspecified"
+    outputs:
+      - weekly_opportunity_digest
+      - funding_opportunity_list
+      - pilot_opportunity_list
+      - tax_preference_update_list

@@ -1,0 +1,118 @@
+# 引用质量测试 / Citation Quality Tests
+# 验证系统输出的引用质量和完整性
+
+tests:
+  - id: citation_001
+    name: "来源存在性检查"
+    description: "验证所有引用的来源确实存在且可访问"
+    trigger: "任意政策查询"
+    assertions:
+      - type: assert_source_exists
+        field: citations.url
+        action: "HTTP HEAD 请求验证来源可访问"
+        message: "引用的来源 URL 不可访问或返回非 200 状态"
+      - type: assert_source_resolvable
+        field: citations.url
+        action: "DNS 解析验证域名有效"
+        message: "引用的来源域名无法解析"
+
+  - id: citation_002
+    name: "证据等级检查"
+    description: "验证所有引用达到 L3 或以上证据等级"
+    trigger: "政策分析类查询（非纯信息查询）"
+    assertions:
+      - type: assert_min_evidence_level
+        field: citations.evidence_level
+        min_level: "L3"
+        message: "核心结论的证据等级低于 L3，可靠性不足"
+      - type: assert_evidence_level_valid
+        field: citations.evidence_level
+        allowed_values: ["L1", "L2", "L3", "L4", "L5"]
+        message: "证据等级不是有效的 L1–L5 值"
+
+  - id: citation_003
+    name: "伪造来源检测"
+    description: "验证不存在伪造或虚构的来源"
+    trigger: "任意政策查询"
+    assertions:
+      - type: assert_no_fabricated_sources
+        field: citations
+        checks:
+          - "URL 格式合法（gov.cn 或已验证域名）"
+          - "发布机构名称与 URL 域名对应"
+          - "发布日期在合理范围内"
+          - "文号格式符合规范（如 国发〔YYYY〕XX号）"
+        message: "检测到可能的伪造来源：URL/机构/日期/文号异常"
+
+  - id: citation_004
+    name: "来源与声明匹配性检查"
+    description: "验证引用来源确实支持所做出的声明"
+    trigger: "任意政策分析查询"
+    assertions:
+      - type: assert_source_matches_claim
+        field: citations
+        checks:
+          - "引用的政策文本内容与声明一致"
+          - "引用的条款确实出现在所引用的文件中"
+          - "未断章取义或选择性引用"
+          - "引用范围涵盖声明的限定条件"
+        message: "引用来源与声明不匹配：来源内容不支持所做声明"
+
+  - id: citation_005
+    name: "来源完整性检查"
+    description: "验证每个引用包含完整的来源信息"
+    trigger: "任意政策查询"
+    assertions:
+      - type: assert_citation_completeness
+        field: citations
+        required_fields:
+          - url: "来源 URL"
+          - institution: "发布机构"
+          - publish_date: "发布日期（YYYY-MM-DD）"
+          - evidence_level: "证据等级（L1–L5）"
+          - policy_status: "政策时效性状态"
+        optional_fields:
+          - document_number: "文号"
+          - article_section: "具体条款位置"
+          - title: "文件标题"
+        message: "引用缺少必要的来源信息字段"
+
+  - id: citation_006
+    name: "交叉验证检查"
+    description: "验证关键声明有多个独立来源支持"
+    trigger: "核心政策结论和分析"
+    assertions:
+      - type: assert_cross_validation
+        field: citations
+        min_sources: 2
+        condition: "核心结论"
+        message: "核心结论仅有单一来源支持，缺乏交叉验证"
+      - type: assert_source_independence
+        field: citations
+        check: "多个来源不属于同一发布体系"
+        message: "引用的多个来源同属一个发布体系，非独立验证"
+
+  - id: citation_007
+    name: "引用格式规范化检查"
+    description: "验证引用格式符合项目标准"
+    trigger: "任意政策查询"
+    assertions:
+      - type: assert_citation_format
+        field: citations
+        format: "[级别] 发布机构, 《文件标题》, 发布日期, URL"
+        example: "[L1] 国务院, 《新能源汽车产业发展规划》，2026-01-15, https://www.gov.cn/..."
+        message: "引用格式不符合项目标准"
+
+  - id: citation_008
+    name: "来源域名的官方属性验证"
+    description: "验证引用来源域名的官方属性"
+    trigger: "任意政策查询"
+    assertions:
+      - type: assert_domain_authority
+        field: citations.url
+        tier_a: "*.gov.cn"
+        tier_b: "地方政府官方域名"
+        tier_c: "新华社/人民日报等权威媒体"
+        tier_d: "行业协会/研究机构"
+        tier_e: "其他来源（需额外验证）"
+        message: "引用来源域名不在已验证的官方域名列表中"

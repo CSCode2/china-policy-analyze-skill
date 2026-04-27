@@ -1,0 +1,149 @@
+# China Policy Intelligence Skill - Source Groups
+# Groups sources by function for scheduling and processing
+
+source_groups:
+  daily_check:
+    description: "Sources checked daily for new content and availability"
+    schedule: "08:00 UTC daily"
+    sources:
+      - category: central_policy_sources
+        include_all: true
+      - category: ministry_sources
+        include_all: true
+      - category: legal_enforcement_sources
+        include_all: true
+      - category: project_credit_sources
+        include_all: true
+    checks:
+      - http_status
+      - content_hash
+      - response_time
+    success_threshold: 0.95
+    escalation_after_failures: 3
+
+  weekly_distill:
+    description: "Sources processed weekly for content updates, indexing, and cross-referencing"
+    schedule: "Monday 06:00 UTC weekly"
+    sources:
+      - category: central_policy_sources
+        include_all: true
+        filter: flagged_for_update
+      - category: ministry_sources
+        include_all: true
+        filter: flagged_for_update
+      - category: provincial_government_sources
+        include_all: true
+        filter: flagged_for_update
+      - category: key_city_sources
+        include_all: true
+        filter: flagged_for_update
+      - category: legal_enforcement_sources
+        include_all: true
+        filter: flagged_for_update
+      - category: project_credit_sources
+        include_all: true
+        filter: flagged_for_update
+    processing:
+      - download_new_content
+      - parse_and_extract
+      - index_with_metadata
+      - update_content_cache
+      - run_policy_language_extraction
+      - run_cross_reference_detection
+      - update_document_relationship_graph
+
+  foreign_policy_daily:
+    description: "Foreign policy and trade sources checked daily for new statements and developments"
+    schedule: "09:00 UTC daily"
+    sources:
+      - category: foreign_trade_policy_sources
+        filter:
+          crawl_frequency: daily
+        items:
+          - 外交部
+          - 商务部各司
+          - 海关总署
+          - 外汇局
+      - category: geo_conflict_sources_china
+        items:
+          - 国防部
+          - 国台办
+          - 外交部
+          - 中国海警局
+          - 中国海事局
+          - 解放军报
+          - 中央电视台军事频道
+          - 东部战区
+          - 南部战区
+      - category: geo_conflict_sources_us
+        filter:
+          crawl_frequency: daily
+        items:
+          - 美国海外资产控制办公室
+          - 美国商务部工业与安全局
+      - category: geo_conflict_sources_taiwan
+        items:
+          - 台湾防务部门
+          - 台湾陆委会
+    checks:
+      - http_status
+      - content_hash
+      - new_statements
+      - position_changes
+
+  geo_conflict_daily:
+    description: "Geopolitical conflict sources checked daily for escalation/de-escalation signals"
+    schedule: "07:00 UTC daily"
+    sources:
+      - category: geo_conflict_sources_china
+        include_all: true
+      - category: geo_conflict_sources_taiwan
+        include_all: true
+      - category: geo_conflict_sources_us
+        items:
+          - 美国海外资产控制办公室
+          - 美国商务部工业与安全局
+      - category: geo_conflict_sources_japan
+        include_all: true
+    processing:
+      - check_geo_risk_indicators
+      - detect_signal_changes
+      - assess_escalation_deescalation
+      - update_risk_dashboard
+    escalation_triggers:
+      - new_military_exercise_announcement
+      - sanctions_list_update
+      - territorial_statement_change
+      - military_deployment_change
+      - diplomatic_recall_or_expulsion
+      - trade_restriction_escalation
+
+  monthly_maintenance:
+    description: "Monthly full maintenance including source registry updates, lexicon review, and system health check"
+    schedule: "1st of month 06:00 UTC"
+    sources:
+      - category: foreign_trade_policy_sources
+        filter:
+          crawl_frequency: monthly
+        items:
+          - World Bank
+          - IMF
+          - UNCTAD
+          - OECD
+      - category: geo_conflict_sources_research_secondary
+        include_all: true
+      - category: provincial_government_sources
+        include_all: true
+        purpose: url_verification
+      - category: key_city_sources
+        include_all: true
+        purpose: url_verification
+    processing:
+      - verify_all_source_urls
+      - check_for_new_sources
+      - review_dead_sources
+      - update_source_registry
+      - lexicon_update_review
+      - full_system_health_check
+      - forecast_calibration_review
+      - quality_metric_collection

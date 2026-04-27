@@ -1,0 +1,317 @@
+# China Policy Intelligence Skill - Importance Rules
+# All scoring rules from spec section 5.2 and 26.9
+# Importance score = sum of dimension scores; max possible = 100
+
+scoring:
+  total_max: 100
+  threshold_high: 80
+  threshold_medium: 50
+  threshold_low: 25
+
+  authority_score:
+    description: "Source authority level; higher authority = higher importance"
+    weight: 25
+    max: 25
+    levels:
+      S:
+        label: "Supreme authority (Central Committee, FYP, GWR, CEWC, Xi speeches, national laws, administrative regulations)"
+        score: 25
+      A:
+        label: "Central implementation (State Council docs, ministries, SPC, SPP, official media)"
+        score: 20
+      B:
+        label: "Provincial authority (provincial governments, provincial departments, major cities)"
+        score: 12
+      C:
+        label: "Local implementation (municipal depts, industrial parks, project notices, procurement)"
+        score: 8
+      D:
+        label: "Official interpretation (press conferences, spokesperson statements, expert explanations)"
+        score: 5
+      E:
+        label: "Informational lead only (commercial media, self-media, market commentary)"
+        score: 2
+    multi_source_bonus:
+      description: "If claims are supported by multiple independent sources at different levels"
+      bonus_per_additional_independent_source: 2
+      max_bonus: 5
+
+  doc_type_score:
+    description: "Document type formality; more formal = higher importance"
+    weight: 15
+    max: 15
+    types:
+      law:
+        label: "法律 (National law enacted by NPC)"
+        score: 15
+      administrative_regulation:
+        label: "行政法规 (Administrative regulation by State Council)"
+        score: 13
+      central_committee_document:
+        label: "中央文件 (Central Committee document)"
+        score: 14
+      state_council_opinion:
+        label: "国务院意见/决定 (State Council opinion/decision)"
+        score: 12
+      five_year_plan:
+        label: "五年规划 (Five-Year Plan)"
+        score: 14
+      government_work_report:
+        label: "政府工作报告 (Government Work Report)"
+        score: 13
+      ministry_implementation:
+        label: "部委实施文件 (Ministry implementation document)"
+        score: 10
+      judicial_interpretation:
+        label: "司法解释 (Judicial interpretation)"
+        score: 11
+      guiding_case:
+        label: "指导性案例 (Guiding case)"
+        score: 10
+      typical_case:
+        label: "典型案例 (Typical case)"
+        score: 7
+      provincial_implementation:
+        label: "省级实施文件 (Provincial implementation document)"
+        score: 8
+      municipal_implementation:
+        label: "市级实施文件 (Municipal implementation document)"
+        score: 6
+      project_notice:
+        label: "项目申报通知 (Project application notice)"
+        score: 6
+      procurement_tender:
+        label: "采购招标 (Procurement/tender notice)"
+        score: 5
+      enforcement_action:
+        label: "执法行动 (Enforcement action)"
+        score: 8
+      speech:
+        label: "领导讲话 (Leader speech)"
+        score: 11
+      article:
+        label: "署名文章 (Signed article)"
+        score: 10
+      press_conference:
+        label: "新闻发布会 (Press conference)"
+        score: 5
+      official_interpretation:
+        label: "官方解读 (Official interpretation)"
+        score: 5
+      commercial_media:
+        label: "商业媒体 (Commercial media)"
+        score: 2
+    joint_issuance_bonus:
+      description: "Jointly issued by multiple bodies indicates stronger coordination"
+      bonus_per_additional_issuing_body: 1
+      max_bonus: 3
+
+  implementation_score:
+    description: "Presence of implementation tools indicates policy is not just rhetoric"
+    weight: 15
+    max: 15
+    dimensions:
+      funding_committed:
+        label: "资金到位"
+        score: 5
+        indicator: "Specific funding amounts mentioned with source and timeline"
+      responsible_units_named:
+        label: "责任单位明确"
+        score: 3
+        indicator: "Specific ministries, departments, or units named as responsible"
+      deadline_specified:
+        label: "期限明确"
+        score: 3
+        indicator: "Specific deadlines with dates, not vague timeframes"
+      pilot_designated:
+        label: "试点确定"
+        score: 2
+        indicator: "Specific pilot zones, projects, or institutions named"
+      enforcement_provisions:
+        label: "执法条款"
+        score: 2
+        indicator: "Specific penalties, inspection mechanisms, or enforcement actions"
+
+  legal_enforcement_score:
+    description: "Legal and enforcement intensity signals; stronger enforcement = higher importance"
+    weight: 10
+    max: 10
+    signals:
+      strict_enforcement:
+        label: "严厉打击/坚决取缔"
+        score: 10
+        indicator: "Strongest enforcement language with specific targets"
+      investigation_enforcement:
+        label: "严肃查处/案件查办"
+        score: 8
+        indicator: "Active investigation and case handling"
+      regulatory_tightening:
+        label: "从严/收紧/强化监管"
+        score: 7
+        indicator: "Stricter standards than current"
+      remediation_action:
+        label: "整治/整顿"
+        score: 6
+        indicator: "Systematic rectification action"
+      compliance_emphasis:
+        label: "依法依规/规范"
+        score: 4
+        indicator: "Compliance emphasis without explicit enforcement"
+      guidance_only:
+        label: "引导/鼓励"
+        score: 2
+        indicator: "Soft guidance without enforcement backing"
+    case_based_bonus:
+      description: "If enforcement claims are backed by actual cases"
+      bonus: 3
+      condition: "At least one verifiable case from judicial or enforcement database"
+
+  recency_score:
+    description: "How recent the source is; more recent = higher importance"
+    weight: 10
+    max: 10
+    decay:
+      within_7_days:
+        score: 10
+      within_30_days:
+        score: 8
+      within_90_days:
+        score: 6
+      within_180_days:
+        score: 4
+      within_365_days:
+        score: 2
+      over_365_days:
+        score: 1
+    override:
+      description: "Foundational documents retain high recency score regardless of age"
+      condition: "Document is still current (not superseded) and is cited by recent documents"
+      min_score: 4
+    superseded_penalty:
+      description: "Document has been superseded by a newer document"
+      penalty: -5
+
+  local_landing_score:
+    description: "Whether central policy has actual local implementation evidence"
+    weight: 10
+    max: 10
+    levels:
+      verified_implementation:
+        label: "已验证实施"
+        score: 10
+        indicator: "C-level evidence exists: project approval, fund disbursement, procurement, enforcement case"
+      implementation_document:
+        label: "有实施文件"
+        score: 7
+        indicator: "B-level implementation document exists but no C-level execution evidence yet"
+      central_only:
+        label: "仅有中央文件"
+        score: 3
+        indicator: "Only S/A-level document exists; no provincial or local implementation"
+      no_implementation:
+        label: "无落地"
+        score: 0
+        indicator: "No implementation evidence at any level below the original document"
+    multi_region_bonus:
+      description: "Implementation across multiple regions indicates broader rollout"
+      bonus_per_additional_province: 1
+      max_bonus: 3
+
+  funding_project_score:
+    description: "Specific funding and project details make policy more actionable"
+    weight: 10
+    max: 10
+    dimensions:
+      specific_funding_amount:
+        label: "明确资金额度"
+        score: 4
+        indicator: "Specific monetary amounts with currency unit"
+      application_channel:
+        label: "申报通道开放"
+        score: 3
+        indicator: "Active application acceptance with deadline and procedure"
+      beneficiary_criteria:
+        label: "受益条件明确"
+        score: 2
+        indicator: "Clear eligibility criteria for funding or support"
+      project_examples:
+        label: "项目案例"
+        score: 1
+        indicator: "Named projects or approved beneficiaries"
+
+  economic_relevance_score:
+    description: "Direct economic impact and market relevance"
+    weight: 5
+    max: 5
+    dimensions:
+      direct_market_impact:
+        label: "直接市场影响"
+        score: 3
+        indicator: "Policy directly changes market conditions (taxes, subsidies, access, prices)"
+      sector_coverage:
+        label: "行业覆盖面"
+        score: 1
+        indicator: "Affects broad sectors vs. narrow niches"
+      data_availability:
+        label: "数据可验证"
+        score: 1
+        indicator: "Effects can be tracked with official data"
+
+  foreign_trade_importance_bonus:
+    description: "Bonus scoring for foreign trade and cross-border policy documents"
+    weight: bonus
+    max: 10
+    applies_to:
+      - foreign_trade
+      - foreign_investment
+      - customs_tariff
+      - cross_border_finance
+      - trade_compliance
+    dimensions:
+      sanctions_escalation:
+        label: "制裁升级"
+        score: 5
+        indicator: "New entity listing, expanded scope, or tightened enforcement of sanctions"
+      trade_barrier_change:
+        label: "贸易壁垒变化"
+        score: 4
+        indicator: "Tariff change, quota adjustment, or new non-tariff barrier"
+      regulatory_alignment:
+        label: "监管协调变化"
+        score: 3
+        indicator: "Change in bilateral/multilateral regulatory cooperation"
+      supply_chain_disruption:
+        label: "供应链断供风险"
+        score: 4
+        indicator: "Export controls, entity list, or supply chain restriction"
+      capital_flow_restriction:
+        label: "资本流动限制"
+        score: 3
+        indicator: "Investment review, capital control, or cross-border payment restriction"
+
+composite_scoring:
+  formula: "authority_score + doc_type_score + implementation_score + legal_enforcement_score + recency_score + local_landing_score + funding_project_score + economic_relevance_score + foreign_trade_importance_bonus"
+  importance_levels:
+    critical:
+      min: 80
+      label: "关键"
+      action: "Immediate analysis; push notification; include in daily briefing"
+    high:
+      min: 60
+      max: 79
+      label: "重要"
+      action: "Same-day analysis; include in weekly digest"
+    medium:
+      min: 40
+      max: 59
+      label: "一般"
+      action: "Queue for weekly processing; include in topic tracking"
+    low:
+      min: 25
+      max: 39
+      label: "次要"
+      action: "Archive for reference; update index only"
+    minimal:
+      max: 24
+      label: "微小"
+      action: "Index only; no active analysis needed"
