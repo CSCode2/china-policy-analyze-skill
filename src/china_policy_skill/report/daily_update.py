@@ -8,7 +8,7 @@ class DailyUpdateGenerator:
     def generate(self, new_documents: List[dict], errors: List[dict]) -> str:
         today = datetime.now().strftime("%Y-%m-%d")
         sections = [
-            f"# Daily Policy Intelligence Update — {today}",
+            f"# Daily Policy Analysis Update — {today}",
             "",
         ]
 

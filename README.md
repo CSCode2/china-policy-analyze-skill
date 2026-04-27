@@ -1,4 +1,4 @@
-# 🏛️ 中国政策智能技能 / China Policy Intelligence Skill
+# 中国政策分析技能 / China Policy Analyze Skill
 
 > 公共政策基础设施 · 让政策信息对每个人都触手可及
 >
@@ -10,13 +10,13 @@
 
 **中文：**
 
-中国政策智能技能（China Policy Intelligence Skill）是一套面向中国公共政策领域的开源智能分析系统。它以"监测—解读—研判—预警"为核心链路，从权威来源自动化采集政策文本，通过结构性解读提取政策意图、影响范围与关键信号，为用户提供基于证据的政策分析，而非主观判断。
+中国政策分析技能（China Policy Analyze Skill）是一套面向中国公共政策领域的开源分析系统。它以"监测—解读—研判—预警"为核心链路，从权威来源自动化采集政策文本，通过结构性解读提取政策意图、影响范围与关键信号，为用户提供基于证据的政策分析，而非主观判断。
 
 本项目定位为**公共基础设施**，而非个人项目。所有输出均标注来源与证据等级，确保可追溯、可验证、可审计。
 
 **English:**
 
-China Policy Intelligence Skill is an open-source intelligent analysis system for China's public policy domain. Built on the "monitor–interpret–assess–alert" pipeline, it automates policy text collection from authoritative sources, extracts policy intent, scope, and key signals through structural interpretation, and delivers evidence-based policy analysis rather than subjective judgment.
+China Policy Analyze Skill is an open-source analysis system for China's public policy domain. Built on the "monitor–interpret–assess–alert" pipeline, it automates policy text collection from authoritative sources, extracts policy intent, scope, and key signals through structural interpretation, and delivers evidence-based policy analysis rather than subjective judgment.
 
 This project is positioned as **public infrastructure**, not a personal project. All outputs are annotated with sources and evidence levels to ensure traceability, verifiability, and auditability.
 
@@ -116,8 +116,8 @@ This project is positioned as **public infrastructure**, not a personal project.
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-org/china-policy-intelligence-skill.git
-cd china-policy-intelligence-skill
+git clone https://github.com/CSCode2/china-policy-analyze-skill.git
+cd china-policy-analyze-skill
 
 # 安装核心依赖
 pip install -e .
@@ -165,7 +165,7 @@ cpi eval --all
 ## 📁 项目结构 / Project Structure
 
 ```
-china-policy-intelligence-skill/
+china-policy-analyze-skill/
 ├── corpus/                  # 政策文本语料库
 │   ├── raw/                 # 原始采集文件（不入版本控制）
 │   └── seed/                # 初始种子数据

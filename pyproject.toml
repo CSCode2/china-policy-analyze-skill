@@ -3,14 +3,14 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "china-policy-intelligence-skill"
+name = "china-policy-analyze-skill"
 version = "0.1.0"
-description = "开源中国政策智能分析系统 — 证据优先、可审计的公共政策基础设施"
+description = "开源中国政策分析系统 — 证据优先、可审计的公共政策基础设施"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
 authors = [
-    {name = "China Policy Intelligence Skill Contributors"},
+    {name = "China Policy Analyze Skill Contributors"},
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",

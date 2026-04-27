@@ -13,7 +13,7 @@ class LocalLandingCardGenerator:
             "",
             "## Overview",
             "",
-            f"Policy intelligence for **{topic}** as it applies to **{region}**.",
+            f"Policy analysis for **{topic}** as it applies to **{region}**.",
             "",
         ]
 

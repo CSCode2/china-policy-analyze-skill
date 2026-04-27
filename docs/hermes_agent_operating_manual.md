@@ -2,7 +2,7 @@
 
 ## Overview
 
-Hermes is the automated operations agent responsible for maintaining the china-policy-intelligence-skill. This manual describes all recurring tasks, error handling, self-repair rules, and operational boundaries.
+Hermes is the automated operations agent responsible for maintaining the china-policy-analyze-skill. This manual describes all recurring tasks, error handling, self-repair rules, and operational boundaries.
 
 ---
 

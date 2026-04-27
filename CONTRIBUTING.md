@@ -69,8 +69,8 @@
 ### 1. 克隆仓库
 
 ```bash
-git clone https://github.com/your-org/china-policy-intelligence-skill.git
-cd china-policy-intelligence-skill
+git clone https://github.com/your-org/china-policy-analyze-skill.git
+cd china-policy-analyze-skill
 ```
 
 ### 2. 创建虚拟环境

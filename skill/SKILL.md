@@ -1,5 +1,5 @@
 ---
-name: china-policy-intelligence
+name: china-policy-analyze
 description: Use this skill when the user asks about Chinese economic policy, central policy documents, Five-Year Plans, Xi Jinping's economic speeches, policy language interpretation, local policy implementation, regulatory signals, economic cases, or opportunity analysis based on official Chinese sources.
 ---
 

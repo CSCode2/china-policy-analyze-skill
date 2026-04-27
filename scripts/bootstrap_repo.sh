@@ -1,8 +1,8 @@
 #!/bin/bash
-# Bootstrap the China Policy Intelligence Skill project
+# Bootstrap the China Policy Analyze Skill project
 set -e
 
-echo "=== Bootstrapping China Policy Intelligence Skill ==="
+echo "=== Bootstrapping China Policy Analyze Skill ==="
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VENV_DIR="${REPO_ROOT}/.venv"

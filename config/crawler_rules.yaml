@@ -1,9 +1,9 @@
-# China Policy Intelligence Skill - Crawler Rules
+# China Policy Analyze Skill - Crawler Rules
 # Rate limits, user-agent, robots compliance, retry strategies, timeout settings,
 # content-type handling, encoding handling, dedup rules, error classification
 
 general:
-  project_name: china-policy-intelligence
+  project_name: china-policy-analyze
   version: "1.0.0"
   description: "Crawling configuration for Chinese government and policy sources"
 
@@ -65,11 +65,11 @@ rate_limits:
       delay_between_requests_ms: 2000
 
 user_agent:
-  primary: "ChinaPolicyIntelligenceBot/1.0 (+https://github.com/anomalyco/china-policy-intelligence-skill; research-bot)"
+  primary: "ChinaPolicyAnalyzeBot/1.0 (+https://github.com/anomalyco/china-policy-analyze-skill; research-bot)"
   rotation_enabled: true
   agents:
-    - "ChinaPolicyIntelligenceBot/1.0 (+https://github.com/anomalyco/china-policy-intelligence-skill; research-bot)"
-    - "Mozilla/5.0 (compatible; ChinaPolicyBot/1.0; +https://github.com/anomalyco/china-policy-intelligence-skill)"
+    - "ChinaPolicyAnalyzeBot/1.0 (+https://github.com/anomalyco/china-policy-analyze-skill; research-bot)"
+    - "Mozilla/5.0 (compatible; ChinaPolicyBot/1.0; +https://github.com/anomalyco/china-policy-analyze-skill)"
     - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
   rotation_rules:
     on_block: true
@@ -78,7 +78,7 @@ user_agent:
     interval_minutes: 30
   identification:
     include_from_header: true
-    from_email: "bot@china-policy-intelligence.example.com"
+    from_email: "bot@china-policy-analyze.example.com"
 
 robots_compliance:
   respect_robots_txt: true
