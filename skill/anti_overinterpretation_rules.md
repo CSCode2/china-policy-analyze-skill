@@ -201,7 +201,7 @@ The system should monitor for common overinterpretation patterns in its own outp
 
 | Pattern | Rule Violated | Detection Method |
 |---------|--------------|------------------|
-| "政策支持=确定性机会" | Rule 1 | Search for patterns like "必然", "确定", "保证" near policy support claims |
+| "政策支持=政策方向较明确的机会" | Rule 1 | Search for patterns like "必然", "确定", "保证" near policy support claims |
 | "试点=全国" | Rule 2 | Check for pilot-stage policies discussed without "复制推广" evidence |
 | "规划目标=已实现" | Rule 3 | Check for planning targets stated without outcome data |
 | "打击=取缔" | Rule 4 | Check for enforcement claims that extend beyond the enforcement scope |

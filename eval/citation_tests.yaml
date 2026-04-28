@@ -18,17 +18,17 @@ tests:
 
   - id: citation_002
     name: "证据等级检查"
-    description: "验证所有引用达到 L3 或以上证据等级"
+    description: "验证所有引用达到 E3 或以上证据等级"
     trigger: "政策分析类查询（非纯信息查询）"
     assertions:
       - type: assert_min_evidence_level
         field: citations.evidence_level
-        min_level: "L3"
-        message: "核心结论的证据等级低于 L3，可靠性不足"
+        min_level: "E3"
+        message: "核心结论的证据等级低于 E3，可靠性不足"
       - type: assert_evidence_level_valid
         field: citations.evidence_level
-        allowed_values: ["L1", "L2", "L3", "L4", "L5"]
-        message: "证据等级不是有效的 L1–L5 值"
+        allowed_values: ["E1", "E2", "E3", "E4", "E5"]
+        message: "证据等级不是有效的 E1–E5 值"
 
   - id: citation_003
     name: "伪造来源检测"
@@ -69,7 +69,7 @@ tests:
           - url: "来源 URL"
           - institution: "发布机构"
           - publish_date: "发布日期（YYYY-MM-DD）"
-          - evidence_level: "证据等级（L1–L5）"
+          - evidence_level: "证据等级（E1–E5）"
           - policy_status: "政策时效性状态"
         optional_fields:
           - document_number: "文号"
@@ -100,7 +100,7 @@ tests:
       - type: assert_citation_format
         field: citations
         format: "[级别] 发布机构, 《文件标题》, 发布日期, URL"
-        example: "[L1] 国务院, 《新能源汽车产业发展规划》，2026-01-15, https://www.gov.cn/..."
+        example: "[E1] 国务院, 《新能源汽车产业发展规划》，2026-01-15, https://www.gov.cn/..."
         message: "引用格式不符合项目标准"
 
   - id: citation_008

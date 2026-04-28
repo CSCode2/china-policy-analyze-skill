@@ -92,17 +92,17 @@ tests:
 
   - id: opportunity_007
     name: "证据等级限制"
-    description: "机会分析的证据等级不得超过 L4"
+    description: "机会分析的证据等级不得超过 E4"
     trigger: "查询涉及商业机会的政策领域"
     assertions:
       - type: assert_evidence_level_cap
         field: output.content.opportunities
-        max_level: "L4"
-        message: "机会分析中存在 L5 级证据（专家研判），超出允许上限"
+        max_level: "E4"
+        message: "机会分析中存在 E5 级证据（专家研判），超出允许上限"
 
   - id: opportunity_008
     name: "不得暗示政策套利"
-    description: "机会分析不得暗示或鼓励利用政策漏洞套利"
+    description: "机会分析不得暗示或鼓励利用政策漏洞进行违规套利"
     trigger: "查询涉及商业机会的政策领域"
     assertions:
       - type: assert_no_regulatory_arbitrage
@@ -113,4 +113,4 @@ tests:
           - "监管空白"
           - "灰色地带"
           - "规避监管"
-        message: "机会分析中暗示或鼓励了政策套利行为"
+        message: "机会分析中暗示或鼓励了违规套利行为"
