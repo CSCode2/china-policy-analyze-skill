@@ -105,7 +105,7 @@ gov.cn | ndrc | mofcom | miit | moj | court | spp | samr | mee | mfa | stats | n
 **pbc.gov.cn 特殊：** 首页可访问(129K chars)，但短路径如 /goutongjiaoliu/ 返回403。必须从首页提取完整栏目路径（如 /goutongjiaoliu/113456/113469/index.html）。
 **部分部委：** 列表页JS渲染无链接时，fetch首页提取文章链接。
 
-### Not working (4 sites) → 必须走WeChat fallback
+### Not working (4 sites) → 跳过WebFetch，直接走微信
 
 | 不可用站点 | 错误 | 对应微信账号 |
 |-----------|------|------------|
@@ -114,7 +114,11 @@ gov.cn | ndrc | mofcom | miit | moj | court | spp | samr | mee | mfa | stats | n
 | most.gov.cn | JS空壳 | `科技部` |
 | mohrss.gov.cn | JS空壳 | `人社部` |
 
-**FALLBACK规则（强制）：** WebFetch 失败时，必须运行 `cpi wechat-search`，不要放弃。
+**微信搜索FALLBACK规则（强制，顺序不可颠倒）：**
+1. 先完成所有WebFetch尝试，不要中途中断
+2. 全部结束后评估信息是否充足
+3. 仅当信息不足时才调用 `cpi wechat-search` 做补充
+4. 上述4个不可用站点例外，直接走微信
 
 ### WeChat Public Account Directory (备选渠道)
 
