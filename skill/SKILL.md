@@ -147,42 +147,18 @@ http://jhsjk.people.cn/     ← 重要讲话数据库 (reliable, returns HTML wi
 https://www.news.cn/politics/ ← 新华网时政 (reliable, full article content)
 ```
 
-### What does NOT work — and how to fall back to WeChat
+### What does NOT work via WebFetch
 
-These sites actively block non-browser requests from data center IPs:
+These sites cannot be accessed from data center IPs:
 
-| Blocked site | Error | WeChat fallback account |
-|-------------|-------|------------------------|
-| `www.customs.gov.cn` (海关总署) | 412 | `中国海关发布` |
-| `www.mps.gov.cn` (公安部) | 521 | (no equivalent WeChat account) |
+| Site | Error |
+|------|-------|
+| `www.customs.gov.cn` (海关总署) | 412 (CDN JS challenge) |
+| `www.mps.gov.cn` (公安部) | 521 (cloud JS challenge) |
+| `www.most.gov.cn` (科技部) | JS-rendered empty shell (157 chars) |
+| `www.mohrss.gov.cn` (人社部) | JS-rendered empty shell (989 chars) |
 
-These sites return near-empty content (JS-rendered):
-
-| Empty site | Chars | WeChat fallback account |
-|-----------|-------|------------------------|
-| `www.most.gov.cn` (科技部) | 157 | `科技部` |
-| `www.mohrss.gov.cn` (人社部) | 989 | `人社部` |
-
-**FALLBACK RULE (mandatory) — 顺序绝不能颠倒：**
-
-1. **先完成所有 WebFetch 尝试** — 不要因为某次 WebFetch 失败就中途打断去搜微信。把所有能访问的官方站点都试完
-2. **评估结果** — 全部 WebFetch 结束后，判断是否已获取到足够的关键信息/得出关键结论
-3. **仅当信息不足时，才调用微信搜索做补充** — 如果 WebFetch 已经拿到足够内容，不需要搜微信
-4. **4个已知不可用站点是唯一例外** — customs.gov.cn / mps.gov.cn / most.gov.cn / mohrss.gov.cn 这4个不用 WebFetch，直接走微信
-
-```bash
-# Linux / macOS
-source .venv/bin/activate && cpi wechat-search "关键词" --fetch --json
-source .venv/bin/activate && cpi wechat-search "关键词" -a "中国人民银行" --fetch --json
-source .venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
-
-# Windows
-.venv\Scripts\cpi.exe wechat-search "关键词" --fetch --json
-.venv\Scripts\cpi.exe wechat-search "关键词" -a "中国人民银行" --fetch --json
-.venv\Scripts\cpi.exe wechat-search "降准" -c economy_finance --fetch --json
-```
-
-For the 4 blocked sites above, skip WebFetch entirely and go straight to WeChat search with the corresponding account.
+You still MUST attempt WebFetch on these sites — the site status may change. Only after ALL WebFetch attempts are exhausted should you consider WeChat search (see WeChat section below).
 
 **pbc.gov.cn (央行) works!** Previously marked as blocked because short paths like `/goutongjiaoliu/` return 403 from CDN. But full column URLs (e.g., `/goutongjiaoliu/113456/113469/index.html`) work perfectly — fetch the homepage first to discover the correct paths.
 
@@ -205,9 +181,21 @@ For the 4 blocked sites above, skip WebFetch entirely and go straight to WeChat 
 
 Python's main advantage: browser-like headers + automated batch fetching + HTML-to-markdown conversion.
 
-### WeChat Public Account (微信公众号) Article Search
+### WeChat Public Account (微信公众号) Article Search — 补充渠道
 
-**When official websites fail to return content, search WeChat public accounts for the same policy content.** Many official and professional accounts post full policy texts on WeChat.
+**微信搜索是补充渠道，不是替代渠道。官网永远优先。**
+
+调用顺序（强制，无例外）：
+1. **先完成所有 WebFetch 尝试** — 包括已知困难的站点也必须试，不要跳过
+2. **全部 WebFetch 结束后评估** — 是否已获取到足够关键信息/得出关键结论
+3. **仅当信息不足时，才搜微信做补充**
+
+绝对不能：
+- ❌ 因为某次 WebFetch 失败就中途打断去搜微信
+- ❌ 跳过某个官网直接搜微信（即使该站已知不可达）
+- ❌ WebFetch 已经拿到足够内容还去搜微信
+
+当确实需要搜微信时：
 
 #### CLI method (quickest — use this first)
 

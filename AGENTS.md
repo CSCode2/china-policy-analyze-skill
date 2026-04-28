@@ -105,20 +105,24 @@ gov.cn | ndrc | mofcom | miit | moj | court | spp | samr | mee | mfa | stats | n
 **pbc.gov.cn 特殊：** 首页可访问(129K chars)，但短路径如 /goutongjiaoliu/ 返回403。必须从首页提取完整栏目路径（如 /goutongjiaoliu/113456/113469/index.html）。
 **部分部委：** 列表页JS渲染无链接时，fetch首页提取文章链接。
 
-### Not working (4 sites) → 跳过WebFetch，直接走微信
+### Not working (4 sites — WebFetch可能失败但必须先试)
 
-| 不可用站点 | 错误 | 对应微信账号 |
-|-----------|------|------------|
+| 不可用站点 | 错误 | 推荐微信账号（WebFetch全部失败后用） |
+|-----------|------|-------------------------------|
 | customs.gov.cn | 412 | `中国海关发布` |
 | mps.gov.cn | 521 | (无对等公众号) |
 | most.gov.cn | JS空壳 | `科技部` |
 | mohrss.gov.cn | JS空壳 | `人社部` |
 
-**微信搜索FALLBACK规则（强制，顺序不可颠倒）：**
-1. 先完成所有WebFetch尝试，不要中途中断
-2. 全部结束后评估信息是否充足
+### 微信搜索规则（强制，无例外）
+
+**微信搜索是补充渠道，不是替代渠道。官网永远优先。**
+
+1. 先完成所有WebFetch尝试 — 包括已知困难的站点也必须试，不要跳过
+2. 全部WebFetch结束后评估信息是否充足
 3. 仅当信息不足时才调用 `cpi wechat-search` 做补充
-4. 上述4个不可用站点例外，直接走微信
+
+绝对不能：因某次WebFetch失败就中断去搜微信 / 跳过某官网直接搜微信（无例外）/ WebFetch已拿够内容还搜微信
 
 ### WeChat Public Account Directory (备选渠道)
 
