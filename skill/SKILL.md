@@ -33,27 +33,65 @@ This skill supports both local corpus lookup AND live web fetching from official
 
 Fetch these listing pages to discover what's new:
 
-**Confirmed working (tested 2026-04-28):**
+**Confirmed working — both listing and sub-pages (tested 2026-04-28 with Python HTMLFetcher):**
 ```
-https://www.gov.cn/zhengce/                           ← 国务院：最新政策列表
-https://www.gov.cn/zhengce/YYYYMM/content_XXXXXXX.htm ← 国务院：具体文件内容
-https://www.ndrc.gov.cn/xwdt/xwfb/                    ← 发改委：新闻发布
-https://www.mofcom.gov.cn/xwfb/                       ← 商务部：新闻发布
-https://www.miit.gov.cn/xwdt/gxdt/sjdt/              ← 工信部：司局动态
-http://jhsjk.people.cn/                               ← 习近平重要讲话数据库
-https://www.news.cn/politics/                          ← 新华网时政频道
-https://www.stats.gov.cn/sj/                          ← 统计局：数据
-https://www.mfa.gov.cn/wjbxw/                         ← 外交部：新闻
-https://www.mee.gov.cn/ywdt/                          ← 生态环境部：新闻
-https://www.nra.gov.cn/xwzx/                          ← 金融监管总局：新闻
-https://www.csrc.gov.cn/csrc/c100032/common_list.shtml ← 证监会：发布
-https://www.moj.gov.cn/pub/sfbgw/                     ← 司法部：政策文件
-https://www.court.gov.cn/zixun/                       ← 最高法：资讯
-https://www.spp.gov.cn/                               ← 最高检：首页
-https://www.samr.gov.cn/                              ← 市场监管总局：首页
+# 国务院
+https://www.gov.cn/zhengce/                                       ← 最新政策列表
+https://www.gov.cn/zhengce/YYYYMM/content_XXXXXXX.htm             ← 具体文件（注意：/zhengce/YYYYMM/ 不是 /zhengce/content/YYYYMM/）
+
+# 发改委
+https://www.ndrc.gov.cn/xwdt/xwfb/                                ← 新闻发布列表
+  子页面示例: /xwdt/202604/t20260427_1389482.html               ✅ 实测md=483
+
+# 商务部
+https://www.mofcom.gov.cn/xwfb/                                   ← 新闻发布列表
+  子页面示例: /xwfb/...                                           ✅ 实测md=1761
+
+# 工信部
+https://www.miit.gov.cn/                                           ← 首页（新闻链接在首页）
+  子页面示例: /xwdt/gxdt/sjdt/art/2026/art_xxx.html             ✅ 实测md=1932
+
+# 司法部
+https://www.moj.gov.cn/                                            ← 首页（政策链接在首页）
+  子页面: /pub/sfbgw/zwgkzt/...                                  ✅ 实测md=8372
+
+# 最高人民法院
+https://www.court.gov.cn/                                          ← 首页
+  子页面: /zixun/.../content_XXXXXXX.html                        ✅ 实测md=1923
+
+# 最高人民检察院
+https://www.spp.gov.cn/                                            ← 首页
+  子页面: /spp/xwfb/.../index.shtml                              ✅ 实测md=14641
+
+# 市场监管总局
+https://www.samr.gov.cn/                                           ← 首页
+  子页面: /xw/zj/art/2026/art_xxx.html                           ✅ 实测md=684
+
+# 生态环境部
+https://www.mee.gov.cn/                                            ← 首页
+  子页面: /ywdt/hjzx/.../t20260427_XXXXXX.shtml                  ✅ 实测md=10845
+
+# 外交部
+https://www.mfa.gov.cn/wjbxw/                                     ← 外交部发言人表态
+  子页面: /web/wjbxw_673016/.../tXXXXXXX.shtml                   ✅ 实测md=15113
+
+# 统计局
+https://www.stats.gov.cn/sj/zxfb/                                 ← 统计发布
+  子页面: /sj/zxfb/202604/t20260427_XXXXXXX.html                 ✅ 实测md=12645
+
+# 金融监管总局
+https://www.nra.gov.cn/xwzx/                                      ← 新闻中心
+  子页面: /xwzx/gdt/.../art/2026/art_xxx.html                    ✅ 实测md=1749
+
+# 证监会
+https://www.csrc.gov.cn/csrc/c100032/common_list.shtml             ← 发布列表
+  子页面: /csrc/c106311/cXXXXXXX/content.shtml                    ✅ 实测md=975
+
+# 习近平重要讲话
+http://jhsjk.people.cn/                                            ← 重要讲话数据库     ✅ 首页+子页面
 ```
 
-Note: Some ministry sites return actual content only from specific sub-paths, not from their top-level news listing URLs. If a URL returns very little content (< 200 chars), try the ministry homepage instead and follow links from there.
+Note: Some ministry listing pages use JS rendering — their HTML may not contain article links. In that case, fetch the ministry **homepage** (not the listing sub-path), which usually has the latest news links embedded in the HTML.
 
 These listing pages reliably return HTML with titles and dates. Read them to find relevant document titles.
 
@@ -100,7 +138,7 @@ These sites return near-empty content (JS-rendered, no useful text without a rea
 - `www.most.gov.cn` (科技部) — 157 chars, empty shell
 - `www.mohrss.gov.cn` (人社部) — 989 chars, empty shell
 
-For these, rely on the local corpus data, or check the gov.cn policy listing page which aggregates documents from all ministries.
+For these, rely on the local corpus data, or check the gov.cn policy listing page which aggregates documents from all ministries, or search for the same content on news.cn (新华网).
 
 ### Data freshness rules
 
