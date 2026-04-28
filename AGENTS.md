@@ -124,6 +124,12 @@ gov.cn | ndrc | mofcom | miit | moj | court | spp | samr | mee | mfa | stats | n
 
 绝对不能：因某次WebFetch失败就中断去搜微信 / 跳过某官网直接搜微信（无例外）/ WebFetch已拿够内容还搜微信
 
+**搜到微信内容后必须验真：**
+1. 提取微信文章引用的官方来源线索（发文号、机关、链接）
+2. 回查官网验证
+3. 验对了：引用官网
+4. 没验对：标注 ⚠️ 此信息来自微信公众号，非官网原文，不代表一定权威，请自行辨别
+
 ### WeChat Public Account Directory (备选渠道)
 
 40 个验证过的权威公众号，存储在 config/wechat_accounts.yaml，7 大类：
@@ -137,7 +143,7 @@ gov.cn | ndrc | mofcom | miit | moj | court | spp | samr | mee | mfa | stats | n
 
 CLI用法：
 ```bash
-source venv/bin/activate && cpi wechat-search "关键词" --fetch --json
-source venv/bin/activate && cpi wechat-search "关键词" -a "中国人民银行" --fetch --json
-source venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
+/root/china-policy-analyze-skill/venv/bin/cpi wechat-search "关键词" --fetch --json
+/root/china-policy-analyze-skill/venv/bin/cpi wechat-search "关键词" -a "中国人民银行" --fetch --json
+/root/china-policy-analyze-skill/venv/bin/cpi wechat-search "降准" -c economy_finance --fetch --json
 ```
