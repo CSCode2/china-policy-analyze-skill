@@ -54,11 +54,7 @@ dev = [
 ]
 
 [project.scripts]
-cpi = "cpi.cli:main"
-cpi-monitor = "cpi.cli:monitor_main"
-cpi-interpret = "cpi.cli:interpret_main"
-cpi-assess = "cpi.cli:assess_main"
-cpi-alert = "cpi.cli:alert_main"
+cpi = "china_policy_skill.cli:run_daily_update"
 
 [tool.setuptools.packages.find]
 where = ["src"]
