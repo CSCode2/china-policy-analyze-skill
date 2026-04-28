@@ -173,6 +173,41 @@ For these, rely on the local corpus data, or check the gov.cn policy listing pag
 
 Python's main advantage: browser-like headers + automated batch fetching + HTML-to-markdown conversion.
 
+### WeChat Public Account (微信公众号) Article Search
+
+**When official websites fail to return content, search WeChat public accounts for the same policy content.** Many official and professional accounts post full policy texts on WeChat.
+
+```python
+from china_policy_skill.fetch.fetch_wechat import WeChatSearcher
+
+ws = WeChatSearcher()
+
+# Search and get titles + abstracts + full article URLs
+articles = ws.search("国务院 服务业扩能提质 原文", max_results=5)
+for a in articles:
+    print(f"{a.title}: {a.abstract[:80]}")
+
+# Fetch full article content
+for article in articles[:2]:
+    ws.fetch_article(article)
+    print(f"{article.title}: {len(article.markdown)} chars")
+    print(article.markdown[:500])
+
+# Or do it in one step
+articles = ws.search_and_fetch("无人机实名制 政策", max_results=3)
+```
+
+**How it works:**
+1. Searches `weixin.sogou.com` (搜狗微信搜索) — works reliably, returns titles + abstracts
+2. Follows Sogou's redirect links → extracts the real `mp.weixin.qq.com` article URL from obfuscated JS
+3. Fetches the full article directly from `mp.weixin.qq.com` — returns complete policy text
+
+**Limitations:**
+- Sogou search rate limit: ~10 queries per session before needing a pause
+- Article URLs contain timestamps and signatures — they may expire after ~24 hours
+- Some WeChat articles may have been deleted by the publisher
+- Always cite the original official source when using WeChat content
+
 If the full project is installed with Python:
 ```bash
 cd china-policy-analyze-skill && source venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py
