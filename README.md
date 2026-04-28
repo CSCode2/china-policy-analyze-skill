@@ -1,6 +1,8 @@
 # 中国政策分析技能
 
-> *读懂政策，本身就是一笔丰厚的宝藏——信息差带来的复利。*
+> *中国人说话、中国共产党说话、中国共产党的领导说话是算数的。*
+>
+> —习近平
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
