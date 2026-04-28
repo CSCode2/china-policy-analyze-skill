@@ -35,7 +35,8 @@
 覆盖国务院、20+ 部委、31 个省级政府、26 个重点城市，<br>
 以及外交部、商务部、海关总署等对外贸易政策来源，<br>
 国台办、国防部、海警局等外部环境与地缘风险观察来源，<br>
-和 OFAC、BIS、USTR 等国际经贸规则来源。
+和 OFAC、BIS、USTR 等国际经贸规则来源。<br>
+部分官网不可达时自动回退至 40 个权威微信公众号获取同一政策全文。
 
 [看效果](#效果示例) · [安装](#安装) · [采集了什么](#采集了什么) · [蒸馏了什么](#蒸馏了什么) · [数据来源](#数据来源)
 
@@ -538,6 +539,10 @@ cp .env.example .env
 source venv/bin/activate
 CPI_MAX_DOCS=10 python scripts/_run_daily_update.py
 
+# 搜索微信公众号文章（官网采集失败时的备选渠道）
+cpi wechat-search "货币政策" -a "中国人民银行" --fetch --json
+cpi wechat-search "降准" -c economy_finance --fetch
+
 # 运行评估测试
 python -m pytest tests/ -q
 ```
@@ -644,6 +649,10 @@ china-policy-analyze-skill/
 ### 地缘风险与外部环境（FP级）
 
 国台办 · 国防部 · 中国海警局 · 中国海事局 · 东部战区 · 南部战区 · 日本防卫省 · 美国国防部 · 美国国务院 · OFAC · BIS · USTR · CSIS · IISS · SIPRI
+
+### 微信公众号（官网不可达时的备选渠道）
+
+40 个验证过的权威公众号，覆盖央行、工信部、商务部、海关总署、科技部、人社部等，当官网因 CDN 拦截或 JS 渲染无法访问时自动回退，访问微信公众号文章获取同一政策全文。
 
 完整数据源列表见 [`config/sources.yaml`](config/sources.yaml)
 
