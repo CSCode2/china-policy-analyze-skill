@@ -15,6 +15,42 @@ It is designed for:
 - regulatory and judicial signal analysis;
 - opportunity analysis for study, career, research, entrepreneurship, and project planning.
 
+# Real-Time Data Acquisition
+
+This skill supports both local corpus lookup AND live web fetching from official sources.
+
+## When to fetch live data
+
+Before answering a policy question, check data freshness:
+1. Look at the most recent file modification time in `corpus/metadata/` or `reports/`
+2. If the user asks about a topic where the local data is older than today, or where the answer might depend on very recent policy changes, proactively fetch from official websites
+3. If the user explicitly asks about "latest" or "recent" policies, always supplement with live fetching
+
+## How to fetch live data
+
+The project provides fetching tools at `scripts/_run_daily_update.py`. You can:
+1. Run the full update: `cd /root/china-policy-analyze-skill && source venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py`
+2. Or fetch a specific document manually using Python:
+   ```python
+   from china_policy_skill.fetch.fetch_html import HTMLFetcher
+   from china_policy_skill.parse.html_to_md import HTMLToMarkdown
+   fetcher = HTMLFetcher(timeout=15, rate_limit_delay=1.0)
+   result = fetcher.fetch('https://www.gov.cn/zhengce/content/202604/content_XXXXXXX.htm')
+   parser = HTMLToMarkdown()
+   markdown = parser.convert(result.html, result.url)
+   ```
+3. Key source URLs are listed in `config/sources.yaml`
+
+## Data freshness rules
+
+- Local corpus data is always the baseline — use it first
+- If local data covers the user's question adequately, no need to fetch live
+- If the question involves events or policies after the last corpus update, fetch live
+- Always tell the user whether your answer is based on local corpus data or live-fetched data
+- Respect rate limits: never fetch more than 10 pages in one session
+- Government websites only display text in HTML — extract directly, do not expect PDF downloads
+- Store any newly fetched documents in the corpus (html + md + txt formats)
+
 # Core Rules
 
 1. Prefer official sources over commentary.
