@@ -2,13 +2,14 @@
 
 ## Meta Rule — HIGHEST PRIORITY
 
-**每次对项目的任何修改，都必须同步更新 Hermes 相关配置，包括但不限于：**
+**每次对项目的任何修改，都必须同步更新服务器上运行此项目的 Hermes Agent 配置：**
 - SOUL.md（/root/.hermes/SOUL.md）
 - Cron 任务 prompt（hermes cron edit）
 - Gateway 重启（如 SOUL.md 有改动）
-- AGENTS.md（如规则有变动）
-- SKILL.md（如技能定义有变动）
+- 本 AGENTS.md（如运维规则有变动）
 - 验证 Hermes 配置生效
+
+**注意：SKILL.md 是给终端用户看的，不属于 Hermes 运维配置，除非技能定义本身变更才需要同步。**
 
 **绝对不能改了项目代码却不更新 Hermes，导致 Agent 执行时用的是过时的指令。**
 
