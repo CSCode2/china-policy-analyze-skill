@@ -86,3 +86,17 @@ Every document must have these fields in corpus/metadata/{doc_id}.json:
 - Source URLs listed in config/sources.yaml
 - Always tell user whether data is from corpus or live-fetched
 - Respect rate limits: max 10 pages per session
+
+### Confirmed working (15 sources, tested 2026-04-28)
+
+gov.cn | ndrc | mofcom | miit | moj | court | spp | samr | mee | mfa | stats | nra | csrc | pbc | jhsjk
+
+**pbc.gov.cn 特殊：** 首页可访问(129K chars)，但短路径如 /goutongjiaoliu/ 返回403。必须从首页提取完整栏目路径（如 /goutongjiaoliu/113456/113469/index.html）。
+**部分部委：** 列表页JS渲染无链接时，fetch首页提取文章链接。
+
+### Not working (4 sites)
+
+- customs.gov.cn — 412 (CDN JS challenge)
+- mps.gov.cn — 521 (cloud JS challenge)  
+- most.gov.cn — JS empty shell (157 bytes)
+- mohrss.gov.cn — JS empty shell (989 bytes)
