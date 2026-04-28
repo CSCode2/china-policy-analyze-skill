@@ -1,0 +1,290 @@
+# 微信公众号目录 — 权威政策来源
+# 每个公众号经过搜狗微信搜索验证（2026-04-28）
+# 用法: WeChatSearcher.search("公众号名 关键词")
+
+central_policy:
+  - name: 中国政府网
+    wechat_id: zhengfuweixin
+    desc: 国务院办公厅主办，发布国务院政策文件、国务院令、政策解读
+    authority: S
+    topics: [国务院文件, 国务院令, 政策解读, 政策例行吹风会]
+    search_tip: "中国政府网 政策原文"
+
+  - name: 国务院公报
+    wechat_id: guowuyuangongbao
+    desc: 国务院公报官方号，发布国务院令、国务院文件全文
+    authority: S
+    topics: [国务院令, 国务院文件, 法规全文]
+    search_tip: "国务院公报 全文"
+
+  - name: 新华视点
+    wechat_id: XHSXHSD
+    desc: 新华社权威发布，中央政策第一时间发布
+    authority: S
+    topics: [中央政策, 领导人活动, 重要讲话]
+    search_tip: "新华视点 政策"
+
+  - name: 人民日报
+    wechat_id: rmrbwx
+    desc: 人民日报官方号，政策评论和权威解读
+    authority: S
+    topics: [政策评论, 权威解读, 社论]
+    search_tip: "人民日报 政策"
+
+  - name: 求是网
+    wechat_id: qiushiwang
+    desc: 《求是》杂志官方号，中央理论权威发布
+    authority: S
+    topics: [理论文章, 重要讲话, 中央精神]
+    search_tip: "求是网 评论"
+
+  - name: 经济日报
+    wechat_id: jjrbwx
+    desc: 经济日报官方号，经济政策权威解读
+    authority: A
+    topics: [经济政策, 宏观调控, 数据解读]
+    search_tip: "经济日报 政策"
+
+economy_finance:
+  - name: 国家发改委
+    wechat_id: gjfgwx
+    desc: 国家发改委官方号，发布宏观经济政策和产业政策
+    authority: A
+    topics: [宏观经济, 产业政策, 投资审批, 体制改革]
+    search_tip: "国家发改委 政策"
+
+  - name: 中国发展改革
+    wechat_id: zgfgwx
+    desc: 中国发展改革报社，改革政策深度解读
+    authority: A
+    topics: [改革政策, 产业升级, 区域发展]
+    search_tip: "中国发展改革 政策"
+
+  - name: 财政部
+    wechat_id: mofgov
+    desc: 财政部官方号，财政税收政策发布
+    authority: A
+    topics: [财政政策, 税收政策, 预算, 政府采购]
+    search_tip: "财政部 政策公告"
+
+  - name: 中国财政
+    wechat_id: zhongguocaizheng
+    desc: 财政部主管，财政政策专业解读
+    authority: A
+    topics: [财政政策解读, 税收改革, 地方财政]
+    search_tip: "中国财政 政策解读"
+
+  - name: 中国人民银行
+    wechat_id: pbcgov
+    desc: 央行官方号，货币政策、金融稳定、支付体系
+    authority: A
+    topics: [货币政策, 利率, 存款准备金, 社融数据, 金融稳定]
+    search_tip: "中国人民银行 货币政策"
+
+  - name: 金融时报
+    wechat_id: jinrongshibao
+    desc: 央行主管，金融政策权威报道
+    authority: A
+    topics: [金融政策, 银行业, 货币政策执行报告]
+    search_tip: "金融时报 央行"
+
+industry_regulation:
+  - name: 工信微报
+    wechat_id: gxwb_wx
+    desc: 工信部官方号，产业政策、工业经济发布
+    authority: A
+    topics: [产业政策, 新能源汽车, 半导体, 5G, 工业互联网]
+    search_tip: "工信微报 政策"
+
+  - name: 工信部发布
+    wechat_id: miitgov
+    desc: 工信部政策发布渠道
+    authority: A
+    topics: [工信部文件, 行业规范, 产业目录]
+    search_tip: "工信部发布 公告"
+
+  - name: 科技部
+    wechat_id: mostgov
+    desc: 科技部官方号（网站JS空壳但微信可用）
+    authority: A
+    topics: [科技政策, 研发费用加计扣除, 科技项目]
+    search_tip: "科技部 政策"
+
+  - name: 市场监管总局
+    wechat_id: samrgov
+    desc: 市场监管总局官方号
+    authority: A
+    topics: [反垄断, 质量监管, 食品安全, 标准化]
+    search_tip: "市场监管总局 政策"
+
+  - name: 证监会发布
+    wechat_id: csrcgov
+    desc: 证监会官方号，资本市场政策法规
+    authority: A
+    topics: [资本市场, 证券监管, IPO政策, 基金监管]
+    search_tip: "证监会发布 政策"
+
+  - name: 金融监管总局
+    wechat_id: nfra_gov_cn
+    desc: 金融监管总局官方号
+    authority: A
+    topics: [银行保险监管, 金融消费者保护, 风险防控]
+    search_tip: "金融监管总局 政策"
+
+trade_foreign:
+  - name: 商务部
+    wechat_id: mofcomgov
+    desc: 商务部官方号，外贸外资政策发布
+    authority: A
+    topics: [外贸政策, 自贸区, 外资管理, 消费促进]
+    search_tip: "商务部 政策"
+
+  - name: 外交小灵通
+    wechat_id: wjxlt_wx
+    desc: 外交部公共外交号，外交政策发布会内容
+    authority: A
+    topics: [外交政策, 中美关系, 国际组织, 制裁反制]
+    search_tip: "外交小灵通 外交政策"
+
+  - name: 中国海关发布
+    wechat_id: haiguanfabu
+    desc: 海关总署官方号（网站不可达但微信可用）
+    authority: A
+    topics: [关税, 贸易便利化, 进出口监管, 知识产权海关保护]
+    search_tip: "中国海关发布 政策"
+
+people_livelihood:
+  - name: 生态环境部
+    wechat_id: meegov
+    desc: 生态环境部官方号
+    authority: A
+    topics: [环保政策, 碳达峰碳中和, 污染防治, 排污许可]
+    search_tip: "生态环境部 政策"
+
+  - name: 交通运输部
+    wechat_id: motgov
+    desc: 交通运输部官方号
+    authority: A
+    topics: [交通政策, 物流, 多式联运, 低空经济]
+    search_tip: "交通运输部 政策"
+
+  - name: 农业农村部
+    wechat_id: moagov
+    desc: 农业农村部官方号
+    authority: A
+    topics: [乡村振兴, 粮食安全, 农业补贴, 土地流转]
+    search_tip: "农业农村部 政策"
+
+  - name: 住建部
+    wechat_id: jzbgwx
+    desc: 住建部官方号
+    authority: A
+    topics: [房地产调控, 保障房, 城市更新, 建筑节能]
+    search_tip: "住建部 政策"
+
+  - name: 人社部
+    wechat_id: mohrssgov
+    desc: 人社部官方号（网站JS空壳但微信可用）
+    authority: A
+    topics: [就业政策, 社保, 养老金, 职业资格]
+    search_tip: "人社部 政策"
+
+  - name: 教育部
+    wechat_id: moegov
+    desc: 教育部官方号
+    authority: A
+    topics: [教育政策, 双减, 职业教育, 学科调整]
+    search_tip: "教育部 政策"
+
+  - name: 国家卫健委
+    wechat_id: nhcgov
+    desc: 国家卫健委官方号
+    authority: A
+    topics: [卫生健康, 医改, 生育政策, 公共卫生]
+    search_tip: "国家卫健委 政策"
+
+  - name: 光明日报
+    wechat_id: gmrbrmqk
+    desc: 光明日报官方号，教育科技文化政策关注
+    authority: A
+    topics: [教育政策, 科技政策, 文化政策]
+    search_tip: "光明日报 政策解读"
+
+law_justice:
+  - name: 司法部
+    wechat_id: mojgov
+    desc: 司法部官方号，法律法规发布
+    authority: A
+    topics: [法律法规, 司法改革, 法律援助, 普法]
+    search_tip: "司法部 法律法规"
+
+  - name: 最高人民法院
+    wechat_id: courtgov
+    desc: 最高法官方号，司法解释和典型案例
+    authority: A
+    topics: [司法解释, 指导性案例, 典型案例, 审判政策]
+    search_tip: "最高人民法院 司法解释"
+
+  - name: 最高人民检察院
+    wechat_id: sppgov
+    desc: 最高检官方号，检察政策和典型案例
+    authority: A
+    topics: [检察政策, 公益诉讼, 典型案例, 法律监督]
+    search_tip: "最高人民检察院 典型案例"
+
+  - name: 中国普法
+    wechat_id: zhongguopufa
+    desc: 司法部普法办号，法律法规通俗解读
+    authority: A
+    topics: [普法, 法律解读, 新法速递]
+    search_tip: "中国普法 法律"
+
+professional:
+  - name: 中国法律评论
+    wechat_id: chinalawreview
+    desc: 法律出版社主办，法律政策深度评论
+    authority: B
+    topics: [法律评论, 政策法规解读, 立法动态]
+    search_tip: "中国法律评论 政策法规"
+
+  - name: 中国改革报
+    wechat_id: zgfgbwx
+    desc: 国家发改委主管，改革政策报道
+    authority: B
+    topics: [改革政策, 经济体制改革, 地方改革实践]
+    search_tip: "中国改革报 政策"
+
+  - name: 北大法律信息网
+    wechat_id: chinalawinfo
+    desc: 北大法宝，法律法规数据库，每周政策立法梳理
+    authority: B
+    topics: [法律法规汇总, 立法动态, 典型案例]
+    search_tip: "北大法律信息网 立法"
+
+  - name: 威科先行
+    wechat_id: WoltersKluwerChina
+    desc: 专业法律信息提供商，财税和合规政策
+    authority: B
+    topics: [财税政策, 合规, 劳动法, 外汇管理]
+    search_tip: "威科先行 政策"
+
+  - name: 中伦视界
+    wechat_id: zhonglunlaw
+    desc: 中伦律师事务所，专业法律政策解读
+    authority: B
+    topics: [外汇管理, 投资政策, 资本市场, 反垄断]
+    search_tip: "中伦视界 政策解读"
+
+  - name: 政策速递
+    wechat_id: zhengcesudi
+    desc: 政策信息聚合号，各行业政策速递
+    authority: C
+    topics: [政策速递, 各行业政策, 地方政策]
+    search_tip: "政策速递 最新政策"
+
+  - name: 政策解读
+    wechat_id: zhengcejiedu
+    desc: 政策解读专业号
+    authority: C
+    topics: [政策解读, 民生政策, 经济政策]
+    search_tip: "政策解读 最新"
