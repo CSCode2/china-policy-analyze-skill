@@ -54,7 +54,7 @@ dev = [
 ]
 
 [project.scripts]
-cpi = "china_policy_skill.cli:run_daily_update"
+cpi = "china_policy_skill.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
