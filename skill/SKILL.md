@@ -33,6 +33,7 @@ This skill supports both local corpus lookup AND live web fetching from official
 
 Fetch these listing pages to discover what's new:
 
+**Confirmed working (tested 2026-04-28):**
 ```
 https://www.gov.cn/zhengce/                           ← 国务院：最新政策列表
 https://www.ndrc.gov.cn/xwdt/xwfb/                    ← 发改委：新闻发布
@@ -40,6 +41,11 @@ https://www.mofcom.gov.cn/xwfb/                       ← 商务部：新闻发�
 https://www.miit.gov.cn/xwdt/gxdt/sjdt/              ← 工信部：司局动态
 http://jhsjk.people.cn/                               ← 习近平重要讲话数据库
 https://www.news.cn/politics/                          ← 新华网时政频道
+https://www.stats.gov.cn/sj/                          ← 统计局：数据
+https://www.mfa.gov.cn/wjbxw/                         ← 外交部：新闻
+https://www.mee.gov.cn/ywdt/                          ← 生态环境部：新闻
+https://www.nra.gov.cn/xwzx/                          ← 金融监管总局：新闻
+https://www.csrc.gov.cn/csrc/c100032/common_list.shtml ← 证监会：发布
 ```
 
 These listing pages reliably return HTML with titles and dates. Read them to find relevant document titles.
@@ -76,13 +82,16 @@ https://www.news.cn/politics/ ← 新华网时政 (reliable, full article conten
 
 ### What does NOT work with WebFetch
 
-- `www.moj.gov.cn` (司法部) — transport error
-- `www.gov.cn/gongbao/` (国务院公报) — most content URLs return 404
+- `www.moj.gov.cn` (司法部) — 404
+- `www.gov.cn/gongbao/` (国务院公报) — too little content (860 chars, just a shell)
 - `www.gov.cn/yaowen/liebiao/` — most content URLs return 404
-- `sousuo.gov.cn` ( gov.cn 搜索) — transport error
-- Provincial/municipal government sites — inconsistent, many block
+- `sousuo.gov.cn` ( gov.cn 搜索) — connection timeout, will hang
+- `www.pbc.gov.cn` (央行) — 403 forbidden
+- `www.customs.gov.cn` (海关总署) — connection error
+- `www.most.gov.cn` (科技部) — 404 on news pages
+- `www.samr.gov.cn` (市场监管总局) — 404 on news pages
 
-For these, rely on the local corpus data or find alternative coverage on news.cn or ministry news pages.
+For these, rely on the local corpus data or find alternative coverage on news.cn, or check the gov.cn policy listing page which aggregates documents from all ministries.
 
 ### Data freshness rules
 
@@ -94,6 +103,16 @@ For these, rely on the local corpus data or find alternative coverage on news.cn
 
 ## How to fetch live data — Python method (only if Python environment is available)
 
+**Note: Python HTMLFetcher has the SAME limitations as WebFetch.** The following sites are NOT accessible even with Python:
+- `www.pbc.gov.cn` (央行) — 403
+- `www.customs.gov.cn` (海关总署) — connection error
+- `www.moj.gov.cn` (司法部) — 404
+- `www.most.gov.cn` (科技部) — 404
+- `www.samr.gov.cn` (市场监管总局) — 404
+- `sousuo.gov.cn` — connection timeout
+
+Python does NOT solve the access problem. The only advantage of Python is automated batch fetching and HTML-to-markdown conversion.
+
 If the full project is installed with Python:
 ```bash
 cd china-policy-analyze-skill && source venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py
@@ -103,9 +122,9 @@ Or fetch a specific URL:
 from china_policy_skill.fetch.fetch_html import HTMLFetcher
 from china_policy_skill.parse.html_to_md import HTMLToMarkdown
 fetcher = HTMLFetcher(timeout=15, rate_limit_delay=1.0)
-result = fetcher.fetch('https://www.gov.cn/zhengce/content/202604/content_XXXXXXX.htm')
+result = fetcher.fetch('https://www.gov.cn/zhengce/202604/content_XXXXXXX.htm')
 parser = HTMLToMarkdown()
-markdown = parser.convert(result.html, result.url)
+markdown = parser.convert(result.html or '', result.url)
 ```
 Source URLs are listed in `config/sources.yaml`.
 
