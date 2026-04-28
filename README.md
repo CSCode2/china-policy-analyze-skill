@@ -357,7 +357,7 @@ china-policy-analyze-skill/
 
 ## 许可证
 
-[MIT License](LICENSE) — 随便用，出了事别找我。
+[MIT License](LICENSE) — 请遵守中国相关法律法规和保密协议，严禁用于非法用途，否则后果自负。
 
 ---
 
