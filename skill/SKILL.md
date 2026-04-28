@@ -136,23 +136,38 @@ http://jhsjk.people.cn/     ← 重要讲话数据库 (reliable, returns HTML wi
 https://www.news.cn/politics/ ← 新华网时政 (reliable, full article content)
 ```
 
-### What does NOT work
+### What does NOT work — and how to fall back to WeChat
 
-These sites actively block non-browser requests from data center IPs. No workaround exists:
+These sites actively block non-browser requests from data center IPs:
 
-- `www.customs.gov.cn` (海关总署) — 412 Precondition Failed (CDN-level blocking, HTTP works but returns empty/412)
-- `www.mps.gov.cn` (公安部) — 521 server error (behind JS challenge protection)
+| Blocked site | Error | WeChat fallback account |
+|-------------|-------|------------------------|
+| `www.customs.gov.cn` (海关总署) | 412 | `中国海关发布` |
+| `www.mps.gov.cn` (公安部) | 521 | (no equivalent WeChat account) |
 
-These sites return near-empty content (JS-rendered, no useful text without a real browser):
+These sites return near-empty content (JS-rendered):
 
-- `www.most.gov.cn` (科技部) — 157 chars, empty shell
-- `www.mohrss.gov.cn` (人社部) — 989 chars, empty shell
+| Empty site | Chars | WeChat fallback account |
+|-----------|-------|------------------------|
+| `www.most.gov.cn` (科技部) | 157 | `科技部` |
+| `www.mohrss.gov.cn` (人社部) | 989 | `人社部` |
 
-For these, rely on the local corpus data, or check the gov.cn policy listing page which aggregates documents from all ministries, or search for the same content on news.cn (新华网).
+**FALLBACK RULE (mandatory):** When WebFetch to any official site fails (4xx/5xx error, empty content <200 chars, or timeout), you MUST try WeChat search before giving up:
+
+```bash
+# Search by keyword (general)
+source venv/bin/activate && cpi wechat-search "关键词" --fetch --json
+
+# Search by known account (faster, more accurate)
+source venv/bin/activate && cpi wechat-search "关键词" -a "中国人民银行" --fetch --json
+
+# Search by category
+source venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
+```
+
+For the 4 blocked sites above, skip WebFetch entirely and go straight to WeChat search with the corresponding account.
 
 **pbc.gov.cn (央行) works!** Previously marked as blocked because short paths like `/goutongjiaoliu/` return 403 from CDN. But full column URLs (e.g., `/goutongjiaoliu/113456/113469/index.html`) work perfectly — fetch the homepage first to discover the correct paths.
-
-**pbc.gov.cn (央行) works!** Previously marked as blocked because short paths like `/goutongjiaoliu/` return 403. But the full column URLs work perfectly — fetch the homepage first to discover the correct paths (see URL list above).
 
 ### Data freshness rules
 
@@ -177,30 +192,45 @@ Python's main advantage: browser-like headers + automated batch fetching + HTML-
 
 **When official websites fail to return content, search WeChat public accounts for the same policy content.** Many official and professional accounts post full policy texts on WeChat.
 
-#### Method 1: Keyword search（通用搜索）
+#### CLI method (quickest — use this first)
+
+```bash
+# Search by keyword (general)
+source venv/bin/activate && cpi wechat-search "关键词" --fetch --json
+
+# Search by known account (faster, more accurate)
+source venv/bin/activate && cpi wechat-search "利率政策" -a "中国人民银行" --fetch --json
+
+# Search by category
+source venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
+
+# Search without fetching full content (titles + abstracts only)
+source venv/bin/activate && cpi wechat-search "服务业扩能提质" --max 5
+
+# Get human-readable output (default)
+source venv/bin/activate && cpi wechat-search "无人机实名制" -a "中国政府网" --fetch
+```
+
+#### Python method (if you need programmatic access)
 
 ```python
 from china_policy_skill.fetch.fetch_wechat import WeChatSearcher
 
 ws = WeChatSearcher()
 
-# Search and get titles + abstracts + full article URLs
-articles = ws.search("国务院 服务业扩能提质 原文", max_results=5)
-for a in articles:
-    print(f"{a.title}: {a.abstract[:80]}")
+# General keyword search
+articles = ws.search_and_fetch("关键词", max_results=3)
 
-# Fetch full article content
-for article in articles[:2]:
-    ws.fetch_article(article)
-    print(f"{article.title}: {len(article.markdown)} chars")
+# Search by known account
+articles = ws.search_by_account_and_fetch("中国人民银行", keyword="货币政策")
 
-# Or do it in one step
-articles = ws.search_and_fetch("无人机实名制 政策", max_results=3)
+# Search by category
+articles = ws.search_by_category_and_fetch("economy_finance", keyword="降准")
 ```
 
-#### Method 2: Search by known account（按公众号搜索，更快更准）
+#### Account directory（按公众号搜索，更快更准）
 
-A curated directory of 40 verified high-quality policy WeChat accounts is stored in `config/wechat_accounts.yaml`, organized by category:
+40 verified high-quality policy WeChat accounts stored in `config/wechat_accounts.yaml`:
 
 | Category | Key accounts | Authority |
 |----------|-------------|-----------|

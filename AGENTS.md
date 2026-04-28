@@ -105,27 +105,31 @@ gov.cn | ndrc | mofcom | miit | moj | court | spp | samr | mee | mfa | stats | n
 **pbc.gov.cn 特殊：** 首页可访问(129K chars)，但短路径如 /goutongjiaoliu/ 返回403。必须从首页提取完整栏目路径（如 /goutongjiaoliu/113456/113469/index.html）。
 **部分部委：** 列表页JS渲染无链接时，fetch首页提取文章链接。
 
-### Not working (4 sites)
+### Not working (4 sites) → 必须走WeChat fallback
 
-- customs.gov.cn — 412 (CDN JS challenge)
-- mps.gov.cn — 521 (cloud JS challenge)  
-- most.gov.cn — JS empty shell (157 bytes)
-- mohrss.gov.cn — JS empty shell (989 bytes)
+| 不可用站点 | 错误 | 对应微信账号 |
+|-----------|------|------------|
+| customs.gov.cn | 412 | `中国海关发布` |
+| mps.gov.cn | 521 | (无对等公众号) |
+| most.gov.cn | JS空壳 | `科技部` |
+| mohrss.gov.cn | JS空壳 | `人社部` |
+
+**FALLBACK规则（强制）：** WebFetch 失败时，必须运行 `cpi wechat-search`，不要放弃。
 
 ### WeChat Public Account Directory (备选渠道)
 
 40 个验证过的权威公众号，存储在 config/wechat_accounts.yaml，7 大类：
 - **central_policy** (7账号): 中国政府网(S), 国务院公报(S), 新华视点(S), 人民日报(S), 求是网(S), 经济日报(A), 光明日报(A)
-- **economy_finance** (6账号): 国家发改委(A), 中国发展改革(A), 财政部(A), 中国财政(A), 中国人民银行(A), 金融时报(A)
-- **industry_regulation** (6账号): 工信微报(A), 工信部发布(A), 科技部(A), 市场监管总局(A), 证监会发布(A), 金融监管总局(A)
+- **economy_finance** (6账号): 国家发改委(A), 财政部(A), 中国人民银行(A), 金融时报(A)
+- **industry_regulation** (6账号): 工信微报(A), 科技部(A), 市场监管总局(A), 证监会发布(A), 金融监管总局(A)
 - **trade_foreign** (3账号): 商务部(A), 外交小灵通(A), 中国海关发布(A)
-- **people_livelihood** (8账号): 生态环境部(A), 交通运输部(A), 农业农村部(A), 住建部(A), 人社部(A), 教育部(A), 国家卫健委(A), 光明日报(A)
-- **law_justice** (4账号): 司法部(A), 最高人民法院(A), 最高人民检察院(A), 中国普法(A)
-- **professional** (7账号): 中国法律评论(B), 中国改革报(B), 北大法律信息网(B), 威科先行(B), 中伦视界(B), 政策速递(C), 政策解读(C)
+- **people_livelihood** (8账号): 生态环境部(A), 交通运输部(A), 农业农村部(A), 人社部(A), 住建部(A)
+- **law_justice** (4账号): 司法部(A), 最高人民法院(A), 最高人民检察院(A)
+- **professional** (7账号): 北大法律信息网(B), 威科前行(B), 中伦视界(B)
 
-使用方法：
-```python
-ws.search_by_account_and_fetch("中国人民银行", keyword="货币政策")
-ws.search_by_category_and_fetch("economy_finance", keyword="降准")
-ws.find_accounts_by_topic("货币政策")
+CLI用法：
+```bash
+source venv/bin/activate && cpi wechat-search "关键词" --fetch --json
+source venv/bin/activate && cpi wechat-search "关键词" -a "中国人民银行" --fetch --json
+source venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
 ```
