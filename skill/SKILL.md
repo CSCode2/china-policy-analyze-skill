@@ -163,7 +163,12 @@ These sites return near-empty content (JS-rendered):
 | `www.most.gov.cn` (科技部) | 157 | `科技部` |
 | `www.mohrss.gov.cn` (人社部) | 989 | `人社部` |
 
-**FALLBACK RULE (mandatory):** When WebFetch to any official site fails (4xx/5xx error, empty content <200 chars, or timeout), you MUST try WeChat search before giving up:
+**FALLBACK RULE (mandatory) — 顺序绝不能颠倒：**
+
+1. **先完成所有 WebFetch 尝试** — 不要因为某次 WebFetch 失败就中途打断去搜微信。把所有能访问的官方站点都试完
+2. **评估结果** — 全部 WebFetch 结束后，判断是否已获取到足够的关键信息/得出关键结论
+3. **仅当信息不足时，才调用微信搜索做补充** — 如果 WebFetch 已经拿到足够内容，不需要搜微信
+4. **4个已知不可用站点是唯一例外** — customs.gov.cn / mps.gov.cn / most.gov.cn / mohrss.gov.cn 这4个不用 WebFetch，直接走微信
 
 ```bash
 # Linux / macOS
