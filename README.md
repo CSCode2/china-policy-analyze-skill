@@ -514,25 +514,27 @@ python -m pytest tests/ -q
 | 政策蒸馏 | 每周一 07:30 UTC | 生成7种结构化卡片、周报，提交 PR |
 | 技能维护 | 每月1日 08:00 UTC | 校准评分、审查推理框架，提交 PR |
 
-所以你只需要 `git pull` 就能拿到最新的语料和报告。
+### 你的 Agent 如何自动更新这个 Skill
 
-### 你的本地自动化
+本 Skill 定义在 `skill/SKILL.md` 中，支持**实时数据获取**——当你的 Agent（Hermes、opencode、Claude 等）加载此 Skill 后，它会：
 
-如果你想让本地也自动更新，最简单的方式是加一条 cron：
-
-```bash
-# 每天早上8点拉取最新语料
-0 8 * * * cd ~/china-policy-analyze-skill && git pull origin main
-```
-
-如果你想自己做增量采集（不只是拉取仓库的更新）：
+1. **优先使用本地语料库回答** — `corpus/` 下的 55+ 份政策文档是即查即用的基础数据
+2. **自动判断数据是否过时** — 当用户问"最新""最近"等问题，或本地语料覆盖不足时，Agent 会主动从官方来源实时抓取
+3. **增量采集新文档** — 通过项目自带的采集脚本补充最新政策：
 
 ```bash
-# 每天早上8点拉取 + 本地采集新文档
-0 8 * * * cd ~/china-policy-analyze-skill && git pull origin main && source venv/bin/activate && CPI_MAX_DOCS=10 python scripts/_run_daily_update.py
+cd china-policy-analyze-skill
+source venv/bin/activate
+CPI_MAX_DOCS=5 python scripts/_run_daily_update.py
 ```
 
-> **注意：** 本地采集需要 `venv` 已配置好依赖，且服务器内存 ≥ 3GB（BM25 索引构建已禁用以防 OOM）。
+4. **拉取仓库最新更新** — 仓库的语料和报告每天自动更新，你的 Agent 只需 `git pull` 即可同步：
+
+```bash
+cd china-policy-analyze-skill && git pull origin main
+```
+
+> **提示：** 如果你的 Agent 支持 cron 定时任务（如 Hermes Agent），可以直接配置每天自动 `git pull` + 增量采集，实现完全无人值守的 Skill 更新。
 
 ---
 
