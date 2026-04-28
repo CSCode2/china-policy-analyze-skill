@@ -241,7 +241,25 @@ topic_taxonomy:
     label: 法律与执法
     label_en: Legal and Enforcement
     description: "法律法规、司法案例与执法动态"
+
     subtopics:
+      - id: official_statements
+        label: 官方发言与发布会
+        label_en: Official Statements and Press Conferences
+        key_sources:
+          - 外交部
+          - 国防部
+          - 国台办
+          - 国新办
+          - 各部委新闻发言人
+        key_indicators:
+          - 发言人表态
+          - 例行记者会
+          - 新闻发布会
+          - 白皮书
+          - 立场文件
+        note: "官方发言人表态属于E2级证据（官方解读/发布会级别），国新办白皮书可达E3-E4级"
+
       - id: legislation
         label: 立法动态
         label_en: Legislation

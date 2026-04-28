@@ -29,6 +29,21 @@ central_policy_sources:
     crawl_frequency: daily
     encoding: utf-8
 
+  - name: 国新办
+    name_en: State Council Information Office (SCIO)
+    url: https://www.scio.gov.cn
+    level: S
+    priority: 1
+    topics:
+      - 国新办新闻发布会
+      - 白皮书
+      - 政策解读发布会
+      - 权威人士解读
+      - 各部委新闻发布会
+    crawl_frequency: daily
+    encoding: utf-8
+    note: "国新办发布会是各部委最高规格的政策发布和解读渠道，所有部委发言人均可在此发布。E2级"
+
   - name: 国家发改委
     name_en: National Development and Reform Commission (NDRC)
     url: https://www.ndrc.gov.cn
@@ -41,6 +56,7 @@ central_policy_sources:
       - 价格政策
       - 外资准入
       - 十五五规划
+      - 发改委新闻发布会
     crawl_frequency: daily
     encoding: utf-8
 
@@ -167,6 +183,7 @@ ministry_sources:
       - 信贷数据
       - 汇率政策
       - 金融稳定
+      - 央行新闻发布会
     column_urls:
       - https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html
       - https://www.pbc.gov.cn/rmyh/105208/index.html
@@ -188,6 +205,7 @@ ministry_sources:
       - 财政收支
       - 专项债
       - 转移支付
+      - 财政部新闻发布会
     crawl_frequency: daily
     encoding: utf-8
 
@@ -204,6 +222,7 @@ ministry_sources:
       - 半导体
       - 人工智能
       - 5G
+      - 工信部新闻发布会
     crawl_frequency: daily
     encoding: utf-8
 
@@ -236,6 +255,7 @@ ministry_sources:
       - 服务贸易
       - 反倾销
       - 制裁应对
+      - 商务部新闻发布会
     crawl_frequency: daily
     encoding: utf-8
 
@@ -250,6 +270,7 @@ ministry_sources:
       - 消费者保护
       - 合规要求
       - 金融开放
+      - 金融监管总局新闻发布会
     crawl_frequency: daily
     encoding: utf-8
 
@@ -265,6 +286,7 @@ ministry_sources:
       - IPO政策
       - 基金监管
       - 期货监管
+      - 证监会新闻发布会
     crawl_frequency: daily
     encoding: utf-8
 
@@ -295,6 +317,7 @@ ministry_sources:
       - 质量监管
       - 食品药品安全
       - 知识产权
+      - 市场监管总局新闻发布会
     crawl_frequency: daily
     encoding: utf-8
 
@@ -974,8 +997,13 @@ foreign_trade_policy_sources:
       - 立场文件
       - 双边关系
       - 国际组织
+      - 外交部例行记者会
+      - 外交部新闻发布会
+    column_urls:
+      - https://www.mfa.gov.cn/web/wjdt_674879/fyrbt_674889/
     crawl_frequency: daily
     encoding: utf-8
+    note: "外交部发言人例行记者会是重要官方表态渠道，E2级"
 
   - name: 商务部各司
     name_en: MOFCOM Departments
@@ -1133,6 +1161,7 @@ geo_conflict_sources_china:
       - 军事声明
       - 台海局势
       - 南海局势
+      - 国防部例行记者会
     crawl_frequency: daily
     encoding: utf-8
 
@@ -1146,6 +1175,7 @@ geo_conflict_sources_china:
       - 两岸关系
       - 台海声明
       - 统一方针
+      - 国台办新闻发布会
     crawl_frequency: daily
     encoding: utf-8
 

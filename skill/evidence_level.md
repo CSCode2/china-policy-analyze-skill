@@ -52,12 +52,14 @@ The evidence level system (E0-E5) classifies the strength of evidence supporting
 
 ### E2: Single-Source Documentary Evidence
 
-**Definition**: The claim is supported by one specific document from a credible source (S/A/B/C level), but without corroboration from additional sources.
+**Definition**: The claim is supported by one specific document from a credible source (S/A/B/C level), but without corroboration from additional sources. Also includes official spokesperson statements and press conference content from any ministry/agency.
 
 **When to use**:
 - One official document directly supports the claim
 - No other source confirms, contradicts, or expands on the claim
 - The document is current and not superseded
+- Official spokesperson statements from any ministry or agency (外交部、国防部、国台办、国新办、各部委新闻发布会)
+- Press conference Q&A content that provides official interpretation but is not a formal policy document
 
 **Output marking**: Labeled as "单一文件证据" (single-document evidence) with the source citation
 

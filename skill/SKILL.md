@@ -108,6 +108,9 @@ https://www.mee.gov.cn/                                            ← 首页
 https://www.mfa.gov.cn/wjbxw/                                     ← 外交部发言人表态
   子页面: /web/wjbxw_673016/.../tXXXXXXX.shtml                   ✅ 实测md=15113
 
+# 国新办（所有部委新闻发布会的统一平台）
+https://www.scio.gov.cn/                                           ← 国新办新闻发布会、白皮书
+
 # 统计局
 https://www.stats.gov.cn/sj/zxfb/                                 ← 统计发布
   子页面: /sj/zxfb/202604/t20260427_XXXXXXX.html                 ✅ 实测md=12645
@@ -356,6 +359,7 @@ A-level:
 - NDRC, MOF, PBOC, NBS, MIIT, MOST, MOFCOM, NFRA, CSRC, SAMR, MPS, MOJ
 - Supreme People's Court and Supreme People's Procuratorate
 - People's Daily, Xinhua, Qiushi, People.cn speech database
+- Official spokesperson statements and press conferences (外交部、国防部、国台办、国新办及各部委新闻发布会)
 
 B-level:
 - Provincial governments and provincial departments
@@ -366,7 +370,7 @@ C-level:
 - Municipal departments, industrial parks, high-tech zones, project application notices, local procurement and tender information
 
 D-level:
-- Official interpretations, press conferences, expert explanations
+- Expert explanations, think tank analysis (not official spokesperson)
 
 E-level:
 - Commercial media, self-media, market commentary. Use E-level only as leads, not as primary evidence.
