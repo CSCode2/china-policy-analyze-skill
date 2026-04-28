@@ -167,6 +167,12 @@ ministry_sources:
       - 信贷数据
       - 汇率政策
       - 金融稳定
+    column_urls:
+      - https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html
+      - https://www.pbc.gov.cn/rmyh/105208/index.html
+      - https://www.pbc.gov.cn/tiaofasi/144941/index.html
+      - https://www.pbc.gov.cn/rmyh/105145/index.html
+    note: "Short paths like /goutongjiaoliu/ return 403. Must use full column paths from homepage."
     crawl_frequency: daily
     encoding: utf-8
 
