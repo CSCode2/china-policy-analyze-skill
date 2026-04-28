@@ -367,6 +367,206 @@ ministry_sources:
     crawl_frequency: weekly
     encoding: utf-8
 
+  - name: 民政部
+    name_en: Ministry of Civil Affairs (MCA)
+    url: https://www.mca.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 社会组织管理
+      - 养老服务
+      - 社会救助
+      - 基层治理
+      - 殡葬改革
+      - 婚姻登记
+      - 慈善事业
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 自然资源部
+    name_en: Ministry of Natural Resources (MNR)
+    url: https://www.mnr.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 土地管理
+      - 国土空间规划
+      - 矿产资源
+      - 不动产登记
+      - 海洋资源
+      - 生态修复
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 生态环境部
+    name_en: Ministry of Ecology and Environment (MEE)
+    url: https://www.mee.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 环保政策
+      - 碳达峰碳中和
+      - 污染防治
+      - 排污许可
+      - 环境影响评价
+      - 气候变化
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 住建部
+    name_en: Ministry of Housing and Urban-Rural Development (MOHURD)
+    url: https://www.mohurd.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 房地产调控
+      - 保障性住房
+      - 城市更新
+      - 建筑业政策
+      - 物业管理
+      - 住房公积金
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 交通运输部
+    name_en: Ministry of Transport (MOT)
+    url: https://www.mot.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 交通基础设施
+      - 公路铁路规划
+      - 民航政策
+      - 水运政策
+      - 物流运输
+      - 自动驾驶
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 农业农村部
+    name_en: Ministry of Agriculture and Rural Affairs (MARA)
+    url: https://www.moa.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 乡村振兴
+      - 粮食安全
+      - 农业补贴
+      - 土地流转
+      - 农产品价格
+      - 种业政策
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 文旅部
+    name_en: Ministry of Culture and Tourism (MCT)
+    url: https://www.mct.gov.cn
+    level: A
+    priority: 3
+    topics:
+      - 文化产业政策
+      - 旅游发展规划
+      - 文物保护
+      - 非遗传承
+      - 演艺市场
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 国家卫健委
+    name_en: National Health Commission (NHC)
+    url: https://www.nhc.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 医疗卫生改革
+      - 公共卫生政策
+      - 生育政策
+      - 药品监管
+      - 医保政策
+      - 中医药发展
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 应急管理部
+    name_en: Ministry of Emergency Management (MEM)
+    url: https://www.mem.gov.cn
+    level: A
+    priority: 3
+    topics:
+      - 安全生产
+      - 防灾减灾
+      - 应急响应
+      - 消防管理
+      - 危化品监管
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 审计署
+    name_en: National Audit Office (CNAO)
+    url: https://www.audit.gov.cn
+    level: A
+    priority: 3
+    topics:
+      - 审计结果公告
+      - 财政审计
+      - 经济责任审计
+      - 专项审计
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 退役军人事务部
+    name_en: Ministry of Veterans Affairs (MVA)
+    url: https://www.mva.gov.cn
+    level: A
+    priority: 3
+    topics:
+      - 退役军人安置
+      - 优抚政策
+      - 就业创业扶持
+    crawl_frequency: weekly
+    encoding: utf-8
+
+  - name: 国家医保局
+    name_en: National Healthcare Security Administration (NHSA)
+    url: https://www.nhsa.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 医保目录调整
+      - 集采政策
+      - DRG/DIP支付
+      - 门诊统筹
+      - 异地就医
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 国家能源局
+    name_en: National Energy Administration (NEA)
+    url: https://www.nea.gov.cn
+    level: A
+    priority: 2
+    topics:
+      - 能源政策
+      - 新能源发展
+      - 电力改革
+      - 油气改革
+      - 核电政策
+    crawl_frequency: daily
+    encoding: utf-8
+
+  - name: 国家林草局
+    name_en: National Forestry and Grassland Administration (NFGA)
+    url: https://www.nfga.gov.cn
+    level: A
+    priority: 3
+    topics:
+      - 林业政策
+      - 草原保护
+      - 国家公园
+      - 碳汇交易
+    crawl_frequency: weekly
+    encoding: utf-8
+
 legal_enforcement_sources:
   - name: 国家法律法规数据库
     name_en: National Laws and Regulations Database
