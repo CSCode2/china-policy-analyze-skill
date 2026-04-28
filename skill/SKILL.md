@@ -3,16 +3,29 @@ name: china-policy-analyze
 description: Use this skill when the user asks about Chinese economic policy, central policy documents, Five-Year Plans, Xi Jinping's economic speeches, policy language interpretation, local policy implementation, regulatory signals, economic cases, or opportunity analysis based on official Chinese sources.
 ---
 
-# Platform-Specific CLI Paths (HARD RULE — READ FIRST)
+# ⚠️ HARD RULES — READ FIRST, VIOLATION = WRONG ANSWER
 
-This skill ships with a `cpi` CLI tool installed in its `.venv`. **You MUST use the correct path for your OS:**
+## 规则1：官网永远优先，微信搜索只能在最后补充
+
+**WebFetch → 评估 → 不足时才搜微信。此顺序不可打破，无任何例外。**
+
+- ✅ 先完成所有 WebFetch 尝试（即使站点已知困难也必须试）
+- ✅ 全部 WebFetch 结束后，评估是否已获取到足够关键信息
+- ✅ 仅当信息不足时，才调用微信搜索做补充
+- ❌ 绝不能因某次 WebFetch 失败就中途去搜微信
+- ❌ 绝不能跳过任何官网直接搜微信（即使该站已知不可达）
+- ❌ 绝不能在 WebFetch 已拿够内容时还搜微信
+
+## 规则2：CLI 路径取决于操作系统
+
+`.venv` 在**项目根目录**（即 `.config/opencode/skills/china-policy-analyze/`），**不在** `skill/` 子目录下。
 
 | OS | Command |
 |----|---------|
-| **Windows** | `.venv\Scripts\cpi.exe wechat-search "关键词" --fetch --json` |
-| **Linux / macOS** | `source .venv/bin/activate && cpi wechat-search "关键词" --fetch --json` |
+| **Windows** | `C:\Users\<用户名>\.config\opencode\skills\china-policy-analyze\.venv\Scripts\cpi.exe wechat-search "关键词" --fetch --json` |
+| **Linux / macOS** | `cd ~/.config/opencode/skills/china-policy-analyze && source .venv/bin/activate && cpi wechat-search "关键词" --fetch --json` |
 
-The working directory is the skill's root folder (where `.venv/` lives). All CLI examples below show the Linux form — **on Windows, replace `source venv/bin/activate && cpi` with `.venv\Scripts\cpi.exe`** and use double quotes for arguments.
+⚠️ Windows 路径注意：是 `china-policy-analyze\.venv\Scripts\cpi.exe`，**不是** `china-policy-analyze\skill\.venv\Scripts\cpi.exe`
 
 # Purpose
 
@@ -195,24 +208,22 @@ Python's main advantage: browser-like headers + automated batch fetching + HTML-
 - ❌ 跳过某个官网直接搜微信（即使该站已知不可达）
 - ❌ WebFetch 已经拿到足够内容还去搜微信
 
-当确实需要搜微信时：
+（此规则已在文档顶部 HARD RULES 处定义，此处不再重复）
+
+当确认信息不足、需要搜微信时：
 
 #### CLI method (quickest — use this first)
 
 ```bash
 # ── Linux / macOS ──
-source .venv/bin/activate && cpi wechat-search "关键词" --fetch --json
-source .venv/bin/activate && cpi wechat-search "利率政策" -a "中国人民银行" --fetch --json
-source .venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
-source .venv/bin/activate && cpi wechat-search "服务业扩能提质" --max 5
-source .venv/bin/activate && cpi wechat-search "无人机实名制" -a "中国政府网" --fetch
+cd ~/.config/opencode/skills/china-policy-analyze && source .venv/bin/activate && cpi wechat-search "关键词" --fetch --json
+cd ~/.config/opencode/skills/china-policy-analyze && source .venv/bin/activate && cpi wechat-search "利率政策" -a "中国人民银行" --fetch --json
+cd ~/.config/opencode/skills/china-policy-analyze && source .venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
 
 # ── Windows ──
-.venv\Scripts\cpi.exe wechat-search "关键词" --fetch --json
-.venv\Scripts\cpi.exe wechat-search "利率政策" -a "中国人民银行" --fetch --json
-.venv\Scripts\cpi.exe wechat-search "降准" -c economy_finance --fetch --json
-.venv\Scripts\cpi.exe wechat-search "服务业扩能提质" --max 5
-.venv\Scripts\cpi.exe wechat-search "无人机实名制" -a "中国政府网" --fetch
+C:\Users\<用户名>\.config\opencode\skills\china-policy-analyze\.venv\Scripts\cpi.exe wechat-search "关键词" --fetch --json
+C:\Users\<用户名>\.config\opencode\skills\china-policy-analyze\.venv\Scripts\cpi.exe wechat-search "利率政策" -a "中国人民银行" --fetch --json
+C:\Users\<用户名>\.config\opencode\skills\china-policy-analyze\.venv\Scripts\cpi.exe wechat-search "降准" -c economy_finance --fetch --json
 ```
 
 #### Python method (if you need programmatic access)
@@ -287,10 +298,10 @@ for category, accounts in ws.account_directory.items():
 If the full project is installed with Python:
 ```bash
 # Linux / macOS
-cd china-policy-analyze-skill && source .venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py
+cd ~/.config/opencode/skills/china-policy-analyze && source .venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py
 
 # Windows
-cd china-policy-analyze-skill && .venv\Scripts\python.exe scripts\_run_daily_update.py
+C:\Users\<用户名>\.config\opencode\skills\china-policy-analyze\.venv\Scripts\python.exe scripts\_run_daily_update.py
 ```
 Or fetch a specific URL:
 ```python
