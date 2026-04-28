@@ -21,35 +21,93 @@ This skill supports both local corpus lookup AND live web fetching from official
 
 ## When to fetch live data
 
-Before answering a policy question, check data freshness:
-1. Look at the most recent file modification time in `corpus/metadata/` or `reports/`
-2. If the user asks about a topic where the local data is older than today, or where the answer might depend on very recent policy changes, proactively fetch from official websites
-3. If the user explicitly asks about "latest" or "recent" policies, always supplement with live fetching
+1. If the user asks about "latest" or "recent" policies, always fetch live
+2. If the user's question involves policies or events more recent than the corpus, fetch live
+3. If local data covers the question adequately, no need to fetch — but always tell the user whether the answer is from local corpus or live-fetched
 
-## How to fetch live data
+## How to fetch live data — WebFetch method (works on ANY agent)
 
-The project provides fetching tools at `scripts/_run_daily_update.py`. You can:
-1. Run the full update: `cd /root/china-policy-analyze-skill && source venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py`
-2. Or fetch a specific document manually using Python:
-   ```python
-   from china_policy_skill.fetch.fetch_html import HTMLFetcher
-   from china_policy_skill.parse.html_to_md import HTMLToMarkdown
-   fetcher = HTMLFetcher(timeout=15, rate_limit_delay=1.0)
-   result = fetcher.fetch('https://www.gov.cn/zhengce/content/202604/content_XXXXXXX.htm')
-   parser = HTMLToMarkdown()
-   markdown = parser.convert(result.html, result.url)
-   ```
-3. Key source URLs are listed in `config/sources.yaml`
+**Use your agent's built-in WebFetch tool.** You do NOT need Python or any project-specific tools. Just fetch the URLs below and read the content directly.
 
-## Data freshness rules
+### Step 1: Find latest policy titles and dates
+
+Fetch these listing pages to discover what's new:
+
+```
+https://www.gov.cn/zhengce/                           ← 国务院：最新政策列表
+https://www.ndrc.gov.cn/xwdt/xwfb/                    ← 发改委：新闻发布
+https://www.mofcom.gov.cn/xwfb/                       ← 商务部：新闻发布
+https://www.miit.gov.cn/xwdt/gxdt/sjdt/              ← 工信部：司局动态
+http://jhsjk.people.cn/                               ← 习近平重要讲话数据库
+https://www.news.cn/politics/                          ← 新华网时政频道
+```
+
+These listing pages reliably return HTML with titles and dates. Read them to find relevant document titles.
+
+### Step 2: Fetch specific document content
+
+**The correct URL pattern for gov.cn policy documents is:**
+```
+https://www.gov.cn/zhengce/YYYYMM/content_XXXXXXX.htm
+```
+
+**NOT** `/zhengce/content/YYYYMM/` (that pattern returns 404).
+
+To find the exact content URL, fetch the listing page at `https://www.gov.cn/zhengce/` and look for links containing `/content_` in the HTML. The href will be something like `/zhengce/202604/content_7066998.htm` — prefix with `https://www.gov.cn`.
+
+**If you get a 404 on a gov.cn URL:**
+- The URL path might be wrong. Try changing `/zhengce/content/YYYYMM/` to `/zhengce/YYYYMM/`
+- Try searching on news.cn: `https://www.news.cn/politics/` — Xinhua often republishes the same content
+- Try the gov.cn search: `https://sousuo.gov.cn/s.htm?t=govall&q=关键词` (may not work with WebFetch)
+
+**Confirmed working examples:**
+```
+https://www.gov.cn/zhengce/202604/content_7066998.htm   ← 中办国办：新就业群体（2026-04-26）
+https://www.gov.cn/zhengce/202604/content_7066483.htm   ← 国发〔2026〕7号 服务业扩能提质（2026-04-21）
+https://www.gov.cn/zhengce/content/202604/content_7066483.htm  ← 同一文件，也可访问（部分URL两种路径都可用）
+```
+
+### Step 3: For Xi Jinping speeches and important meetings
+
+```
+http://jhsjk.people.cn/     ← 重要讲话数据库 (reliable, returns HTML with dates)
+https://www.news.cn/politics/ ← 新华网时政 (reliable, full article content)
+```
+
+### What does NOT work with WebFetch
+
+- `www.moj.gov.cn` (司法部) — transport error
+- `www.gov.cn/gongbao/` (国务院公报) — most content URLs return 404
+- `www.gov.cn/yaowen/liebiao/` — most content URLs return 404
+- `sousuo.gov.cn` ( gov.cn 搜索) — transport error
+- Provincial/municipal government sites — inconsistent, many block
+
+For these, rely on the local corpus data or find alternative coverage on news.cn or ministry news pages.
+
+### Data freshness rules
 
 - Local corpus data is always the baseline — use it first
-- If local data covers the user's question adequately, no need to fetch live
-- If the question involves events or policies after the last corpus update, fetch live
-- Always tell the user whether your answer is based on local corpus data or live-fetched data
+- If local data covers the question adequately, no need to fetch live
+- Always tell the user whether your answer is based on local corpus or live-fetched data
 - Respect rate limits: never fetch more than 10 pages in one session
-- Government websites only display text in HTML — extract directly, do not expect PDF downloads
-- Store any newly fetched documents in the corpus (html + md + txt formats)
+- If a fetched page has too little content (< 200 chars), it's likely a listing page — find and follow the actual content links
+
+## How to fetch live data — Python method (only if Python environment is available)
+
+If the full project is installed with Python:
+```bash
+cd china-policy-analyze-skill && source venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py
+```
+Or fetch a specific URL:
+```python
+from china_policy_skill.fetch.fetch_html import HTMLFetcher
+from china_policy_skill.parse.html_to_md import HTMLToMarkdown
+fetcher = HTMLFetcher(timeout=15, rate_limit_delay=1.0)
+result = fetcher.fetch('https://www.gov.cn/zhengce/content/202604/content_XXXXXXX.htm')
+parser = HTMLToMarkdown()
+markdown = parser.convert(result.html, result.url)
+```
+Source URLs are listed in `config/sources.yaml`.
 
 # Core Rules
 
