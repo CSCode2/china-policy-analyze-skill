@@ -177,6 +177,8 @@ Python's main advantage: browser-like headers + automated batch fetching + HTML-
 
 **When official websites fail to return content, search WeChat public accounts for the same policy content.** Many official and professional accounts post full policy texts on WeChat.
 
+#### Method 1: Keyword search（通用搜索）
+
 ```python
 from china_policy_skill.fetch.fetch_wechat import WeChatSearcher
 
@@ -191,10 +193,50 @@ for a in articles:
 for article in articles[:2]:
     ws.fetch_article(article)
     print(f"{article.title}: {len(article.markdown)} chars")
-    print(article.markdown[:500])
 
 # Or do it in one step
 articles = ws.search_and_fetch("无人机实名制 政策", max_results=3)
+```
+
+#### Method 2: Search by known account（按公众号搜索，更快更准）
+
+A curated directory of 40 verified high-quality policy WeChat accounts is stored in `config/wechat_accounts.yaml`, organized by category:
+
+| Category | Key accounts | Authority |
+|----------|-------------|-----------|
+| central_policy | 中国政府网, 国务院公报, 新华视点, 人民日报, 求是网, 经济日报 | S/A |
+| economy_finance | 国家发改委, 财政部, 中国人民银行, 金融时报 | A |
+| industry_regulation | 工信微报, 科技部, 市场监管总局, 证监会发布, 金融监管总局 | A |
+| trade_foreign | 商务部, 外交小灵通, 中国海关发布 | A |
+| people_livelihood | 生态环境部, 交通运输部, 农业农村部, 住建部, 人社部, 教育部, 国家卫健委 | A |
+| law_justice | 司法部, 最高人民法院, 最高人民检察院, 中国普法 | A |
+| professional | 北大法律信息网, 威科先行, 中伦视界, 中国法律评论, 中国改革报 | B |
+
+```python
+from china_policy_skill.fetch.fetch_wechat import WeChatSearcher
+
+ws = WeChatSearcher()
+
+# Search by account name (uses optimized search_tip from directory)
+articles = ws.search_by_account("中国人民银行", keyword="利率", max_results=3)
+articles = ws.search_by_account_and_fetch("中国人民银行", keyword="货币政策")
+
+# Search across all accounts in a category
+articles = ws.search_by_category("economy_finance", keyword="降准")
+articles = ws.search_by_category_and_fetch("law_justice", keyword="司法解释")
+
+# Look up account info
+acc = ws.get_account("中国政府网")
+# WeChatAccount(name='中国政府网', wechat_id='zhengfuweixin', authority='S', ...)
+
+# Find accounts by topic keyword
+accounts = ws.find_accounts_by_topic("货币政策")
+# Returns accounts whose topics contain "货币政策"
+
+# Browse the full directory
+for category, accounts in ws.account_directory.items():
+    for acc in accounts:
+        print(f"  {acc.name} ({acc.authority}): {acc.desc}")
 ```
 
 **How it works:**
