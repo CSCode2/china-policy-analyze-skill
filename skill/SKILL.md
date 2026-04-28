@@ -3,6 +3,17 @@ name: china-policy-analyze
 description: Use this skill when the user asks about Chinese economic policy, central policy documents, Five-Year Plans, Xi Jinping's economic speeches, policy language interpretation, local policy implementation, regulatory signals, economic cases, or opportunity analysis based on official Chinese sources.
 ---
 
+# Platform-Specific CLI Paths (HARD RULE — READ FIRST)
+
+This skill ships with a `cpi` CLI tool installed in its `.venv`. **You MUST use the correct path for your OS:**
+
+| OS | Command |
+|----|---------|
+| **Windows** | `.venv\Scripts\cpi.exe wechat-search "关键词" --fetch --json` |
+| **Linux / macOS** | `source .venv/bin/activate && cpi wechat-search "关键词" --fetch --json` |
+
+The working directory is the skill's root folder (where `.venv/` lives). All CLI examples below show the Linux form — **on Windows, replace `source venv/bin/activate && cpi` with `.venv\Scripts\cpi.exe`** and use double quotes for arguments.
+
 # Purpose
 
 This skill helps the agent answer questions and produce analysis based on Chinese official policy documents, speeches, economic meetings, laws, regulations, judicial cases, enforcement notices, and official economic data.
@@ -155,14 +166,15 @@ These sites return near-empty content (JS-rendered):
 **FALLBACK RULE (mandatory):** When WebFetch to any official site fails (4xx/5xx error, empty content <200 chars, or timeout), you MUST try WeChat search before giving up:
 
 ```bash
-# Search by keyword (general)
-source venv/bin/activate && cpi wechat-search "关键词" --fetch --json
+# Linux / macOS
+source .venv/bin/activate && cpi wechat-search "关键词" --fetch --json
+source .venv/bin/activate && cpi wechat-search "关键词" -a "中国人民银行" --fetch --json
+source .venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
 
-# Search by known account (faster, more accurate)
-source venv/bin/activate && cpi wechat-search "关键词" -a "中国人民银行" --fetch --json
-
-# Search by category
-source venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
+# Windows
+.venv\Scripts\cpi.exe wechat-search "关键词" --fetch --json
+.venv\Scripts\cpi.exe wechat-search "关键词" -a "中国人民银行" --fetch --json
+.venv\Scripts\cpi.exe wechat-search "降准" -c economy_finance --fetch --json
 ```
 
 For the 4 blocked sites above, skip WebFetch entirely and go straight to WeChat search with the corresponding account.
@@ -195,20 +207,19 @@ Python's main advantage: browser-like headers + automated batch fetching + HTML-
 #### CLI method (quickest — use this first)
 
 ```bash
-# Search by keyword (general)
-source venv/bin/activate && cpi wechat-search "关键词" --fetch --json
+# ── Linux / macOS ──
+source .venv/bin/activate && cpi wechat-search "关键词" --fetch --json
+source .venv/bin/activate && cpi wechat-search "利率政策" -a "中国人民银行" --fetch --json
+source .venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
+source .venv/bin/activate && cpi wechat-search "服务业扩能提质" --max 5
+source .venv/bin/activate && cpi wechat-search "无人机实名制" -a "中国政府网" --fetch
 
-# Search by known account (faster, more accurate)
-source venv/bin/activate && cpi wechat-search "利率政策" -a "中国人民银行" --fetch --json
-
-# Search by category
-source venv/bin/activate && cpi wechat-search "降准" -c economy_finance --fetch --json
-
-# Search without fetching full content (titles + abstracts only)
-source venv/bin/activate && cpi wechat-search "服务业扩能提质" --max 5
-
-# Get human-readable output (default)
-source venv/bin/activate && cpi wechat-search "无人机实名制" -a "中国政府网" --fetch
+# ── Windows ──
+.venv\Scripts\cpi.exe wechat-search "关键词" --fetch --json
+.venv\Scripts\cpi.exe wechat-search "利率政策" -a "中国人民银行" --fetch --json
+.venv\Scripts\cpi.exe wechat-search "降准" -c economy_finance --fetch --json
+.venv\Scripts\cpi.exe wechat-search "服务业扩能提质" --max 5
+.venv\Scripts\cpi.exe wechat-search "无人机实名制" -a "中国政府网" --fetch
 ```
 
 #### Python method (if you need programmatic access)
@@ -282,7 +293,11 @@ for category, accounts in ws.account_directory.items():
 
 If the full project is installed with Python:
 ```bash
-cd china-policy-analyze-skill && source venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py
+# Linux / macOS
+cd china-policy-analyze-skill && source .venv/bin/activate && CPI_MAX_DOCS=5 python scripts/_run_daily_update.py
+
+# Windows
+cd china-policy-analyze-skill && .venv\Scripts\python.exe scripts\_run_daily_update.py
 ```
 Or fetch a specific URL:
 ```python
