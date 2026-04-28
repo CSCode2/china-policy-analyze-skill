@@ -36,6 +36,7 @@ Fetch these listing pages to discover what's new:
 **Confirmed working (tested 2026-04-28):**
 ```
 https://www.gov.cn/zhengce/                           ← 国务院：最新政策列表
+https://www.gov.cn/zhengce/YYYYMM/content_XXXXXXX.htm ← 国务院：具体文件内容
 https://www.ndrc.gov.cn/xwdt/xwfb/                    ← 发改委：新闻发布
 https://www.mofcom.gov.cn/xwfb/                       ← 商务部：新闻发布
 https://www.miit.gov.cn/xwdt/gxdt/sjdt/              ← 工信部：司局动态
@@ -46,7 +47,13 @@ https://www.mfa.gov.cn/wjbxw/                         ← 外交部：新闻
 https://www.mee.gov.cn/ywdt/                          ← 生态环境部：新闻
 https://www.nra.gov.cn/xwzx/                          ← 金融监管总局：新闻
 https://www.csrc.gov.cn/csrc/c100032/common_list.shtml ← 证监会：发布
+https://www.moj.gov.cn/pub/sfbgw/                     ← 司法部：政策文件
+https://www.court.gov.cn/zixun/                       ← 最高法：资讯
+https://www.spp.gov.cn/                               ← 最高检：首页
+https://www.samr.gov.cn/                              ← 市场监管总局：首页
 ```
+
+Note: Some ministry sites return actual content only from specific sub-paths, not from their top-level news listing URLs. If a URL returns very little content (< 200 chars), try the ministry homepage instead and follow links from there.
 
 These listing pages reliably return HTML with titles and dates. Read them to find relevant document titles.
 
@@ -80,18 +87,20 @@ http://jhsjk.people.cn/     ← 重要讲话数据库 (reliable, returns HTML wi
 https://www.news.cn/politics/ ← 新华网时政 (reliable, full article content)
 ```
 
-### What does NOT work with WebFetch
+### What does NOT work
 
-- `www.moj.gov.cn` (司法部) — 404
-- `www.gov.cn/gongbao/` (国务院公报) — too little content (860 chars, just a shell)
-- `www.gov.cn/yaowen/liebiao/` — most content URLs return 404
-- `sousuo.gov.cn` ( gov.cn 搜索) — connection timeout, will hang
-- `www.pbc.gov.cn` (央行) — 403 forbidden
-- `www.customs.gov.cn` (海关总署) — connection error
-- `www.most.gov.cn` (科技部) — 404 on news pages
-- `www.samr.gov.cn` (市场监管总局) — 404 on news pages
+These sites actively block non-browser requests from data center IPs. No workaround exists:
 
-For these, rely on the local corpus data or find alternative coverage on news.cn, or check the gov.cn policy listing page which aggregates documents from all ministries.
+- `www.pbc.gov.cn` (央行) — 403 Forbidden (IP-level blocking)
+- `www.customs.gov.cn` (海关总署) — connection timeout (IP-level blocking)
+- `www.mps.gov.cn` (公安部) — 521 server error (behind cloud protection)
+
+These sites return near-empty content (JS-rendered, no useful text without a real browser):
+
+- `www.most.gov.cn` (科技部) — 157 chars, empty shell
+- `www.mohrss.gov.cn` (人社部) — 989 chars, empty shell
+
+For these, rely on the local corpus data, or check the gov.cn policy listing page which aggregates documents from all ministries.
 
 ### Data freshness rules
 
@@ -103,15 +112,13 @@ For these, rely on the local corpus data or find alternative coverage on news.cn
 
 ## How to fetch live data — Python method (only if Python environment is available)
 
-**Note: Python HTMLFetcher has the SAME limitations as WebFetch.** The following sites are NOT accessible even with Python:
-- `www.pbc.gov.cn` (央行) — 403
-- `www.customs.gov.cn` (海关总署) — connection error
-- `www.moj.gov.cn` (司法部) — 404
-- `www.most.gov.cn` (科技部) — 404
-- `www.samr.gov.cn` (市场监管总局) — 404
-- `sousuo.gov.cn` — connection timeout
+**Note: Python HTMLFetcher uses browser-like headers and CAN access more sites than bare WebFetch:**
+- Judicial/Legal: `www.moj.gov.cn`, `www.court.gov.cn`, `www.spp.gov.cn` — all work with Python
+- Market regulation: `www.samr.gov.cn` — works with Python
+- But these sites still block at IP level (no workaround): `www.pbc.gov.cn` (403), `www.customs.gov.cn` (timeout)
+- JS-rendered sites still return empty shells: `www.most.gov.cn`, `www.mohrss.gov.cn`
 
-Python does NOT solve the access problem. The only advantage of Python is automated batch fetching and HTML-to-markdown conversion.
+Python's main advantage: browser-like headers + automated batch fetching + HTML-to-markdown conversion.
 
 If the full project is installed with Python:
 ```bash

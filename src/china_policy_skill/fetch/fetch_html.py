@@ -20,13 +20,30 @@ class FetchResult:
 
 
 class HTMLFetcher:
+    _BROWSER_HEADERS = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Sec-Ch-Ua": '"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": '"Windows"',
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+    }
+
     def __init__(
         self,
         timeout: int = 30,
         max_retries: int = 3,
         backoff_factor: float = 1.0,
         rate_limit_delay: float = 1.0,
-        user_agent: str = "ChinaPolicySkill/0.1.0",
+        user_agent: str = "",
     ):
         self.timeout = timeout
         self.max_retries = max_retries
@@ -48,7 +65,10 @@ class HTMLFetcher:
         adapter = HTTPAdapter(max_retries=retry_strategy)
         session.mount("http://", adapter)
         session.mount("https://", adapter)
-        session.headers.update({"User-Agent": self.user_agent})
+        headers = dict(self._BROWSER_HEADERS)
+        if self.user_agent:
+            headers["User-Agent"] = self.user_agent
+        session.headers.update(headers)
         return session
 
     def _rate_limit(self) -> None:
