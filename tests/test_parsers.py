@@ -25,8 +25,9 @@ class TestHTMLToMarkdown:
             "<html><body><nav>Navigation</nav>"
             "<article><p>Content</p></article></body></html>"
         )
-        cleaned = converter._strip_noise(html)
-        assert "Navigation" not in cleaned or "Content" in cleaned
+        result = converter.convert(html)
+        assert "Navigation" not in result
+        assert "Content" in result
 
     def test_strip_noise_removes_footer(self):
         converter = HTMLToMarkdown()
@@ -34,8 +35,9 @@ class TestHTMLToMarkdown:
             "<html><body><p>Main</p>"
             "<footer>Footer info</footer></body></html>"
         )
-        cleaned = converter._strip_noise(html)
-        assert "Footer info" not in cleaned or "Main" in cleaned
+        result = converter.convert(html)
+        assert "Footer info" not in result
+        assert "Main" in result
 
     def test_title_extraction(self):
         extractor = MetadataExtractor()

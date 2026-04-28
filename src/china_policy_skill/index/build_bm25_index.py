@@ -7,7 +7,7 @@ import pickle
 from pathlib import Path
 from typing import Dict, List, Optional
 
-import jieba
+import re
 from rank_bm25 import BM25Okapi
 
 logger = logging.getLogger(__name__)
@@ -117,9 +117,15 @@ class BM25IndexBuilder:
 
         return filtered
 
+    _CN_TOKEN_RE = re.compile(r'[\u4e00-\u9fff]|[a-zA-Z]+|\d+')
+
     def _tokenize(self, text: str) -> List[str]:
-        tokens = jieba.lcut(text)
-        return [t.strip() for t in tokens if t.strip()]
+        cn_chars = self._CN_TOKEN_RE.findall(text)
+        bigrams = []
+        for i in range(len(cn_chars) - 1):
+            if '\u4e00' <= cn_chars[i] <= '\u9fff' and '\u4e00' <= cn_chars[i+1] <= '\u9fff':
+                bigrams.append(cn_chars[i] + cn_chars[i+1])
+        return cn_chars + bigrams
 
     def _load_chunks(self, path: str) -> List[dict]:
         chunks: List[dict] = []

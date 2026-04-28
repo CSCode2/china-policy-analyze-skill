@@ -3,7 +3,7 @@
 set -e
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-source "${REPO_ROOT}/.venv/bin/activate"
+source "${REPO_ROOT}/venv/bin/activate"
 
 WEEK=$(date +%Y_W%V)
 REPORT_DIR="${REPO_ROOT}/reports"

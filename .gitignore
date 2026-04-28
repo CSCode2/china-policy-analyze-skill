@@ -26,3 +26,8 @@ rag/bm25_index/
 *.log
 .hermes/
 reports/*.md
+corpus/raw/*.html
+corpus/processed/
+corpus/metadata/hash_store.json
+reports/
+rag/
