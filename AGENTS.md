@@ -26,3 +26,15 @@
 - Run tests before committing.
 - Record all fetch errors in corpus/metadata/fetch_errors.jsonl.
 - Deduplicate using content hashes before saving.
+
+## Data Collection Rules
+
+- Government websites typically only display text in HTML, NOT downloadable PDF/Word files.
+- ALWAYS extract text content directly from web page HTML, do NOT wait for or expect PDF downloads.
+- Store each document in 3 formats under corpus/:
+  - raw/{doc_id}.html — original HTML (for re-processing if needed)
+  - processed/markdown/{doc_id}.md — cleaned markdown
+  - processed/text/{doc_id}.txt — plain text (same content as md, no markdown syntax)
+- If a page has too little content (<200 chars after extraction), it is likely a listing page, not a document page — follow its links to find the actual content page.
+- Do NOT run BM25 index building — it causes OOM on 3GB RAM servers. Index building is disabled.
+- Use CPI_MAX_DOCS env var to limit documents per run (default 20).

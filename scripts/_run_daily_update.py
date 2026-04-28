@@ -28,6 +28,7 @@ def _ensure_dirs():
     for d in [
         "corpus/raw",
         "corpus/processed/markdown",
+        "corpus/processed/text",
         "corpus/metadata",
         "reports",
     ]:
@@ -144,6 +145,12 @@ def fetch_and_process_docs(doc_urls):
             REPO_ROOT, "corpus", "processed", "markdown", f"{doc_id}.md"
         )
         with open(md_path, "w", encoding="utf-8") as f:
+            f.write(cleaned_text)
+
+        txt_path = os.path.join(
+            REPO_ROOT, "corpus", "processed", "text", f"{doc_id}.txt"
+        )
+        with open(txt_path, "w", encoding="utf-8") as f:
             f.write(cleaned_text)
 
         meta_path = os.path.join(
