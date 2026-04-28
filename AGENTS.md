@@ -1,5 +1,17 @@
 # Agent Rules for China Policy Analyze Skill
 
+## Meta Rule — HIGHEST PRIORITY
+
+**每次对项目的任何修改，都必须同步更新 Hermes 相关配置，包括但不限于：**
+- SOUL.md（/root/.hermes/SOUL.md）
+- Cron 任务 prompt（hermes cron edit）
+- Gateway 重启（如 SOUL.md 有改动）
+- AGENTS.md（如规则有变动）
+- SKILL.md（如技能定义有变动）
+- 验证 Hermes 配置生效
+
+**绝对不能改了项目代码却不更新 Hermes，导致 Agent 执行时用的是过时的指令。**
+
 ## Security
 
 - NEVER push to main directly. Always create a branch and PR.
