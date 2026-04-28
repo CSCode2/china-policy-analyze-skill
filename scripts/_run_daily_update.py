@@ -131,6 +131,8 @@ def fetch_and_process_docs(doc_urls):
             "authority_level": "S" if "gov.cn" in source else "A",
             "doc_type": meta.doc_type,
             "organization": meta.organization,
+            "issuing_body": meta.issuing_body,
+            "doc_number": meta.doc_number,
             "content_hash": h,
         }
 

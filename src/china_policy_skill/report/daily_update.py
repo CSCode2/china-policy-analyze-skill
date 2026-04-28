@@ -5,6 +5,30 @@ from typing import List
 
 
 class DailyUpdateGenerator:
+    @staticmethod
+    def _format_doc_entry(doc: dict) -> str:
+        title = doc.get("title", "Untitled")
+        date = doc.get("publish_date", "")
+        doc_number = doc.get("doc_number", "")
+        issuing_body = doc.get("issuing_body", "")
+        url = doc.get("url", "")
+
+        if "《" not in title:
+            title = f"《{title}》"
+
+        parts = [title]
+        if doc_number:
+            parts.append(doc_number)
+        if date:
+            parts.append(f"({date})")
+
+        entry = "  - " + " ".join(parts)
+        if issuing_body:
+            entry += f" — {issuing_body}"
+        if url:
+            entry += f" [Link]({url})"
+        return entry
+
     def generate(self, new_documents: List[dict], errors: List[dict]) -> str:
         today = datetime.now().strftime("%Y-%m-%d")
         sections = [
@@ -41,14 +65,7 @@ class DailyUpdateGenerator:
                 docs = by_authority[level]
                 sections.append(f"**{level}** ({len(docs)} document(s)):")
                 for doc in docs:
-                    title = doc.get("title", "Untitled")
-                    source = doc.get("source_name", "Unknown")
-                    date = doc.get("publish_date", "Unknown")
-                    url = doc.get("url", "")
-                    entry = f"  - {title} — {source} ({date})"
-                    if url:
-                        entry += f" [Link]({url})"
-                    sections.append(entry)
+                    sections.append(self._format_doc_entry(doc))
                 sections.append("")
 
             sections.append(f"### By Document Type")
@@ -57,14 +74,7 @@ class DailyUpdateGenerator:
                 docs = by_type[dtype]
                 sections.append(f"**{dtype}** ({len(docs)} document(s)):")
                 for doc in docs:
-                    title = doc.get("title", "Untitled")
-                    source = doc.get("source_name", "Unknown")
-                    date = doc.get("publish_date", "Unknown")
-                    url = doc.get("url", "")
-                    entry = f"  - {title} — {source} ({date})"
-                    if url:
-                        entry += f" [Link]({url})"
-                    sections.append(entry)
+                    sections.append(self._format_doc_entry(doc))
                 sections.append("")
 
             all_phrases: List[str] = []

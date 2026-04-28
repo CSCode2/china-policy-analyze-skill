@@ -11,6 +11,8 @@ class DocumentMetadata:
     organization: str = ""
     doc_type: str = ""
     source_url: str = ""
+    doc_number: str = ""
+    issuing_body: str = ""
 
 
 DOC_TYPE_PATTERNS: List[re.Pattern] = [
@@ -70,6 +72,19 @@ class MetadataExtractor:
         re.compile(r'<meta[^>]+(?:property|name)=["\']author["\'][^>]+content=["\'](.*?)["\']', re.IGNORECASE),
         re.compile(r'<meta[^>]+(?:property|name)=["\']article:author["\'][^>]+content=["\'](.*?)["\']', re.IGNORECASE),
     ]
+
+    DOC_NUMBER_PATTERNS = [
+        re.compile(r'(国发〔\d{4}〕\d+号)'),
+        re.compile(r'(国办发〔\d{4}〕\d+号)'),
+        re.compile(r'(中办发〔\d{4}〕\d+号)'),
+        re.compile(r'(国函〔\d{4}〕\d+号)'),
+        re.compile(r'(国办函〔\d{4}〕\d+号)'),
+        re.compile(r'(主席令第\d+号)'),
+        re.compile(r'(国务院令第\d+号)'),
+        re.compile(r'(〔\d{4}〕\d+号)'),
+    ]
+
+    TITLE_SUFFIX_RE = re.compile(r'[_—–\-]\s*(中国政府网|最新政策|其他|政策解读|宏观经济|海关|医药管理|新华社|新华网|人民网|求是网|国务院部门网站|地方政策).*$')
 
     HTML_TAG_RE = re.compile(r"<[^>]+>")
     WHITESPACE_RE = re.compile(r"\s+")
@@ -151,14 +166,45 @@ class MetadataExtractor:
                     return author
         return ""
 
+    def _clean_title(self, title: str) -> str:
+        title = self.TITLE_SUFFIX_RE.sub("", title)
+        return title.strip()
+
+    def _extract_doc_number(self, html_or_text: str) -> str:
+        text = self._strip_html(html_or_text)[:2000]
+        for pattern in self.DOC_NUMBER_PATTERNS:
+            match = pattern.search(text)
+            if match:
+                return match.group(1)
+        return ""
+
+    def _extract_issuing_body(self, html_or_text: str) -> str:
+        text = self._strip_html(html_or_text)[:500]
+        issuing_patterns = [
+            re.compile(r'^(国务院办公厅|国务院|中共中央办公厅|中共中央|全国人大|全国政协)'),
+            re.compile(r'(国家发展改革委|工业和信息化部|科学技术部|财政部|商务部|人力资源和社会保障部|自然资源部|生态环境部|住房和城乡建设部|交通运输部|农业农村部|文化和旅游部|国家卫生健康委员会|应急管理部|司法部|民政部|教育部|审计署|国家医疗保障局|国家能源局|海关总署|国家税务总局|国家市场监督管理总局|中国人民银行|中国证监会|国家金融监督管理总局|国家外汇管理局|公安部|最高人民检察院|最高人民法院)'),
+        ]
+        for pattern in issuing_patterns:
+            match = pattern.search(text)
+            if match:
+                return match.group(1)
+        return ""
+
     def extract(self, html_or_text: str, url: str = "") -> DocumentMetadata:
         metadata = DocumentMetadata(source_url=url)
-        metadata.title = self._extract_title(html_or_text)
+        raw_title = self._extract_title(html_or_text)
+        metadata.title = self._clean_title(raw_title)
         metadata.publish_date = self._extract_date_from_html(html_or_text)
+        if metadata.publish_date and len(metadata.publish_date) > 10:
+            metadata.publish_date = metadata.publish_date[:10]
         metadata.author = self._extract_author(html_or_text)
         metadata.organization = self._extract_organization(html_or_text)
         metadata.doc_type = self._classify_doc_type(html_or_text)
+        metadata.doc_number = self._extract_doc_number(html_or_text)
+        metadata.issuing_body = self._extract_issuing_body(html_or_text)
 
+        if not metadata.organization and metadata.issuing_body:
+            metadata.organization = metadata.issuing_body
         if not metadata.organization and metadata.author:
             metadata.organization = metadata.author
 
