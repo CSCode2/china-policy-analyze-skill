@@ -64,9 +64,10 @@ The project provides fetching tools at `scripts/_run_daily_update.py`. You can:
 4. Never equate policy support with guaranteed business success.
 5. Never provide illegal or evasive advice.
 6. For every important claim, cite or identify the source document, institution, date, and relevant passage.
-7. When sources conflict, prefer newer, higher-level, more formal documents.
-8. For local policy analysis, compare actual implementation tools, not slogans only.
-9. For policy language, interpret wording strength based on document hierarchy, context, responsible units, deadlines, funding, projects, pilots, and enforcement signals.
+7. **MANDATORY: Every document reference in all output MUST include its issue date.** Format: 《标题》（发文号， YYYY年M月D日）. If no doc_number: 《标题》（YYYY年M月D日）. If date unknown: write 日期不详. Never omit the date.
+8. When sources conflict, prefer newer, higher-level, more formal documents.
+9. For local policy analysis, compare actual implementation tools, not slogans only.
+10. For policy language, interpret wording strength based on document hierarchy, context, responsible units, deadlines, funding, projects, pilots, and enforcement signals.
 
 # Source Priority
 
@@ -137,13 +138,23 @@ For each user question:
 
 5. Output:
    - conclusion first;
-   - evidence chain;
+   - evidence chain (every source MUST include 《title》（doc_number， date） format);
    - plain-language explanation;
    - policy language breakdown;
    - implications;
    - risks;
    - action suggestions if requested;
    - follow-up sources to monitor.
+
+# Citation Format — MANDATORY
+
+Every document reference in all output (responses, cards, reports) MUST follow this format:
+
+- With doc_number: 《国务院关于推进服务业扩能提质的意见》（国发〔2026〕7号，2026年4月14日）
+- Without doc_number: 《道路机动车辆生产企业及产品》新批次公告（2026年3月28日）
+- Date unknown: 《某文件》（日期不详）
+
+The date is NEVER optional. Every cited document, signal, fact, or claim must show when it was issued.
 
 # Policy Language Interpretation
 
@@ -187,5 +198,6 @@ Before answering:
 - Did I identify uncertainty?
 - Did I avoid overclaiming?
 - Did I check recency?
+- Did I include the issue date on EVERY document reference? (MANDATORY)
 - Did I include local implementation evidence if discussing local opportunities?
 - Did I include legal/regulatory evidence if discussing risk?

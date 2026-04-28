@@ -3,6 +3,8 @@ from __future__ import annotations
 from datetime import datetime
 from typing import List
 
+from ..utils.dates import format_doc_citation
+
 
 class PolicySignalCardGenerator:
     def generate(self, topic: str, documents: List[dict]) -> str:
@@ -95,11 +97,9 @@ class PolicySignalCardGenerator:
 
         sections.extend(["", "## Source Documents", ""])
         for idx, doc in enumerate(documents, 1):
-            title = doc.get("title", "Untitled")
-            source = doc.get("source_name", "Unknown")
-            date = doc.get("publish_date", "Unknown")
+            citation = format_doc_citation(doc)
             url = doc.get("url", "")
-            entry = f"{idx}. **{title}** — {source} ({date})"
+            entry = f"{idx}. **{citation}**"
             if url:
                 entry += f" [Link]({url})"
             sections.append(entry)

@@ -25,7 +25,10 @@
 
 - ALWAYS wrap document titles in 《》 in all output
 - ALWAYS include document number and issue date when available
+- EVERY document reference MUST include its issue date — this is MANDATORY, no exceptions
 - Format example: 《国务院关于推进服务业扩能提质的意见》（国发〔2026〕7号，2026年4月14日）
+- Without doc_number: 《道路机动车辆生产企业及产品》新批次公告（2026年3月28日）
+- If date unknown: write 日期不详 — NEVER omit the date
 - ALWAYS include evidence level (L1–L5) for claims
 - ALWAYS indicate whether answer is from local corpus or live-fetched data
 

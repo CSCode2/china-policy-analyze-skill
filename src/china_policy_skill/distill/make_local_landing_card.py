@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import List
 
+from ..utils.dates import format_doc_citation
+
 
 class LocalLandingCardGenerator:
     def generate(self, region: str, topic: str, documents: List[dict]) -> str:
@@ -38,13 +40,11 @@ class LocalLandingCardGenerator:
         if local_docs:
             sections.extend(["## Regional Policy Documents", ""])
             for idx, doc in enumerate(local_docs, 1):
-                title = doc.get("title", "Untitled")
-                source = doc.get("source_name", "Unknown")
-                date = doc.get("publish_date", "Unknown")
+                citation = format_doc_citation(doc)
                 url = doc.get("url", "")
                 authority = doc.get("authority_level", "")
                 stage = doc.get("implementation_stage", "")
-                entry = f"{idx}. **{title}** — {source} ({date})"
+                entry = f"{idx}. **{citation}**"
                 if authority:
                     entry += f" [Authority: {authority}]"
                 if stage:
@@ -96,11 +96,9 @@ class LocalLandingCardGenerator:
         if national_docs:
             sections.extend(["## National-Level Context", ""])
             for idx, doc in enumerate(national_docs, 1):
-                title = doc.get("title", "Untitled")
-                source = doc.get("source_name", "Unknown")
-                date = doc.get("publish_date", "Unknown")
+                citation = format_doc_citation(doc)
                 url = doc.get("url", "")
-                entry = f"{idx}. **{title}** — {source} ({date})"
+                entry = f"{idx}. **{citation}**"
                 if url:
                     entry += f" [Link]({url})"
                 sections.append(entry)

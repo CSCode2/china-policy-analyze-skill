@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import List
 
+from ..utils.dates import format_doc_citation
+
 
 class ConceptCardGenerator:
     def generate(self, concept: str, documents: List[dict]) -> str:
@@ -23,14 +25,12 @@ class ConceptCardGenerator:
             sections.append("No documents found for this concept.")
         else:
             for idx, doc in enumerate(documents, 1):
-                title = doc.get("title", "Untitled")
-                source = doc.get("source_name", "Unknown")
-                date = doc.get("publish_date", "Unknown")
+                citation = format_doc_citation(doc)
                 url = doc.get("url", "")
                 relevance = doc.get("relevance_score", "")
                 authority = doc.get("authority_level", "")
 
-                entry = f"{idx}. **{title}** — {source} ({date})"
+                entry = f"{idx}. **{citation}**"
                 if authority:
                     entry += f" [Authority: {authority}]"
                 if relevance:

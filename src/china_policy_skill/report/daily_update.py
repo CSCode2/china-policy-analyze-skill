@@ -3,28 +3,15 @@ from __future__ import annotations
 from datetime import datetime
 from typing import List
 
+from ..utils.dates import format_doc_citation
+
 
 class DailyUpdateGenerator:
     @staticmethod
     def _format_doc_entry(doc: dict) -> str:
-        title = doc.get("title", "Untitled")
-        date = doc.get("publish_date", "")
-        doc_number = doc.get("doc_number", "")
-        issuing_body = doc.get("issuing_body", "")
+        citation = format_doc_citation(doc)
         url = doc.get("url", "")
-
-        if "《" not in title:
-            title = f"《{title}》"
-
-        parts = [title]
-        if doc_number:
-            parts.append(doc_number)
-        if date:
-            parts.append(f"({date})")
-
-        entry = "  - " + " ".join(parts)
-        if issuing_body:
-            entry += f" — {issuing_body}"
+        entry = f"  - **{citation}**"
         if url:
             entry += f" [Link]({url})"
         return entry

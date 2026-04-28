@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import List
 
+from ..utils.dates import format_doc_citation
+
 
 class CaseCardGenerator:
     def generate(self, case_data: dict) -> str:
@@ -9,6 +11,8 @@ class CaseCardGenerator:
             return ""
 
         case_name = case_data.get("case_name", case_data.get("title", "Untitled Case"))
+        if "《" not in case_name:
+            case_name = f"《{case_name}》"
         case_number = case_data.get("case_number", "")
         court = case_data.get("court", "")
         date = case_data.get("judgment_date", case_data.get("date", "Unknown"))
@@ -26,8 +30,15 @@ class CaseCardGenerator:
         url = case_data.get("url", "")
         authority_level = case_data.get("authority_level", "")
 
+        date_str = str(date) if date else "日期不详"
+        title_line = case_name
+        if case_number:
+            title_line += f"（{case_number}，{date_str}）"
+        else:
+            title_line += f"（{date_str}）"
+
         sections = [
-            f"# {case_name}",
+            f"# {title_line}",
             "",
             "| Field | Value |",
             "|-------|-------|",

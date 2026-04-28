@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import List
 
+from ..utils.dates import format_doc_citation
+
 
 class LanguageCardGenerator:
     def generate(self, phrase: str, evidence: List[dict]) -> str:
@@ -102,11 +104,10 @@ class LanguageCardGenerator:
         sections.extend(["## Document Evidence", ""])
         for idx, ev in enumerate(evidence, 1):
             if isinstance(ev, dict):
-                source = ev.get("source_title", ev.get("source_name", "Unknown"))
-                date = ev.get("publish_date", "Unknown")
+                citation = format_doc_citation(ev)
                 strength = ev.get("strength_level", "?")
                 context = ev.get("context", "")
-                entry = f"{idx}. **{source}** ({date}) — Strength: {strength}/5"
+                entry = f"{idx}. **{citation}** — Strength: {strength}/5"
                 if context:
                     entry += f"\n   > {context}"
                 sections.append(entry)
