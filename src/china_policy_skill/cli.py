@@ -49,7 +49,7 @@ def wechat_search():
         for a in articles:
             item = {"title": a.title, "url": a.url, "abstract": a.abstract, "account": a.account_name}
             if a.markdown:
-                item["markdown"] = a.markdown[:5000]
+                item["markdown"] = a.markdown
             data.append(item)
         print(json.dumps(data, ensure_ascii=False, indent=2))
     else:
