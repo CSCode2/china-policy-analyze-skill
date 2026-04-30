@@ -147,11 +147,3 @@ CLI用法：
 /root/china-policy-analyze-skill/venv/bin/cpi wechat-search "关键词" -a "中国人民银行" --fetch --json
 /root/china-policy-analyze-skill/venv/bin/cpi wechat-search "降准" -c economy_finance --fetch --json
 ```
-
-### PR审批规则
-
-审批PR时必须用 `gh pr comment` 写明理由：
-- **通过**：简要写理由（如：内容来自官方来源，证据等级标注正确，引用格式合规）
-- **不通过**：必须具体指出哪条内容有什么问题
-- **不通过的PR直接关闭，不修改不重提**，不影响后续日常任务
-- 即使今天的PR不通过，明天的日常任务照常执行
