@@ -2,7 +2,9 @@ import json
 import os
 import sys
 import glob
-from datetime import datetime
+from datetime import datetime, date
+
+import yaml
 
 from china_policy_skill.fetch.fetch_html import HTMLFetcher
 from china_policy_skill.parse.html_to_md import HTMLToMarkdown
@@ -13,11 +15,26 @@ from china_policy_skill.report.daily_update import DailyUpdateGenerator
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-SOURCE_URLS = [
-    "https://www.gov.cn/zhengce/",
-    "https://www.ndrc.gov.cn",
-    "http://jhsjk.people.cn",
+LISTING_URLS = [
+    ("gov.cn", "https://www.gov.cn/zhengce/"),
+    ("ndrc", "https://www.ndrc.gov.cn/xwdt/xwfb/"),
+    ("mofcom", "https://www.mofcom.gov.cn/xwfb/"),
+    ("miit", "https://www.miit.gov.cn/"),
+    ("moj", "https://www.moj.gov.cn/"),
+    ("court", "https://www.court.gov.cn/"),
+    ("spp", "https://www.spp.gov.cn/"),
+    ("samr", "https://www.samr.gov.cn/"),
+    ("mee", "https://www.mee.gov.cn/"),
+    ("mfa", "https://www.mfa.gov.cn/wjbxw/"),
+    ("stats", "https://www.stats.gov.cn/sj/zxfb/"),
+    ("nfra", "https://www.nfra.gov.cn/"),
+    ("csrc", "https://www.csrc.gov.cn/csrc/c100032/"),
+    ("pbc", "https://www.pbc.gov.cn/"),
+    ("jhsjk", "http://jhsjk.people.cn"),
+    ("scio", "https://www.scio.gov.cn/"),
 ]
+
+SKIP_SOURCES = {"customs.gov.cn", "mps.gov.cn", "most.gov.cn", "mohrss.gov.cn"}
 
 HASH_STORE = os.path.join(REPO_ROOT, "corpus", "metadata", "hash_store.json")
 
@@ -53,41 +70,60 @@ def fetch_list_pages():
     html_fetcher = HTMLFetcher(timeout=15, rate_limit_delay=1.0)
     doc_urls = []
 
-    for source_url in SOURCE_URLS:
-        print(f"  Fetching listing page: {source_url}")
+    for source_name, source_url in LISTING_URLS:
+        if any(skip in source_url for skip in SKIP_SOURCES):
+            continue
+        print(f"  Fetching listing page: {source_name} ({source_url})")
         result = html_fetcher.fetch(source_url)
         if result.error:
             print(f"    ERROR: {result.error}")
-            _log_fetch_error(source_url, source_url, result.error)
+            _log_fetch_error(source_name, source_url, result.error)
             continue
 
         from lxml import etree
+        from urllib.parse import urljoin, urlparse
 
         try:
             parser = etree.HTMLParser(encoding="utf-8")
             tree = etree.fromstring((result.html or "").encode("utf-8"), parser)
+            parsed_base = urlparse(source_url)
+            base = f"{parsed_base.scheme}://{parsed_base.netloc}"
+
             for a_el in tree.xpath("//a[@href]"):
                 href = a_el.get("href", "")
                 text = (a_el.text or "").strip()
                 if not text or len(text) < 5:
                     continue
                 if href.startswith("./"):
-                    from urllib.parse import urljoin
                     href = urljoin(source_url, href)
                 elif href.startswith("/"):
-                    from urllib.parse import urlparse
+                    href = f"{base}{href}"
+                elif not href.startswith("http"):
+                    href = urljoin(source_url, href)
 
-                    parsed = urlparse(source_url)
-                    href = f"{parsed.scheme}://{parsed.netloc}{href}"
-                if (
+                is_article = (
                     "/content_" in href
                     or "/zhengce/content" in href
                     or "/xwdt/" in href
-                ):
-                    doc_urls.append((text, href, source_url))
+                    or "/art/" in href
+                    or "/t20" in href
+                    or ".shtml" in href
+                    or "/content.shtml" in href
+                    or "/pub/" in href
+                    or "/zixun/" in href
+                    or "/xwzx/" in href
+                    or "/sj/zxfb/" in href
+                    or "/ywdt/" in href
+                    or "/xwfb/" in href
+                    or "/wjbxw/" in href
+                )
+
+                same_site = parsed_base.netloc in href or href.startswith("/")
+                if is_article and same_site:
+                    doc_urls.append((text, href, source_name))
         except Exception as e:
             print(f"    Parse error: {e}")
-            _log_fetch_error(source_url, source_url, str(e))
+            _log_fetch_error(source_name, source_url, str(e))
 
     print(f"  Found {len(doc_urls)} document URLs")
     return doc_urls
@@ -173,6 +209,7 @@ def fetch_and_process_docs(doc_urls):
 def generate_report(new_docs):
     gen = DailyUpdateGenerator()
 
+    today_str = date.today().isoformat()
     errors = []
     error_log = os.path.join(REPO_ROOT, "corpus", "metadata", "fetch_errors.jsonl")
     if os.path.exists(error_log):
@@ -181,7 +218,10 @@ def generate_report(new_docs):
                 line = line.strip()
                 if line:
                     try:
-                        errors.append(json.loads(line))
+                        entry = json.loads(line)
+                        ts = entry.get("timestamp", "")
+                        if ts.startswith(today_str):
+                            errors.append(entry)
                     except json.JSONDecodeError:
                         pass
 

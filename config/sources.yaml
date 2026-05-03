@@ -261,7 +261,7 @@ ministry_sources:
 
   - name: 金融监管总局
     name_en: National Financial Regulatory Administration (NFRA)
-    url: https://www.cbirc.gov.cn
+    url: https://www.nfra.gov.cn
     level: A
     priority: 2
     topics:
