@@ -48,6 +48,7 @@ LISTING_URLS = [
     ("mva", "https://www.mva.gov.cn/"),
     ("audit", "https://www.audit.gov.cn/"),
     ("nea", "https://www.nea.gov.cn/"),
+    ("nda", "https://www.nda.gov.cn/"),
     ("scio", "https://www.scio.gov.cn/"),
 ]
 
