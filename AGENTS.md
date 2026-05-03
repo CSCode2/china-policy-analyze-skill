@@ -98,21 +98,29 @@ Every document must have these fields in corpus/metadata/{doc_id}.json:
 6. 不把单个案件扩展为对整个行业的绝对判断
 7. 只分析风险类型、监管趋势和合规边界
 
-### Confirmed working (15 sources, tested 2026-04-28)
+### Confirmed working (32 sources in daily pipeline, tested 2026-05-03)
 
 gov.cn | ndrc | mofcom | miit | moj | court | spp | samr | mee | mfa | stats | nra | csrc | pbc | jhsjk
 
 **pbc.gov.cn 特殊：** 首页可访问(129K chars)，但短路径如 /goutongjiaoliu/ 返回403。必须从首页提取完整栏目路径（如 /goutongjiaoliu/113456/113469/index.html）。
 **部分部委：** 列表页JS渲染无链接时，fetch首页提取文章链接。
 
-### Not working (4 sites — WebFetch可能失败但必须先试)
+### Not working (12 sites — WebFetch可能失败但必须先试)
 
 | 不可用站点 | 错误 | 推荐微信账号（WebFetch全部失败后用） |
 |-----------|------|-------------------------------|
 | customs.gov.cn | 412 | `中国海关发布` |
 | mps.gov.cn | 521 | (无对等公众号) |
+| mohurd.gov.cn | 000连接失败 | `中国建设报` |
+| nfga.gov.cn | 000连接失败 | `中国绿色时报` |
 | most.gov.cn | JS空壳 | `科技部` |
 | mohrss.gov.cn | JS空壳 | `人社部` |
+| scio.gov.cn | 000连接失败 | `国务院新闻办` |
+| flk.npc.gov.cn | 000连接失败 | `全国人大` |
+| cyberpolice.cn | 000连接失败 | (无) |
+| gsxt.gov.cn | 521 | (无) |
+| creditchina.gov.cn | 412 | (无) |
+| ccgp.gov.cn | 403 | (无) |
 
 ### 微信搜索规则（强制，无例外）
 

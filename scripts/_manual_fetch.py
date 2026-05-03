@@ -176,8 +176,8 @@ fetch_and_process('生态环境部', 'https://www.mee.gov.cn/',
     'https://www.mee.gov.cn', '生态环境部', '环境新闻', 'A', max_links=2)
 
 # Source 13: NFRA
-fetch_and_process('金融监管总局', 'https://www.nfra.gov.cn/xwzx/',
-    r'href="(/xwzx/[^"]*art/\d{4}/art_\d+\.html)"',
+fetch_and_process('金融监管总局', 'https://www.nfra.gov.cn/',
+    r'href="(/[^"]*art/\d{4}/art_\d+\.html)"',
     'https://www.nfra.gov.cn', '金融监管总局', '监管新闻', 'A', max_links=2)
 
 # Source 14: NDRC
