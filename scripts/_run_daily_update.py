@@ -3,7 +3,7 @@ import os
 import sys
 import glob
 import time
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 import yaml
 
@@ -89,6 +89,7 @@ def fetch_list_pages():
     html_fetcher = HTMLFetcher(timeout=8, rate_limit_delay=0.3)
     doc_urls = []
     deadline = time.time() + 80
+    recent_cutoff = date.today() - timedelta(days=7)
 
     for source_name, source_url in LISTING_URLS:
         if time.time() > deadline:
@@ -117,13 +118,20 @@ def fetch_list_pages():
             base = f"{parsed_base.scheme}://{parsed_base.netloc}"
 
             link_count = 0
-            for a_el in tree.xpath("//a[@href]"):
+            for li in tree.xpath("//li"):
                 if link_count >= 200:
                     break
+                
+                a_el = li.xpath(".//a[@href]")
+                if not a_el:
+                    continue
+                a_el = a_el[0]
+                
                 href = a_el.get("href", "")
                 text = (a_el.text or "").strip()
                 if not text or len(text) < 5:
                     continue
+                    
                 if href.startswith("./"):
                     href = urljoin(source_url, href)
                 elif href.startswith("/"):
@@ -149,9 +157,24 @@ def fetch_list_pages():
                 )
 
                 same_site = parsed_base.netloc in href or href.startswith("/")
-                if is_article and same_site:
-                    doc_urls.append((text, href, source_name))
-                    link_count += 1
+                if not (is_article and same_site):
+                    continue
+                
+                link_date = None
+                for span in li.xpath(".//span"):
+                    span_text = (span.text or "").strip()
+                    if span_text and len(span_text) >= 8:
+                        try:
+                            link_date = datetime.strptime(span_text[:10], "%Y-%m-%d").date()
+                            break
+                        except ValueError:
+                            pass
+                
+                if link_date and link_date < recent_cutoff:
+                    continue
+                
+                doc_urls.append((text, href, source_name, link_date))
+                link_count += 1
         except Exception as e:
             print(f"    Parse error: {e}")
             _log_fetch_error(source_name, source_url, str(e))
@@ -170,15 +193,23 @@ def fetch_and_process_docs(doc_urls):
     processed_count = 0
     deadline = time.time() + 40
 
-    for title, url, source in doc_urls[:MAX_DOCS]:
+    for item in doc_urls[:MAX_DOCS]:
         if time.time() > deadline:
             print(f"  ⏰ Time limit reached, stopping document processing")
             break
+        
+        if len(item) >= 4:
+            title, url, source, link_date = item
+        else:
+            title, url, source = item[:3]
+            link_date = None
+            
         h = content_hash(url)
         if is_duplicate(h, HASH_STORE):
             continue
 
-        print(f"  Fetching document: {title[:50]}...")
+        date_str = link_date.strftime("%Y-%m-%d") if link_date else "日期未知"
+        print(f"  Fetching document ({date_str}): {title[:50]}...")
         result = html_fetcher.fetch(url)
         if result.error:
             print(f"    ERROR: {result.error}")
