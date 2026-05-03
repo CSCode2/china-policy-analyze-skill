@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import glob
+import time
 from datetime import datetime, date
 
 import yaml
@@ -52,7 +53,7 @@ LISTING_URLS = [
     ("scio", "https://www.scio.gov.cn/"),
 ]
 
-SKIP_SOURCES = {"customs.gov.cn", "mps.gov.cn", "most.gov.cn", "mohrss.gov.cn"}
+SKIP_SOURCES = {"customs.gov.cn", "mps.gov.cn", "most.gov.cn", "mohrss.gov.cn", "jhsjk.org.cn", "jhsjk.people.cn", "scio.gov.cn", "mohurd.gov.cn"}
 
 HASH_STORE = os.path.join(REPO_ROOT, "corpus", "metadata", "hash_store.json")
 
@@ -85,10 +86,14 @@ def _log_fetch_error(source: str, url: str, message: str):
 
 
 def fetch_list_pages():
-    html_fetcher = HTMLFetcher(timeout=15, rate_limit_delay=1.0)
+    html_fetcher = HTMLFetcher(timeout=8, rate_limit_delay=0.3)
     doc_urls = []
+    deadline = time.time() + 80
 
     for source_name, source_url in LISTING_URLS:
+        if time.time() > deadline:
+            print(f"  ⏰ Time limit reached, skipping remaining sources")
+            break
         if any(skip in source_url for skip in SKIP_SOURCES):
             continue
         print(f"  Fetching listing page: {source_name} ({source_url})")
@@ -102,12 +107,19 @@ def fetch_list_pages():
         from urllib.parse import urljoin, urlparse
 
         try:
+            html_content = result.html or ""
+            if len(html_content) > 500000:
+                print(f"    Large page ({len(html_content)} chars), truncating for link extraction")
+                html_content = html_content[:500000]
             parser = etree.HTMLParser(encoding="utf-8")
-            tree = etree.fromstring((result.html or "").encode("utf-8"), parser)
+            tree = etree.fromstring(html_content.encode("utf-8"), parser)
             parsed_base = urlparse(source_url)
             base = f"{parsed_base.scheme}://{parsed_base.netloc}"
 
+            link_count = 0
             for a_el in tree.xpath("//a[@href]"):
+                if link_count >= 200:
+                    break
                 href = a_el.get("href", "")
                 text = (a_el.text or "").strip()
                 if not text or len(text) < 5:
@@ -139,6 +151,7 @@ def fetch_list_pages():
                 same_site = parsed_base.netloc in href or href.startswith("/")
                 if is_article and same_site:
                     doc_urls.append((text, href, source_name))
+                    link_count += 1
         except Exception as e:
             print(f"    Parse error: {e}")
             _log_fetch_error(source_name, source_url, str(e))
@@ -148,15 +161,19 @@ def fetch_list_pages():
 
 
 def fetch_and_process_docs(doc_urls):
-    html_fetcher = HTMLFetcher(timeout=15, rate_limit_delay=1.0)
+    html_fetcher = HTMLFetcher(timeout=10, rate_limit_delay=0.3)
     html_parser = HTMLToMarkdown()
     meta_extractor = MetadataExtractor()
     text_normalizer = TextNormalizer()
 
     new_docs_metadata = []
     processed_count = 0
+    deadline = time.time() + 40
 
     for title, url, source in doc_urls[:MAX_DOCS]:
+        if time.time() > deadline:
+            print(f"  ⏰ Time limit reached, stopping document processing")
+            break
         h = content_hash(url)
         if is_duplicate(h, HASH_STORE):
             continue
