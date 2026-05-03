@@ -89,7 +89,7 @@ def fetch_list_pages():
     html_fetcher = HTMLFetcher(timeout=8, rate_limit_delay=0.3)
     doc_urls = []
     deadline = time.time() + 80
-    recent_cutoff = date.today() - timedelta(days=7)
+    recent_cutoff = date.today() - timedelta(days=3)
 
     for source_name, source_url in LISTING_URLS:
         if time.time() > deadline:
@@ -171,6 +171,8 @@ def fetch_list_pages():
                             pass
                 
                 if link_date and link_date < recent_cutoff:
+                    continue
+                if not link_date:
                     continue
                 
                 doc_urls.append((text, href, source_name, link_date))
