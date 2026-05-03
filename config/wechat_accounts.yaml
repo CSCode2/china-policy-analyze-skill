@@ -1,5 +1,6 @@
 # 微信公众号目录 — 权威政策来源
-# 每个公众号经过搜狗微信搜索验证（2026-04-28）
+# 每个公众号经过搜狗微信搜索验证（40个旧账号 2026-04-28验证, 30个新账号 2026-05-03验证）
+# 总计70个公众号, 9大类
 # 用法: WeChatSearcher.search("公众号名 关键词")
 
 central_policy:
@@ -45,6 +46,27 @@ central_policy:
     topics: [经济政策, 宏观调控, 数据解读]
     search_tip: "经济日报 政策"
 
+  - name: 网信中国
+    wechat_id: cacweixin
+    desc: 中央网信办官方号，网络政策法规
+    authority: S
+    topics: [网络政策, 数据安全, 算法监管, 平台经济]
+    search_tip: "网信中国 政策"
+
+  - name: 共产党员
+    wechat_id: gcdyweixin
+    desc: 共产党员网官方号
+    authority: S
+    topics: [党建, 党内法规, 组织建设]
+    search_tip: "共产党员 党建"
+
+  - name: 学习大国
+    wechat_id: xuexidaguo
+    desc: 人民日报主办，政策学习
+    authority: A
+    topics: [理论学习, 政策解读]
+    search_tip: "学习大国 政策"
+
 economy_finance:
   - name: 国家发改委
     wechat_id: gjfgwx
@@ -87,6 +109,34 @@ economy_finance:
     authority: A
     topics: [金融政策, 银行业, 货币政策执行报告]
     search_tip: "金融时报 央行"
+
+  - name: 统计微讯
+    wechat_id: tjweixun
+    desc: 国家统计局官方号，经济数据发布
+    authority: A
+    topics: [GDP, CPI, 经济数据, 统计公报]
+    search_tip: "统计微讯 数据"
+
+  - name: 中国税务报
+    wechat_id: ctbnews
+    desc: 税务总局主管，税收政策
+    authority: A
+    topics: [税收政策, 减税降费, 税务征管]
+    search_tip: "中国税务报 政策"
+
+  - name: 中国外汇
+    wechat_id: chinaforex
+    desc: 外汇局主管，外汇政策
+    authority: A
+    topics: [外汇政策, 跨境资金, 汇率]
+    search_tip: "中国外汇 政策"
+
+  - name: 中国货币市场
+    wechat_id: chinamoneymarket
+    desc: 央行主管，货币市场
+    authority: A
+    topics: [货币政策, 公开市场, 利率]
+    search_tip: "中国货币市场 政策"
 
 industry_regulation:
   - name: 工信微报
@@ -131,6 +181,41 @@ industry_regulation:
     topics: [银行保险监管, 金融消费者保护, 风险防控]
     search_tip: "金融监管总局 政策"
 
+  - name: 自然资源部
+    wechat_id: zrzybwx
+    desc: 自然资源部官方号
+    authority: A
+    topics: [土地管理, 国土规划, 不动产登记]
+    search_tip: "自然资源部 政策"
+
+  - name: 国家能源局
+    wechat_id: nea_gov_cn
+    desc: 国家能源局官方号
+    authority: A
+    topics: [能源政策, 新能源, 电力改革]
+    search_tip: "国家能源局 政策"
+
+  - name: 中国建设报
+    wechat_id: zhongguojianshebao
+    desc: 住建部主管，房地产政策
+    authority: A
+    topics: [房地产调控, 保障房, 城市更新]
+    search_tip: "中国建设报 政策"
+
+  - name: 中国安全生产
+    wechat_id: china_safety
+    desc: 应急管理部主管
+    authority: A
+    topics: [安全生产, 应急管理, 防灾减灾]
+    search_tip: "中国安全生产 政策"
+
+  - name: 国家数据局
+    wechat_id: guojiashujuju
+    desc: 国家数据局官方号
+    authority: A
+    topics: [数据要素, 数字经济, 数据安全]
+    search_tip: "国家数据局 政策"
+
 trade_foreign:
   - name: 商务部
     wechat_id: mofcomgov
@@ -152,6 +237,27 @@ trade_foreign:
     authority: A
     topics: [关税, 贸易便利化, 进出口监管, 知识产权海关保护]
     search_tip: "中国海关发布 政策"
+
+  - name: 海关发布
+    wechat_id: haiguanfabu_2020
+    desc: 海关总署发布号
+    authority: A
+    topics: [关税, 通关便利化, 贸易监管]
+    search_tip: "海关发布 政策"
+
+  - name: 中国贸促
+    wechat_id: ccpitwx
+    desc: 贸促会官方号
+    authority: A
+    topics: [贸易促进, 国际商事, 原产地证]
+    search_tip: "中国贸促 政策"
+
+  - name: 走出去智库
+    wechat_id: cggthinktank
+    desc: 海外投资政策
+    authority: B
+    topics: [对外投资, 合规, ESG]
+    search_tip: "走出去智库 政策"
 
 people_livelihood:
   - name: 生态环境部
@@ -210,6 +316,62 @@ people_livelihood:
     topics: [教育政策, 科技政策, 文化政策]
     search_tip: "光明日报 政策解读"
 
+  - name: 民政微语
+    wechat_id: minzhengweiyu
+    desc: 民政部官方号
+    authority: A
+    topics: [社会组织, 养老服务, 社会救助]
+    search_tip: "民政微语 政策"
+
+  - name: 审计署
+    wechat_id: audit_gov_cn
+    desc: 审计署官方号
+    authority: A
+    topics: [审计结果, 经济责任审计]
+    search_tip: "审计署 公告"
+
+  - name: 中国退役军人
+    wechat_id: zgtyjr
+    desc: 退役军人事务部官方号
+    authority: A
+    topics: [退役军人安置, 优抚政策]
+    search_tip: "中国退役军人 政策"
+
+  - name: 文旅之声
+    wechat_id: mctgov
+    desc: 文旅部官方号
+    authority: A
+    topics: [文化产业, 旅游政策, 文物保护]
+    search_tip: "文旅之声 政策"
+
+  - name: 微言教育
+    wechat_id: jybxwb
+    desc: 教育部新闻办
+    authority: A
+    topics: [教育政策, 双减, 高考改革]
+    search_tip: "微言教育 政策"
+
+  - name: 健康中国
+    wechat_id: healthchina
+    desc: 国家卫健委主管
+    authority: A
+    topics: [医改, 公共卫生, 生育政策]
+    search_tip: "健康中国 政策"
+
+  - name: 国家医保局
+    wechat_id: nhsa_gov_cn
+    desc: 国家医保局官方号
+    authority: A
+    topics: [医保目录, 集采, DRG支付]
+    search_tip: "国家医保局 政策"
+
+  - name: 中国植树造林
+    wechat_id: zhongguolc
+    desc: 林草局相关号
+    authority: A
+    topics: [林业政策, 碳汇, 国家公园]
+    search_tip: "中国植树造林 政策"
+
 law_justice:
   - name: 司法部
     wechat_id: mojgov
@@ -238,6 +400,56 @@ law_justice:
     authority: A
     topics: [普法, 法律解读, 新法速递]
     search_tip: "中国普法 法律"
+
+  - name: 公安部
+    wechat_id: gonganbu
+    desc: 公安部官方号
+    authority: A
+    topics: [治安管理, 网络安全, 经济犯罪]
+    search_tip: "公安部 政策"
+
+  - name: 中国警察网
+    wechat_id: zgjcwcn
+    desc: 公安部主管
+    authority: A
+    topics: [执法动态, 交通安全, 反诈]
+    search_tip: "中国警察网 通报"
+
+geo_defense:
+  - name: 国防部发布
+    wechat_id: mod_gov_cn
+    desc: 国防部官方号
+    authority: A
+    topics: [国防政策, 军事声明, 例行记者会]
+    search_tip: "国防部发布 声明"
+
+  - name: 钧正平工作室
+    wechat_id: jzp_gongzuoshi
+    desc: 解放军报评论号
+    authority: A
+    topics: [军事评论, 国防动态]
+    search_tip: "钧正平 评论"
+
+  - name: 中国军网
+    wechat_id: zgjw_81
+    desc: 解放军报官方号
+    authority: A
+    topics: [军事动态, 国防建设]
+    search_tip: "中国军网 动态"
+
+  - name: 中国海警
+    wechat_id: china_coast_guard
+    desc: 中国海警局号
+    authority: A
+    topics: [海上执法, 南海巡航]
+    search_tip: "中国海警 巡航"
+
+  - name: 中共中央台办
+    wechat_id: gwytb_gov_cn
+    desc: 国台办官方号
+    authority: A
+    topics: [两岸政策, 台海声明]
+    search_tip: "中共中央台办 声明"
 
 professional:
   - name: 中国法律评论

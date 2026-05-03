@@ -586,6 +586,21 @@ ministry_sources:
   crawl_frequency: weekly
   encoding: utf-8
   status: 000(连接失败)
+- name: 国家数据局
+  name_en: National Data Administration (NDA)
+  url: https://www.nda.gov.cn
+  level: A
+  priority: 2
+  topics:
+  - 数据要素市场化
+  - 数字经济发展
+  - 数据安全治理
+  - 数据基础设施
+  - 公共数据开放
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+  note: 2023年新组建，主管数据要素和数字经济，十五五期间核心部委
 legal_enforcement_sources:
 - name: 国家法律法规数据库
   name_en: National Laws and Regulations Database
@@ -767,14 +782,17 @@ provincial_government_sources:
   url: https://www.hebei.gov.cn
   level: B
   priority: 3
+  status: 000(海外不可达)
 - name: 山西省
   url: https://www.shanxi.gov.cn
   level: B
   priority: 3
+  status: 000(海外不可达)
 - name: 内蒙古自治区
   url: https://www.nmg.gov.cn
   level: B
   priority: 3
+  status: ok
 - name: 辽宁省
   url: https://www.ln.gov.cn
   level: B
@@ -811,10 +829,12 @@ provincial_government_sources:
   url: https://www.jiangxi.gov.cn
   level: B
   priority: 3
+  status: 000(海外不可达)
 - name: 山东省
-  url: https://www.shandong.gov.cn
+  url: http://www.shandong.gov.cn
   level: B
   priority: 3
+  status: ok(http_only)
 - name: 河南省
   url: https://www.henan.gov.cn
   level: B
@@ -832,9 +852,10 @@ provincial_government_sources:
   level: B
   priority: 3
 - name: 广西壮族自治区
-  url: https://www.gxzf.gov.cn
+  url: http://www.gxzf.gov.cn
   level: B
   priority: 3
+  status: ok(http_redirect)
 - name: 海南省
   url: https://www.hainan.gov.cn
   level: B
@@ -851,6 +872,7 @@ provincial_government_sources:
   url: https://www.guizhou.gov.cn
   level: B
   priority: 3
+  status: 000(海外不可达)
 - name: 云南省
   url: https://www.yn.gov.cn
   level: B
@@ -871,6 +893,7 @@ provincial_government_sources:
   url: https://www.qh.gov.cn
   level: B
   priority: 3
+  status: 000(海外不可达)
 - name: 宁夏回族自治区
   url: https://www.nx.gov.cn
   level: B
@@ -881,9 +904,10 @@ provincial_government_sources:
   priority: 3
 key_city_sources:
 - name: 深圳
-  url: https://www.sz.gov.cn
+  url: http://www.sz.gov.cn
   level: B
   priority: 3
+  status: ok(http_only)
 - name: 广州
   url: https://www.gz.gov.cn
   level: B
@@ -913,9 +937,10 @@ key_city_sources:
   level: B
   priority: 3
 - name: 长沙
-  url: https://www.changsha.gov.cn
+  url: http://www.changsha.gov.cn
   level: B
   priority: 3
+  status: ok(http_only)
 - name: 郑州
   url: https://www.zhengzhou.gov.cn
   level: B
@@ -932,10 +957,12 @@ key_city_sources:
   url: https://www.xm.gov.cn
   level: B
   priority: 3
+  status: 000(海外不可达)
 - name: 大连
   url: https://www.dl.gov.cn
   level: B
   priority: 3
+  status: 000(海外不可达)
 - name: 宁波
   url: https://www.ningbo.gov.cn
   level: B
@@ -961,9 +988,10 @@ key_city_sources:
   level: B
   priority: 3
 - name: 佛山
-  url: https://www.foshan.gov.cn
+  url: http://www.foshan.gov.cn
   level: B
   priority: 3
+  status: ok(http_only)
 - name: 温州
   url: https://www.wenzhou.gov.cn
   level: B
