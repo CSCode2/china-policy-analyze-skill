@@ -185,6 +185,8 @@ def fetch_list_pages():
     return doc_urls
 
 
+PUBLISH_DATE_CUTOFF_DAYS = 7
+
 def fetch_and_process_docs(doc_urls):
     html_fetcher = HTMLFetcher(timeout=10, rate_limit_delay=0.3)
     html_parser = HTMLToMarkdown()
@@ -224,6 +226,17 @@ def fetch_and_process_docs(doc_urls):
             continue
 
         meta = meta_extractor.extract(result.html or "", url)
+
+        publish_cutoff = date.today() - timedelta(days=PUBLISH_DATE_CUTOFF_DAYS)
+        if meta.publish_date:
+            try:
+                pub_dt = datetime.strptime(meta.publish_date[:10], "%Y-%m-%d").date()
+                if pub_dt < publish_cutoff:
+                    print(f"    SKIP: publish_date too old ({meta.publish_date}), cutoff={publish_cutoff}")
+                    record_hash(h, f"skipped_old_{h[:12]}", HASH_STORE)
+                    continue
+            except ValueError:
+                pass
 
         doc_id = f"doc_{h[:12]}"
         doc_meta = {
