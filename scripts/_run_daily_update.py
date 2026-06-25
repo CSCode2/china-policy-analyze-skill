@@ -50,7 +50,9 @@ LISTING_URLS = [
     ("audit", "https://www.audit.gov.cn/"),
     ("nea", "https://www.nea.gov.cn/"),
     ("nda", "https://www.nda.gov.cn/"),
-    ("scio", "https://www.scio.gov.cn/"),
+    ("neac", "https://www.neac.gov.cn/"),
+    ("mwr", "http://www.mwr.gov.cn/"),
+    ("mof_tariff", "https://gss.mof.gov.cn/gzdt/zhengcefabu/"),
 ]
 
 SKIP_SOURCES = {"customs.gov.cn", "mps.gov.cn", "most.gov.cn", "mohrss.gov.cn", "jhsjk.org.cn", "jhsjk.people.cn", "scio.gov.cn", "mohurd.gov.cn"}

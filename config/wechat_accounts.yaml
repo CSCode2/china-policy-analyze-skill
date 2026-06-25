@@ -413,7 +413,7 @@ law_justice:
     authority: A
     topics: [国家安全教育, 反间谍, 数据安全, 境外安全风险]
     search_tip: "国家安全部 官方"
-    verification_url: https://www.sz.gov.cn/cn/xxgk/zt/content/post_11028283.html
+    verification_url: https://www.scio.gov.cn/xwfb/bwxwfb/gbwfbh/gjaqb/
     verified_on: 2026-06-25
 
   - name: 中国警察网
@@ -589,7 +589,7 @@ local_government:
     topics: [地方政策, 政策解读, 民生服务, 应急信息]
     search_tip: "合肥市人民政府发布 政策"
     verification_source: https://www.hefei.gov.cn
-    verification_url: https://www.nhsa.gov.cn/art/2025/3/13/art_14_15979.html
+    verification_url: https://www.hefei.gov.cn/
     verified_on: 2026-06-25
 
   - name: 福州市人民政府
@@ -754,7 +754,7 @@ local_government:
     topics: [地方政策, 政策解读, 民生服务, 应急信息]
     search_tip: "西安发布 政策"
     verification_source: https://www.xa.gov.cn
-    verification_url: https://www.cac.gov.cn/2016-02/29/c_1118188560.htm
+    verification_url: https://www.xa.gov.cn/
     verified_on: 2026-06-25
 
   - name: 兰州发布
