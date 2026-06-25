@@ -53,7 +53,7 @@ source_groups:
       - update_document_relationship_graph
 
   foreign_policy_daily:
-    description: "Foreign policy and trade sources checked daily for new statements and developments"
+    description: "Foreign policy, trade, and macro-policy sources checked daily for new statements and developments"
     schedule: "09:00 UTC daily"
     sources:
       - category: foreign_trade_policy_sources
@@ -62,8 +62,11 @@ source_groups:
         items:
           - 外交部
           - 商务部各司
+          - 财政部关税司
           - 海关总署
           - 外汇局
+      - category: foreign_macro_policy_sources
+        include_all: true
       - category: geo_conflict_sources_china
         items:
           - 国防部
@@ -90,6 +93,30 @@ source_groups:
       - content_hash
       - new_statements
       - position_changes
+
+  local_policy_daily:
+    description: "Official city-government channels plus lead-only local service sources"
+    schedule: "10:00 UTC daily"
+    sources:
+      - category: key_city_sources
+        include_all: true
+        rotation:
+          batch_size: 10
+          full_cycle_days: 4
+      - wechat_category: local_government
+        include_all: true
+        rotation:
+          batch_size: 8
+          full_cycle_days: 4
+      - category: local_information_lead_sources
+        include_all: true
+        lead_only: true
+    processing:
+      - discover_local_policy_updates
+      - extract_original_issuing_body
+      - extract_document_date_and_number
+      - verify_against_official_city_or_department_site
+      - discard_unverified_policy_claims
 
   geo_conflict_daily:
     description: "Geopolitical conflict sources checked daily for escalation/de-escalation signals"
@@ -130,12 +157,18 @@ source_groups:
           - IMF
           - UNCTAD
           - OECD
+      - category: foreign_macro_policy_sources
+        include_all: true
+        purpose: url_verification
       - category: geo_conflict_sources_research_secondary
         include_all: true
       - category: provincial_government_sources
         include_all: true
         purpose: url_verification
       - category: key_city_sources
+        include_all: true
+        purpose: url_verification
+      - category: local_information_lead_sources
         include_all: true
         purpose: url_verification
     processing:

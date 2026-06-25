@@ -167,7 +167,7 @@ tasks:
   foreign_policy_watcher:
     name: "外交政策监控器"
     name_en: "Foreign Policy Watcher"
-    description: "Monitors foreign policy and international economic policy sources daily"
+    description: "Monitors foreign policy, international economic policy, and major foreign central-bank sources daily"
     schedule: "09:00 UTC daily"
     source_groups:
       - foreign_policy_daily
@@ -182,6 +182,12 @@ tasks:
           - "关切 → 严重关切 → 抗议"
           - "反对 → 坚决反对 → 强烈谴责"
           - "不可接受 → 予以反击"
+      - id: monitor_foreign_macro_policy
+        description: "Track major foreign central-bank decisions, executive actions, tariff announcements, and trade-control rules that may affect China"
+        verification_rules:
+          - "Treat social-media posts as direct-statement leads, not formal policy"
+          - "Verify executive-policy signals against official government releases or legal publications"
+          - "Preserve the original-language source when translation could alter policy meaning"
       - id: classify_foreign_content
         description: "Classify by FP-S through FP-E levels and topic tags"
         uses:
@@ -230,6 +236,36 @@ tasks:
       - sanctions_change_alert
       - tariff_update_notice
       - supply_chain_risk_assessment
+
+  local_policy_watcher:
+    name: "地方政策监控器"
+    name_en: "Local Policy Watcher"
+    description: "Monitors official city-government websites and WeChat release accounts, using commercial local-service sites only as discovery leads"
+    schedule: "10:00 UTC daily"
+    source_groups:
+      - local_policy_daily
+    operations:
+      - id: check_official_city_channels
+        description: "Check rotating batches of provincial-capital, municipality, and Shenzhen government websites and official WeChat release accounts"
+        rate_limit:
+          websites_per_run: 10
+          wechat_queries_per_run: 8
+          full_cycle_days: 4
+      - id: scan_local_information_leads
+        description: "Scan 本地宝 for potentially relevant local benefits, eligibility, application-window, education, housing, transport, and public-service updates"
+      - id: verify_local_leads
+        description: "Extract the original issuing body, document number, issue date, and official URL; then verify every lead against the responsible government site"
+        hard_rules:
+          - "本地宝 is E-level and is never primary policy evidence"
+          - "Do not publish an eligibility rule, amount, deadline, or application procedure unless confirmed by an official source"
+          - "If no official source can be found, label the item unverified and exclude it from policy conclusions"
+          - "Do not exceed 10 WeChat searches in one run; rotate city-account batches instead"
+      - id: compare_local_implementation
+        description: "Compare implementation tools, deadlines, funding, and eligibility across cities only after official verification"
+    outputs:
+      - verified_local_policy_updates
+      - unverified_local_lead_log
+      - city_implementation_comparison_inputs
 
   geo_conflict_watcher:
     name: "地缘冲突监控器"

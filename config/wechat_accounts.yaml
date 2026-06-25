@@ -1,6 +1,6 @@
 # 微信公众号目录 — 权威政策来源
-# 每个公众号经过搜狗微信搜索验证（40个旧账号 2026-04-28验证, 30个新账号 2026-05-03验证）
-# 总计70个公众号, 9大类
+# 中央和部委账号经过搜狗微信搜索验证；地方账号以政府网站、信息公开报告或官方政务新媒体矩阵为准
+# 总计103个公众号, 9大类
 # 用法: WeChatSearcher.search("公众号名 关键词")
 
 central_policy:
@@ -408,6 +408,14 @@ law_justice:
     topics: [治安管理, 网络安全, 经济犯罪]
     search_tip: "公安部 政策"
 
+  - name: 国家安全部
+    desc: 国家安全部官方信息发布渠道
+    authority: A
+    topics: [国家安全教育, 反间谍, 数据安全, 境外安全风险]
+    search_tip: "国家安全部 官方"
+    verification_url: https://www.sz.gov.cn/cn/xxgk/zt/content/post_11028283.html
+    verified_on: 2026-06-25
+
   - name: 中国警察网
     wechat_id: zgjcwcn
     desc: 公安部主管
@@ -450,6 +458,359 @@ geo_defense:
     authority: A
     topics: [两岸政策, 台海声明]
     search_tip: "中共中央台办 声明"
+
+local_government:
+  - name: 北京发布
+    city: 北京市
+    official: true
+    desc: 北京市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "北京发布 政策"
+    verification_source: https://www.beijing.gov.cn
+    verification_url: https://zwfwj.beijing.gov.cn/zwgk/zfxxgk/
+    verified_on: 2026-06-25
+
+  - name: 天津政务信息发布
+    city: 天津市
+    official: true
+    desc: 天津市人民政府办公厅政务信息官方发布渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "天津政务信息发布 政策"
+    verification_source: https://www.tj.gov.cn
+    verification_url: https://www.tj.gov.cn/zwgk/szfjg/szfbgt/qtgkxx/202501/t20250122_6841134.html
+    verified_on: 2026-06-25
+
+  - name: 石家庄发布
+    city: 石家庄
+    official: true
+    desc: 石家庄市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "石家庄发布 政策"
+    verification_source: https://www.sjz.gov.cn
+    verification_url: https://www.sjz.gov.cn/columns/6055140e-a315-47cc-b985-8ae22c26d4b8/202507/04/47ede7d9-6406-4b8a-9f0f-f56bc9c9913f.html
+    verified_on: 2026-06-25
+
+  - name: 我的太原
+    city: 太原
+    official: true
+    desc: 太原市政府政务新媒体矩阵列示的官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "我的太原 政策"
+    verification_source: https://www.taiyuan.gov.cn
+    verification_url: https://taiyuan.gov.cn/zwxmtjz.html
+    verified_on: 2026-06-25
+
+  - name: 呼和浩特发布
+    city: 呼和浩特
+    official: true
+    desc: 呼和浩特市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "呼和浩特发布 政策"
+    verification_source: https://www.huhhot.gov.cn
+    verification_url: https://www.huhhot.gov.cn/zfxxgknew/fdzdgknr/zdlyxx/jsjf/jsjf1/202311/t20231106_1613440.html
+    verified_on: 2026-06-25
+
+  - name: 沈阳发布
+    city: 沈阳
+    official: true
+    desc: 沈阳市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "沈阳发布 政策"
+    verification_source: https://www.shenyang.gov.cn
+    verification_url: https://sfj.shenyang.gov.cn/yshjzl/202502/t20250221_4812721.html
+    verified_on: 2026-06-25
+
+  - name: 长春发布
+    city: 长春
+    official: true
+    desc: 长春市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "长春发布 政策"
+    verification_source: http://www.changchun.gov.cn
+    verification_url: https://wglj.changchun.gov.cn/gdzl_44844/ccxxysj/202507/t20250729_3417771.shtml
+    verified_on: 2026-06-25
+
+  - name: 哈尔滨发布
+    city: 哈尔滨
+    official: true
+    desc: 哈尔滨市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "哈尔滨发布 政策"
+    verification_source: https://www.harbin.gov.cn
+    verification_url: https://news.cctv.com/2023/08/06/ARTIDY6nX59rZW1YHufIFsU5230806.shtml
+    verified_on: 2026-06-25
+
+  - name: 上海发布
+    city: 上海市
+    official: true
+    desc: 上海市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "上海发布 政策"
+    verification_source: https://www.shanghai.gov.cn
+    verification_url: https://www.shanghai.gov.cn/ypqxqjy/20250508/3bbb4c2972774bc9907f331f4f4eafea.html
+    verified_on: 2026-06-25
+
+  - name: 南京发布
+    city: 南京
+    official: true
+    desc: 南京市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "南京发布 政策"
+    verification_source: https://www.nanjing.gov.cn
+    verification_url: https://www.nanjing.gov.cn/hdjl/hygq/202606/t20260609_5854211.html
+    verified_on: 2026-06-25
+
+  - name: 杭州发布
+    city: 杭州
+    official: true
+    desc: 杭州市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "杭州发布 政策"
+    verification_source: https://www.hangzhou.gov.cn
+    verification_url: https://minyi.zjzwfw.gov.cn/dczjnewls/dczj/idea/phonetopic_18459.html
+    verified_on: 2026-06-25
+
+  - name: 合肥市人民政府发布
+    city: 合肥
+    official: true
+    desc: 合肥市人民政府官方发布渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "合肥市人民政府发布 政策"
+    verification_source: https://www.hefei.gov.cn
+    verification_url: https://www.nhsa.gov.cn/art/2025/3/13/art_14_15979.html
+    verified_on: 2026-06-25
+
+  - name: 福州市人民政府
+    city: 福州
+    official: true
+    desc: 福州市人民政府官方微信公众号
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "福州市人民政府 政策"
+    verification_source: https://www.fuzhou.gov.cn
+    verification_url: https://www.fuzhou.gov.cn/zfxxgkzl/szfbmjxsqxxgk/szfbmxxgk/fzsrmzfbgt/zfxxgkndbg/202601/t20260119_5272856.htm
+    verified_on: 2026-06-25
+
+  - name: 南昌市人民政府发布
+    city: 南昌
+    official: true
+    desc: 南昌市人民政府官方发布渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "南昌市人民政府发布 政策"
+    verification_source: https://www.nc.gov.cn
+    verification_url: https://www.nc.gov.cn/ncszf/xxgknb/202601/93f01b2c04ef41d7951ffad648bcb1d2.shtml
+    verified_on: 2026-06-25
+
+  - name: 济南市人民政府研究室
+    city: 济南
+    official: true
+    desc: 济南市人民政府研究室官方微信公众号，覆盖市政府政策研究和政务活动
+    authority: B
+    topics: [地方政策, 政策研究, 政府工作报告, 政务活动]
+    search_tip: "济南市人民政府研究室 政策"
+    verification_source: https://www.jinan.gov.cn
+    verification_url: https://www.jinan.gov.cn/col/col73659/index.html?jh=261
+    verified_on: 2026-06-25
+
+  - name: 郑州发布
+    city: 郑州
+    official: true
+    desc: 郑州市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "郑州发布 政策"
+    verification_source: https://www.zhengzhou.gov.cn
+    verification_url: https://www.zhengzhou.gov.cn/news6/10089389.jhtml
+    verified_on: 2026-06-25
+
+  - name: 武汉发布
+    city: 武汉
+    official: true
+    desc: 武汉市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "武汉发布 政策"
+    verification_source: https://www.wuhan.gov.cn
+    verification_url: https://www.wuhan.gov.cn/sy/whyw/202510/t20251027_2666154.shtml
+    verified_on: 2026-06-25
+
+  - name: 长沙发布
+    city: 长沙
+    official: true
+    desc: 长沙市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "长沙发布 政策"
+    verification_source: http://www.changsha.gov.cn
+    verification_url: https://changs.ccgp-hunan.gov.cn/gp/gpcategory/showNew/259744
+    verified_on: 2026-06-25
+
+  - name: 广州政府网
+    city: 广州
+    official: true
+    desc: 广州市人民政府门户网站官方微信公众号
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 政务服务]
+    search_tip: "广州政府网 政策"
+    verification_source: https://www.gz.gov.cn
+    verification_url: https://www.gz.gov.cn/zt/jrshts/2025n/zqgq/sys/content/post_10461396.html
+    verified_on: 2026-06-25
+
+  - name: 南宁发布
+    city: 南宁
+    official: true
+    desc: 南宁市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "南宁发布 政策"
+    verification_source: https://www.nanning.gov.cn
+    verification_url: https://www.nnjn.gov.cn/fw/ggfw/hysy/hydj/bmxx_hydj/t6342024.html
+    verified_on: 2026-06-25
+
+  - name: 海口发布
+    city: 海口
+    official: true
+    desc: 海口市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "海口发布 政策"
+    verification_source: https://www.haikou.gov.cn
+    verification_url: https://ggzy.haikou.gov.cn/gonggao/87868
+    verified_on: 2026-06-25
+
+  - name: 重庆发布
+    city: 重庆市
+    official: true
+    desc: 重庆市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "重庆发布 政策"
+    verification_source: https://www.cq.gov.cn
+    verification_url: https://www.cq.gov.cn/zwgk/zfxxgkml/sjfb_120853/cqsj/tjsj/202601/t20260126_15354111.html
+    verified_on: 2026-06-25
+
+  - name: 成都发布
+    city: 成都
+    official: true
+    desc: 成都市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "成都发布 政策"
+    verification_source: https://www.chengdu.gov.cn
+    verification_url: https://www.chengdu.gov.cn/cdsrmzf/c174536/2025-09/12/content_b065ea0eb95f432a83a0df684aee475e.shtml
+    verified_on: 2026-06-25
+
+  - name: 贵阳发布
+    city: 贵阳
+    official: true
+    desc: 贵阳市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "贵阳发布 政策"
+    verification_source: https://www.guiyang.gov.cn
+    verification_url: https://tyj.guiyang.gov.cn/zhxw/zhxwtzgg/202512/t20251224_89083361.html
+    verified_on: 2026-06-25
+
+  - name: 昆明发布
+    city: 昆明
+    official: true
+    desc: 昆明市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "昆明发布 政策"
+    verification_source: https://www.km.gov.cn
+    verification_url: https://yzh.km.gov.cn/c/2025-07-21/7032482.shtml
+    verified_on: 2026-06-25
+
+  - name: 拉萨发布
+    city: 拉萨
+    official: true
+    desc: 拉萨市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "拉萨发布 政策"
+    verification_source: https://www.lasa.gov.cn
+    verification_url: https://www.lasa.gov.cn/lasa/lsyw/202512/8b089e1079c74091bd95e2212e5273b1.shtml
+    verified_on: 2026-06-25
+
+  - name: 西安发布
+    city: 西安
+    official: true
+    desc: 西安市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "西安发布 政策"
+    verification_source: https://www.xa.gov.cn
+    verification_url: https://www.cac.gov.cn/2016-02/29/c_1118188560.htm
+    verified_on: 2026-06-25
+
+  - name: 兰州发布
+    city: 兰州
+    official: true
+    desc: 兰州市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "兰州发布 政策"
+    verification_source: https://www.lanzhou.gov.cn
+    verification_url: https://www.gansu.gov.cn/gsszf/c103678dkbet/202501/174068014/files/cc7c3d8237ee4ed380e0fcb98667c030.pdf
+    verified_on: 2026-06-25
+
+  - name: 西宁发布
+    city: 西宁
+    official: true
+    desc: 西宁市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "西宁发布 政策"
+    verification_source: https://www.xining.gov.cn
+    verification_url: https://credit.xining.gov.cn/m_374/13560.html
+    verified_on: 2026-06-25
+
+  - name: 银川政府网
+    city: 银川
+    official: true
+    desc: 银川市人民政府门户网站官方微信公众号
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 政务服务]
+    search_tip: "银川政府网 政策"
+    verification_source: https://www.yinchuan.gov.cn
+    verification_url: https://www.yinchuan.gov.cn/xxgk/bmxxgkml/ycswlxxhj_38263/xxgknb_38265/202301/t20230130_3933647.html
+    verified_on: 2026-06-25
+
+  - name: 乌鲁木齐政府网
+    city: 乌鲁木齐
+    official: true
+    desc: 乌鲁木齐市人民政府门户网站官方微信公众号
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 政务服务]
+    search_tip: "乌鲁木齐政府网 政策"
+    verification_source: https://www.wlmq.gov.cn
+    verification_url: https://www.wlmq.gov.cn/wlmqs/c119066/zfxxgk_xxgkzn.shtml
+    verified_on: 2026-06-25
+
+  - name: 深圳发布
+    city: 深圳
+    official: true
+    desc: 深圳市政务发布官方渠道
+    authority: B
+    topics: [地方政策, 政策解读, 民生服务, 应急信息]
+    search_tip: "深圳发布 政策"
+    verification_source: http://www.sz.gov.cn
+    verification_url: https://wjw.sz.gov.cn/gzcy/zxft/fthg/content/post_9978661.html
+    verified_on: 2026-06-25
 
 professional:
   - name: 中国法律评论
