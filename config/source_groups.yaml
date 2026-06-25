@@ -100,8 +100,14 @@ source_groups:
     sources:
       - category: key_city_sources
         include_all: true
+        rotation:
+          batch_size: 10
+          full_cycle_days: 4
       - wechat_category: local_government
         include_all: true
+        rotation:
+          batch_size: 8
+          full_cycle_days: 4
       - category: local_information_lead_sources
         include_all: true
         lead_only: true

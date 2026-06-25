@@ -23,6 +23,16 @@ def _all_source_names() -> set[str]:
     }
 
 
+def _source_by_name(name: str) -> dict:
+    registry = _load_yaml(SOURCES_PATH)
+    return next(
+        source
+        for sources in registry.values()
+        for source in sources
+        if isinstance(source, dict) and source.get("name") == name
+    )
+
+
 def test_all_state_council_constituent_departments_are_covered():
     expected = {
         "外交部",
@@ -132,6 +142,16 @@ def test_tariff_and_foreign_macro_sources_are_scheduled():
     )
 
 
+def test_audited_sources_use_current_canonical_urls():
+    assert _source_by_name("财政部关税司")["url"] == (
+        "https://gss.mof.gov.cn/gzdt/zhengcefabu/"
+    )
+    assert _source_by_name("欧洲央行")["url"] == (
+        "https://www.ecb.europa.eu/press/pubbydate/html/index.en.html"
+    )
+    assert _source_by_name("乌鲁木齐")["url"] == "https://www.wlmq.gov.cn"
+
+
 def test_bendibao_is_lead_only_and_requires_official_verification():
     registry = _load_yaml(SOURCES_PATH)
     bendibao = next(
@@ -196,3 +216,27 @@ def test_official_local_wechat_accounts_cover_capitals_and_shenzhen():
     assert all(account["official"] is True for account in accounts)
     assert all(account["authority"] == "B" for account in accounts)
     assert all(account["verification_source"] for account in accounts)
+    assert all(account["verification_url"] for account in accounts)
+    assert all(str(account["verified_on"]) == "2026-06-25" for account in accounts)
+
+    account_names = {account["name"] for account in accounts}
+    assert "天津政务信息发布" in account_names
+    assert "我的太原" in account_names
+    assert "天津发布" not in account_names
+    assert "太原发布" not in account_names
+
+
+def test_local_source_rotation_stays_within_wechat_search_limit():
+    groups = _load_yaml(SOURCE_GROUPS_PATH)["source_groups"]
+    local_sources = groups["local_policy_daily"]["sources"]
+    city_group = next(
+        item for item in local_sources if item.get("category") == "key_city_sources"
+    )
+    wechat_group = next(
+        item for item in local_sources if item.get("wechat_category") == "local_government"
+    )
+
+    assert city_group["rotation"]["batch_size"] <= 10
+    assert wechat_group["rotation"]["batch_size"] <= 10
+    assert city_group["rotation"]["full_cycle_days"] == 4
+    assert wechat_group["rotation"]["full_cycle_days"] == 4

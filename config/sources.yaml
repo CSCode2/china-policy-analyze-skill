@@ -1043,15 +1043,17 @@ key_city_sources:
   url: https://www.sjz.gov.cn
   level: B
   priority: 3
+  status: ok(webfetch; python_tls_error)
 - name: 太原
   url: https://www.taiyuan.gov.cn
   level: B
   priority: 3
+  status: ok(search_index; python_tls_error)
 - name: 呼和浩特
   url: https://www.huhhot.gov.cn
   level: B
   priority: 3
-  status: tls_certificate_issue
+  status: 422(anti_bot)
 - name: 长春
   url: http://www.changchun.gov.cn
   level: B
@@ -1061,6 +1063,7 @@ key_city_sources:
   url: https://www.harbin.gov.cn
   level: B
   priority: 3
+  status: ok(search_index; python_tls_error)
 - name: 福州
   url: https://www.fuzhou.gov.cn
   level: B
@@ -1073,26 +1076,32 @@ key_city_sources:
   url: https://www.nanning.gov.cn
   level: B
   priority: 3
+  status: ok(search_index; python_tls_error)
 - name: 海口
   url: https://www.haikou.gov.cn
   level: B
   priority: 3
+  status: 200(firewall_challenge)
 - name: 贵阳
   url: https://www.guiyang.gov.cn
   level: B
   priority: 3
+  status: ok(search_index; python_tls_error)
 - name: 昆明
   url: https://www.km.gov.cn
   level: B
   priority: 3
+  status: ok(webfetch; python_connection_closed)
 - name: 拉萨
   url: https://www.lasa.gov.cn
   level: B
   priority: 3
+  status: ok(webfetch; python_tls_error)
 - name: 兰州
   url: https://www.lanzhou.gov.cn
   level: B
   priority: 3
+  status: ok(search_index; python_tls_error)
 - name: 西宁
   url: https://www.xining.gov.cn
   level: B
@@ -1174,9 +1183,10 @@ foreign_trade_policy_sources:
   status: ok
 - name: 财政部关税司
   name_en: MOF Customs Department / Office of the State Council Tariff Commission
-  url: https://gss.mof.gov.cn
+  url: https://gss.mof.gov.cn/gzdt/zhengcefabu/
   level: FP-A
   priority: 2
+  status: ok(search_index; python_502)
   topics:
   - 关税政策
   - 国务院关税税则委员会公告
@@ -1449,9 +1459,10 @@ foreign_macro_policy_sources:
   - 经济安全保障
   crawl_frequency: daily
   encoding: utf-8
+  status: ok(webfetch; python_timeout)
 - name: 欧洲央行
   name_en: European Central Bank
-  url: https://www.ecb.europa.eu/press/html/index.en.html
+  url: https://www.ecb.europa.eu/press/pubbydate/html/index.en.html
   level: FP-E
   priority: 4
   topics:
