@@ -94,6 +94,24 @@ source_groups:
       - new_statements
       - position_changes
 
+  local_policy_daily:
+    description: "Official city-government channels plus lead-only local service sources"
+    schedule: "10:00 UTC daily"
+    sources:
+      - category: key_city_sources
+        include_all: true
+      - wechat_category: local_government
+        include_all: true
+      - category: local_information_lead_sources
+        include_all: true
+        lead_only: true
+    processing:
+      - discover_local_policy_updates
+      - extract_original_issuing_body
+      - extract_document_date_and_number
+      - verify_against_official_city_or_department_site
+      - discard_unverified_policy_claims
+
   geo_conflict_daily:
     description: "Geopolitical conflict sources checked daily for escalation/de-escalation signals"
     schedule: "07:00 UTC daily"
@@ -142,6 +160,9 @@ source_groups:
         include_all: true
         purpose: url_verification
       - category: key_city_sources
+        include_all: true
+        purpose: url_verification
+      - category: local_information_lead_sources
         include_all: true
         purpose: url_verification
     processing:

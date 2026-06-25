@@ -5,6 +5,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES_PATH = ROOT / "config" / "sources.yaml"
 SOURCE_GROUPS_PATH = ROOT / "config" / "source_groups.yaml"
+WECHAT_ACCOUNTS_PATH = ROOT / "config" / "wechat_accounts.yaml"
 
 
 def _load_yaml(path: Path) -> dict:
@@ -129,3 +130,69 @@ def test_tariff_and_foreign_macro_sources_are_scheduled():
         item["category"] == "foreign_macro_policy_sources" and item["include_all"]
         for item in foreign_sources
     )
+
+
+def test_bendibao_is_lead_only_and_requires_official_verification():
+    registry = _load_yaml(SOURCES_PATH)
+    bendibao = next(
+        source
+        for source in registry["local_information_lead_sources"]
+        if source["name"] == "本地宝"
+    )
+
+    assert bendibao["level"] == "E"
+    assert bendibao["priority"] == 5
+    assert "必须" in bendibao["note"]
+    assert "政府官网" in bendibao["note"]
+
+    groups = _load_yaml(SOURCE_GROUPS_PATH)["source_groups"]
+    local_sources = groups["local_policy_daily"]["sources"]
+    lead_group = next(
+        item for item in local_sources if item.get("category") == "local_information_lead_sources"
+    )
+    assert lead_group["lead_only"] is True
+
+
+def test_official_local_wechat_accounts_cover_capitals_and_shenzhen():
+    directory = _load_yaml(WECHAT_ACCOUNTS_PATH)
+    accounts = directory["local_government"]
+    covered_cities = {account["city"] for account in accounts}
+    expected = {
+        "北京市",
+        "天津市",
+        "石家庄",
+        "太原",
+        "呼和浩特",
+        "沈阳",
+        "长春",
+        "哈尔滨",
+        "上海市",
+        "南京",
+        "杭州",
+        "合肥",
+        "福州",
+        "南昌",
+        "济南",
+        "郑州",
+        "武汉",
+        "长沙",
+        "广州",
+        "南宁",
+        "海口",
+        "重庆市",
+        "成都",
+        "贵阳",
+        "昆明",
+        "拉萨",
+        "西安",
+        "兰州",
+        "西宁",
+        "银川",
+        "乌鲁木齐",
+        "深圳",
+    }
+
+    assert expected <= covered_cities
+    assert all(account["official"] is True for account in accounts)
+    assert all(account["authority"] == "B" for account in accounts)
+    assert all(account["verification_source"] for account in accounts)

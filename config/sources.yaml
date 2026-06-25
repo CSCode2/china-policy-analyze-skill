@@ -1103,10 +1103,10 @@ key_city_sources:
   level: B
   priority: 3
 - name: 乌鲁木齐
-  url: http://www.urumqi.gov.cn
+  url: https://www.wlmq.gov.cn
   level: B
   priority: 3
-  status: ok(http_only)
+  status: ok
 - name: 香港
   name_en: Hong Kong SAR Government
   url: https://www.gov.hk
@@ -1117,6 +1117,24 @@ key_city_sources:
   url: https://www.gov.mo
   level: B
   priority: 3
+local_information_lead_sources:
+- name: 本地宝
+  name_en: Bendibao
+  url: https://www.bendibao.com
+  level: E
+  priority: 5
+  topics:
+  - 地方办事指南
+  - 人才补贴
+  - 户籍居住证
+  - 公积金社保
+  - 教育招生
+  - 交通限行
+  - 消费券
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+  note: 商业便民信息平台，只可作为发现地方政策和办事信息的线索；引用前必须提取原发文机关、文件日期和官方链接并回查政府官网，未完成官方验证时不得作为政策证据
 foreign_trade_policy_sources:
 - name: 外交部
   name_en: Ministry of Foreign Affairs (MFA)
