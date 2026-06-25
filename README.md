@@ -503,7 +503,7 @@
 
 ## 实在想看英文？
 
-China Policy Analyze Skill is an open-source system that automates policy text collection, structural interpretation, and risk observation from 120+ authoritative Chinese government sources. It turns dense policy documents into understandable daily briefings with evidence-level annotations (E0–E5), scenario analysis, and 7 types of structured distillation cards.
+China Policy Analyze Skill is an open-source system that automates policy text collection, structural interpretation, and risk observation from 180+ authoritative Chinese sources and international primary sources. It turns dense policy documents into understandable daily briefings with evidence-level annotations (E0–E5), scenario analysis, and 7 types of structured distillation cards.
 
 ---
 
@@ -597,7 +597,7 @@ china-policy-analyze-skill/
 │   ├── evidence_level.md           # 证据等级定义
 │   └── ...更多
 ├── config/
-│   ├── sources.yaml          # 120+ 数据源注册表
+│   ├── sources.yaml          # 180+ 数据源注册表
 │   ├── importance_rules.yaml # 重要性评分规则
 │   ├── topic_taxonomy.yaml   # 主题分类体系
 │   └── ...更多
@@ -628,7 +628,7 @@ china-policy-analyze-skill/
 
 ### 部委级（A级）
 
-发改委 · 财政部 · 央行 · 工信部 · 科技部 · 商务部 · 海关总署 · 税务总局 · 统计局 · 金融监管总局 · 证监会 · 外汇局 · 市场监管总局 · 人社部 · 教育部 · 司法部 · 民政部 · 自然资源部 · 生态环境部 · 住建部 · 交通运输部 · 农业农村部 · 文旅部 · 卫健委 · 应急管理部 · 医保局 · 能源局 · 审计署
+发改委 · 财政部 · 央行 · 工信部 · 科技部 · 商务部 · 国家民委 · 国家安全部公开渠道 · 水利部 · 海关总署 · 税务总局 · 统计局 · 金融监管总局 · 证监会 · 外汇局 · 市场监管总局 · 人社部 · 教育部 · 司法部 · 民政部 · 自然资源部 · 生态环境部 · 住建部 · 交通运输部 · 农业农村部 · 文旅部 · 卫健委 · 应急管理部 · 医保局 · 能源局 · 审计署
 
 ### 司法执法（A级）
 
@@ -640,15 +640,19 @@ china-policy-analyze-skill/
 
 ### 重点城市（B级）
 
-北京 · 上海 · 天津 · 重庆 · 深圳 · 广州 · 成都 · 杭州 · 武汉 · 南京 · 苏州 · 青岛 · 长沙 · 郑州 · 西安 · 合肥 · 厦门 · 大连 · 宁波 · 济南 · 沈阳 · 无锡 · 珠海 · 东莞 · 佛山 · 温州
+27个省会城市全覆盖 · 深圳 · 香港 · 澳门，以及苏州 · 青岛 · 厦门 · 大连 · 宁波 · 无锡 · 珠海 · 东莞 · 佛山 · 温州等重点城市
 
 ### 对外贸易（FP级）
 
-外交部 · 商务部(各司) · 海关总署 · 外汇局 · 贸促会 · 一带一路网 · 自贸区服务网 · WTO · World Bank · IMF · OECD
+外交部 · 商务部(各司) · 财政部关税司 · 海关总署 · 外汇局 · 贸促会 · 一带一路网 · 自贸区服务网 · WTO · World Bank · IMF · OECD
 
 ### 地缘风险与外部环境（FP级）
 
 国台办 · 国防部 · 中国海警局 · 中国海事局 · 东部战区 · 南部战区 · 日本防卫省 · 美国国防部 · 美国国务院 · OFAC · BIS · USTR · CSIS · IISS · SIPRI
+
+### 外部宏观政策（FP级）
+
+白宫 · 美联储 · 美国财政部 · 美国商务部 · 美国联邦公报 · 特朗普Truth Social · 日本银行 · 日本首相官邸 · 日本财务省 · 日本经济产业省 · 欧洲央行 · 欧盟委员会贸易总司 · 英格兰银行 · 加拿大银行
 
 ### 微信公众号（官网不可达时的备选渠道）
 

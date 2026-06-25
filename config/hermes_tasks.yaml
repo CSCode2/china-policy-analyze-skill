@@ -167,7 +167,7 @@ tasks:
   foreign_policy_watcher:
     name: "外交政策监控器"
     name_en: "Foreign Policy Watcher"
-    description: "Monitors foreign policy and international economic policy sources daily"
+    description: "Monitors foreign policy, international economic policy, and major foreign central-bank sources daily"
     schedule: "09:00 UTC daily"
     source_groups:
       - foreign_policy_daily
@@ -182,6 +182,12 @@ tasks:
           - "关切 → 严重关切 → 抗议"
           - "反对 → 坚决反对 → 强烈谴责"
           - "不可接受 → 予以反击"
+      - id: monitor_foreign_macro_policy
+        description: "Track major foreign central-bank decisions, executive actions, tariff announcements, and trade-control rules that may affect China"
+        verification_rules:
+          - "Treat social-media posts as direct-statement leads, not formal policy"
+          - "Verify executive-policy signals against official government releases or legal publications"
+          - "Preserve the original-language source when translation could alter policy meaning"
       - id: classify_foreign_content
         description: "Classify by FP-S through FP-E levels and topic tags"
         uses:

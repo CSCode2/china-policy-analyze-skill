@@ -231,6 +231,19 @@ ministry_sources:
   crawl_frequency: daily
   encoding: utf-8
   status: ok(JS空壳,首页无文章链接)
+- name: 国家民族事务委员会
+  name_en: National Ethnic Affairs Commission (NEAC)
+  url: https://www.neac.gov.cn
+  level: A
+  priority: 3
+  topics:
+  - 民族政策
+  - 民族地区发展
+  - 民族团结进步
+  - 少数民族事务
+  crawl_frequency: weekly
+  encoding: utf-8
+  status: ok
 - name: 商务部
   name_en: Ministry of Commerce (MOFCOM)
   url: https://www.mofcom.gov.cn
@@ -462,6 +475,20 @@ ministry_sources:
   crawl_frequency: daily
   encoding: utf-8
   status: ok
+- name: 水利部
+  name_en: Ministry of Water Resources (MWR)
+  url: http://www.mwr.gov.cn
+  level: A
+  priority: 2
+  topics:
+  - 水资源管理
+  - 防汛抗旱
+  - 水利基础设施
+  - 河湖治理
+  - 节水政策
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok(http_only)
 - name: 农业农村部
   name_en: Ministry of Agriculture and Rural Affairs (MARA)
   url: https://www.moa.gov.cn
@@ -601,6 +628,22 @@ ministry_sources:
   encoding: utf-8
   status: ok
   note: 2023年新组建，主管数据要素和数字经济，十五五期间核心部委
+- name: 国家安全部
+  name_en: Ministry of State Security (MSS)
+  url: https://www.12339.gov.cn
+  level: A
+  priority: 3
+  topics:
+  - 国家安全教育
+  - 反间谍
+  - 数据安全
+  - 境外安全风险
+  column_urls:
+  - https://www.scio.gov.cn/xwfb/bwxwfb/gbwfbh/gjaqb/
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+  note: 国家安全部无综合门户网站；12339为国家安全机关官方举报受理平台，公开内容主要通过国家安全部微信公众号和国新办栏目发布
 legal_enforcement_sources:
 - name: 国家法律法规数据库
   name_en: National Laws and Regulations Database
@@ -996,6 +1039,84 @@ key_city_sources:
   url: https://www.wenzhou.gov.cn
   level: B
   priority: 3
+- name: 石家庄
+  url: https://www.sjz.gov.cn
+  level: B
+  priority: 3
+- name: 太原
+  url: https://www.taiyuan.gov.cn
+  level: B
+  priority: 3
+- name: 呼和浩特
+  url: https://www.huhhot.gov.cn
+  level: B
+  priority: 3
+  status: tls_certificate_issue
+- name: 长春
+  url: http://www.changchun.gov.cn
+  level: B
+  priority: 3
+  status: ok(http_only)
+- name: 哈尔滨
+  url: https://www.harbin.gov.cn
+  level: B
+  priority: 3
+- name: 福州
+  url: https://www.fuzhou.gov.cn
+  level: B
+  priority: 3
+- name: 南昌
+  url: https://www.nc.gov.cn
+  level: B
+  priority: 3
+- name: 南宁
+  url: https://www.nanning.gov.cn
+  level: B
+  priority: 3
+- name: 海口
+  url: https://www.haikou.gov.cn
+  level: B
+  priority: 3
+- name: 贵阳
+  url: https://www.guiyang.gov.cn
+  level: B
+  priority: 3
+- name: 昆明
+  url: https://www.km.gov.cn
+  level: B
+  priority: 3
+- name: 拉萨
+  url: https://www.lasa.gov.cn
+  level: B
+  priority: 3
+- name: 兰州
+  url: https://www.lanzhou.gov.cn
+  level: B
+  priority: 3
+- name: 西宁
+  url: https://www.xining.gov.cn
+  level: B
+  priority: 3
+  status: 403(anti_bot)
+- name: 银川
+  url: https://www.yinchuan.gov.cn
+  level: B
+  priority: 3
+- name: 乌鲁木齐
+  url: http://www.urumqi.gov.cn
+  level: B
+  priority: 3
+  status: ok(http_only)
+- name: 香港
+  name_en: Hong Kong SAR Government
+  url: https://www.gov.hk
+  level: B
+  priority: 3
+- name: 澳门
+  name_en: Macao SAR Government
+  url: https://www.gov.mo
+  level: B
+  priority: 3
 foreign_trade_policy_sources:
 - name: 外交部
   name_en: Ministry of Foreign Affairs (MFA)
@@ -1032,6 +1153,23 @@ foreign_trade_policy_sources:
   crawl_frequency: daily
   encoding: utf-8
   note: mofcom.gov.cn/article/sgkong/ 返回403，用首页或xwfb/代替
+  status: ok
+- name: 财政部关税司
+  name_en: MOF Customs Department / Office of the State Council Tariff Commission
+  url: https://gss.mof.gov.cn
+  level: FP-A
+  priority: 2
+  topics:
+  - 关税政策
+  - 国务院关税税则委员会公告
+  - 进口税收
+  - 加征关税
+  - 关税政策解读
+  column_urls:
+  - https://gss.mof.gov.cn/gzdt/zhengcefabu/
+  - https://gss.mof.gov.cn/gzdt/zhengcejiedu/
+  crawl_frequency: daily
+  encoding: utf-8
   status: ok
 - name: 海关总署
   name_en: General Administration of Customs (GACC)
@@ -1155,6 +1293,197 @@ foreign_trade_policy_sources:
   - 创新政策
   crawl_frequency: monthly
   encoding: utf-8
+foreign_macro_policy_sources:
+- name: 白宫
+  name_en: The White House
+  url: https://www.whitehouse.gov/briefings-statements/
+  level: FP-E
+  priority: 4
+  topics:
+  - 总统行政行动
+  - 对华政策声明
+  - 贸易与关税
+  - 国家安全政策
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 美联储
+  name_en: Board of Governors of the Federal Reserve System
+  url: https://www.federalreserve.gov/newsevents.htm
+  level: FP-E
+  priority: 4
+  topics:
+  - 联邦基金利率
+  - FOMC
+  - 货币政策
+  - 金融稳定
+  - 美元流动性
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 美国财政部
+  name_en: US Department of the Treasury
+  url: https://home.treasury.gov/news/press-releases
+  level: FP-E
+  priority: 4
+  topics:
+  - 财政政策
+  - 制裁
+  - 国际金融
+  - 汇率政策
+  - 对华投资限制
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 美国商务部
+  name_en: US Department of Commerce
+  url: https://www.commerce.gov/news
+  level: FP-E
+  priority: 4
+  topics:
+  - 对华贸易
+  - 产业政策
+  - 半导体政策
+  - 出口管制
+  - 投资限制
+  crawl_frequency: daily
+  encoding: utf-8
+  status: 403(anti_bot)
+- name: 美国联邦公报
+  name_en: Federal Register
+  url: https://www.federalregister.gov
+  level: FP-E
+  priority: 4
+  topics:
+  - 行政规则
+  - 拟议规则
+  - 总统文件
+  - 贸易限制
+  - 出口管制
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 特朗普Truth Social
+  name_en: Donald J. Trump on Truth Social
+  url: https://truthsocial.com/@realDonaldTrump
+  level: FP-E
+  priority: 5
+  topics:
+  - 总统公开表态
+  - 对华政策信号
+  - 关税表态
+  - 外交与安全表态
+  crawl_frequency: daily
+  encoding: utf-8
+  status: 403(anti_bot)
+  note: 仅作为本人直接公开表态的一手线索，不等同于美国政府正式政策；必须与白宫、联邦公报或主管部门文件交叉验证
+- name: 日本银行
+  name_en: Bank of Japan
+  url: https://www.boj.or.jp/en/index.htm
+  level: FP-E
+  priority: 4
+  topics:
+  - 日本货币政策
+  - 利率决议
+  - 日元流动性
+  - 金融稳定
+  column_urls:
+  - https://www.boj.or.jp/en/mopo/mpmdeci/index.htm
+  - https://www.boj.or.jp/en/announcements/index.htm
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 日本首相官邸
+  name_en: Prime Minister's Office of Japan
+  url: https://japan.kantei.go.jp
+  level: FP-E
+  priority: 4
+  topics:
+  - 首相声明
+  - 对华政策
+  - 经济安全保障
+  - 外交政策
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 日本财务省
+  name_en: Ministry of Finance Japan
+  url: https://www.mof.go.jp/english/
+  level: FP-E
+  priority: 4
+  topics:
+  - 外汇干预
+  - 财政政策
+  - 关税
+  - 国际金融
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 日本经济产业省
+  name_en: Ministry of Economy, Trade and Industry Japan
+  url: https://www.meti.go.jp/english/press/index.html
+  level: FP-E
+  priority: 4
+  topics:
+  - 对华贸易
+  - 出口管制
+  - 产业政策
+  - 经济安全保障
+  crawl_frequency: daily
+  encoding: utf-8
+- name: 欧洲央行
+  name_en: European Central Bank
+  url: https://www.ecb.europa.eu/press/html/index.en.html
+  level: FP-E
+  priority: 4
+  topics:
+  - 欧元区货币政策
+  - 利率决议
+  - 金融稳定
+  - 欧元流动性
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 欧盟委员会贸易总司
+  name_en: European Commission Directorate-General for Trade
+  url: https://policy.trade.ec.europa.eu/news_en
+  level: FP-E
+  priority: 4
+  topics:
+  - 对华贸易政策
+  - 贸易救济
+  - 外国补贴
+  - 投资审查
+  - 出口管制
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 英格兰银行
+  name_en: Bank of England
+  url: https://www.bankofengland.co.uk/news
+  level: FP-E
+  priority: 4
+  topics:
+  - 英国货币政策
+  - 利率决议
+  - 金融稳定
+  - 英镑流动性
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
+- name: 加拿大银行
+  name_en: Bank of Canada
+  url: https://www.bankofcanada.ca/press/
+  level: FP-E
+  priority: 4
+  topics:
+  - 加拿大货币政策
+  - 利率决议
+  - 金融稳定
+  - 加元流动性
+  crawl_frequency: daily
+  encoding: utf-8
+  status: ok
 geo_conflict_sources_china:
 - name: 国防部
   name_en: Ministry of National Defense (MND)

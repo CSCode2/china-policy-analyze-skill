@@ -408,6 +408,12 @@ law_justice:
     topics: [治安管理, 网络安全, 经济犯罪]
     search_tip: "公安部 政策"
 
+  - name: 国家安全部
+    desc: 国家安全部官方信息发布渠道
+    authority: A
+    topics: [国家安全教育, 反间谍, 数据安全, 境外安全风险]
+    search_tip: "国家安全部 官方"
+
   - name: 中国警察网
     wechat_id: zgjcwcn
     desc: 公安部主管

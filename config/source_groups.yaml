@@ -53,7 +53,7 @@ source_groups:
       - update_document_relationship_graph
 
   foreign_policy_daily:
-    description: "Foreign policy and trade sources checked daily for new statements and developments"
+    description: "Foreign policy, trade, and macro-policy sources checked daily for new statements and developments"
     schedule: "09:00 UTC daily"
     sources:
       - category: foreign_trade_policy_sources
@@ -62,8 +62,11 @@ source_groups:
         items:
           - 外交部
           - 商务部各司
+          - 财政部关税司
           - 海关总署
           - 外汇局
+      - category: foreign_macro_policy_sources
+        include_all: true
       - category: geo_conflict_sources_china
         items:
           - 国防部
@@ -130,6 +133,9 @@ source_groups:
           - IMF
           - UNCTAD
           - OECD
+      - category: foreign_macro_policy_sources
+        include_all: true
+        purpose: url_verification
       - category: geo_conflict_sources_research_secondary
         include_all: true
       - category: provincial_government_sources
