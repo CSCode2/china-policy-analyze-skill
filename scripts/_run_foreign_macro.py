@@ -175,17 +175,40 @@ FETCHERS = {
 
 
 def fetch_article_content(url, title, source_name):
-    """Fetch article content and extract text."""
+    """Fetch article content and extract text + real title."""
     result = fetcher.fetch(url)
     if result.error:
-        return None, result.error
+        return None, None, result.error
     html = result.html or ""
+
     from china_policy_skill.parse.html_to_md import HTMLToMarkdown
-    parser = HTMLToMarkdown()
-    md_text = parser.convert(html, url)
+    from lxml import html as lxml_html
+
+    real_title = title
+    tree = lxml_html.fromstring(html)
+    og_title = tree.xpath("//meta[@property='og:title']/@content")
+    if og_title and og_title[0].strip():
+        real_title = og_title[0].strip()
+    else:
+        for title_tag in tree.xpath("//title/text()"):
+            t = title_tag.strip()
+            if t and len(t) > 10:
+                real_title = t.split("|")[0].split(" - ")[0].strip()
+                break
+
+    md_text = ""
+    parser_inst = HTMLToMarkdown()
+    md_text = parser_inst.convert(html, url)
+
     if len(md_text) < 200:
-        return None, "too short"
-    return md_text, None
+        paragraphs = tree.xpath("//p//text()")
+        para_text = "\n\n".join(p.strip() for p in paragraphs if p.strip() and len(p.strip()) > 20)
+        if len(para_text) > 200:
+            md_text = f"Source: {url}\n\n{real_title}\n\n{para_text}"
+
+    if len(md_text) < 150:
+        return None, None, "too short"
+    return md_text, real_title, None
 
 
 def main():
@@ -223,7 +246,7 @@ def main():
     docs = []
     for title, url, src in all_items[:10]:
         print(f"  Fetching content: {title[:60]}...")
-        md_text, error = fetch_article_content(url, title, src)
+        md_text, real_title, error = fetch_article_content(url, title, src)
         if error:
             print(f"    SKIP: {error}")
             errors.append({"source": src, "url": url, "error": error})
@@ -244,7 +267,7 @@ def main():
         with open(meta_path, "w", encoding="utf-8") as f:
             json.dump({
                 "doc_id": doc_id,
-                "title": title,
+                "title": real_title,
                 "source_name": src,
                 "publish_date": "",
                 "url": url,
@@ -254,8 +277,8 @@ def main():
             }, f, ensure_ascii=False, indent=2)
 
         record_hash(h, doc_id, HASH_STORE)
-        docs.append({"title": title, "url": url, "source": src, "chars": len(md_text)})
-        print(f"    OK: {len(md_text)} chars")
+        docs.append({"title": real_title, "url": url, "source": src, "chars": len(md_text)})
+        print(f"    OK: {real_title[:60]} ({len(md_text)} chars)")
 
     # Generate report
     today_str = date.today().isoformat()
