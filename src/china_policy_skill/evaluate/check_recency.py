@@ -36,7 +36,12 @@ class RecencyChecker:
 
             parsed = self._parse_date(date_str)
             if parsed is None:
-                stale_sources.append({"source": src.get("title", "Unknown"), "reason": f"Unparseable date: {date_str}"})
+                stale_sources.append(
+                    {
+                        "source": src.get("title", "Unknown"),
+                        "reason": f"Unparseable date: {date_str}",
+                    }
+                )
                 total += 1
                 continue
 
@@ -44,7 +49,13 @@ class RecencyChecker:
             if parsed >= cutoff:
                 recent_count += 1
             else:
-                stale_sources.append({"source": src.get("title", "Unknown"), "date": date_str, "age_days": (now - parsed).days})
+                stale_sources.append(
+                    {
+                        "source": src.get("title", "Unknown"),
+                        "date": date_str,
+                        "age_days": (now - parsed).days,
+                    }
+                )
 
         score = recent_count / total if total > 0 else 1.0
         passed = score >= 0.8

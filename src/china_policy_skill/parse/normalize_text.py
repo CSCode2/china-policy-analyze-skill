@@ -96,7 +96,9 @@ class TextNormalizer:
                 heading_text = md_match.group(2).strip()
                 is_heading = True
             else:
-                cn_section_match = re.match(r"^第[一二三四五六七八九十百零\d]+([章节条部分篇])\s*(.*)$", line)
+                cn_section_match = re.match(
+                    r"^第[一二三四五六七八九十百零\d]+([章节条部分篇])\s*(.*)$", line
+                )
                 if cn_section_match:
                     sec_type = cn_section_match.group(1)
                     type_levels = {"篇": 1, "部分": 1, "章": 2, "节": 3, "条": 4}

@@ -8,7 +8,7 @@ import requests
 import yaml
 from lxml import etree
 
-from china_policy_skill.fetch.fetch_html import HTMLFetcher, FetchResult
+from china_policy_skill.fetch.fetch_html import HTMLFetcher
 from china_policy_skill.parse.html_to_md import HTMLToMarkdown
 
 _ACCOUNTS_YAML = Path(__file__).resolve().parents[3] / "config" / "wechat_accounts.yaml"
@@ -49,21 +49,27 @@ def load_account_directory(yaml_path: Optional[str] = None) -> Dict[str, List[We
         for acc in accounts:
             if not isinstance(acc, dict) or "name" not in acc:
                 continue
-            directory[category].append(WeChatAccount(
-                name=acc["name"],
-                wechat_id=acc.get("wechat_id", ""),
-                desc=acc.get("desc", ""),
-                authority=acc.get("authority", ""),
-                topics=acc.get("topics", []),
-                search_tip=acc.get("search_tip", ""),
-                category=category,
-            ))
+            directory[category].append(
+                WeChatAccount(
+                    name=acc["name"],
+                    wechat_id=acc.get("wechat_id", ""),
+                    desc=acc.get("desc", ""),
+                    authority=acc.get("authority", ""),
+                    topics=acc.get("topics", []),
+                    search_tip=acc.get("search_tip", ""),
+                    category=category,
+                )
+            )
     return directory
 
 
 class WeChatSearcher:
     _BROWSER_HEADERS = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/125.0.0.0 Safari/537.36"
+        ),
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
         "Accept-Encoding": "gzip, deflate, br",
@@ -96,11 +102,7 @@ class WeChatSearcher:
             if "/link?" not in href or not title:
                 continue
 
-            full_url = (
-                f"https://weixin.sogou.com{href}"
-                if href.startswith("/")
-                else href
-            )
+            full_url = f"https://weixin.sogou.com{href}" if href.startswith("/") else href
 
             abstract = self._extract_abstract(a_el)
 
@@ -139,13 +141,13 @@ class WeChatSearcher:
         else:
             article.markdown = self.parser.convert(html, article.url)
             if len(article.markdown) < 50:
-                article.markdown = f"[Could not extract article content, got {len(html)} chars HTML]"
+                article.markdown = (
+                    f"[Could not extract article content, got {len(html)} chars HTML]"
+                )
 
         return article
 
-    def search_and_fetch(
-        self, query: str, max_results: int = 3
-    ) -> List[WeChatArticle]:
+    def search_and_fetch(self, query: str, max_results: int = 3) -> List[WeChatArticle]:
         articles = self.search(query, max_results=max_results)
         for article in articles:
             self.fetch_article(article)

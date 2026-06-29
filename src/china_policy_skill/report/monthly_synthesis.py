@@ -22,12 +22,14 @@ class MonthlySynthesisGenerator:
         regional_breakdown = monthly_data.get("regional_breakdown", {})
         sector_breakdown = monthly_data.get("sector_breakdown", {})
 
-        sections.extend([
-            "## Executive Summary",
-            "",
-            f"This month **{total_docs}** policy documents were tracked.",
-            "",
-        ])
+        sections.extend(
+            [
+                "## Executive Summary",
+                "",
+                f"This month **{total_docs}** policy documents were tracked.",
+                "",
+            ]
+        )
 
         if trending_topics:
             sections.extend(["## Trending Topics", ""])
@@ -48,7 +50,11 @@ class MonthlySynthesisGenerator:
                     for topic in items:
                         sections.append(f"- **{topic}**")
             elif isinstance(trending_topics, dict):
-                for topic, count in sorted(trending_topics.items(), key=lambda x: x[1] if isinstance(x[1], (int, float)) else 0, reverse=True)[:10]:
+                for topic, count in sorted(
+                    trending_topics.items(),
+                    key=lambda x: x[1] if isinstance(x[1], (int, float)) else 0,
+                    reverse=True,
+                )[:10]:
                     sections.append(f"- **{topic}**: {count}")
             sections.append("")
 
@@ -109,7 +115,11 @@ class MonthlySynthesisGenerator:
         if regional_breakdown:
             sections.extend(["## Regional Breakdown", ""])
             if isinstance(regional_breakdown, dict):
-                sorted_regions = sorted(regional_breakdown.items(), key=lambda x: x[1] if isinstance(x[1], (int, float)) else 0, reverse=True)
+                sorted_regions = sorted(
+                    regional_breakdown.items(),
+                    key=lambda x: x[1] if isinstance(x[1], (int, float)) else 0,
+                    reverse=True,
+                )
                 for region, count in sorted_regions[:15]:
                     sections.append(f"- **{region}**: {count}")
             sections.append("")
@@ -117,11 +127,24 @@ class MonthlySynthesisGenerator:
         if sector_breakdown:
             sections.extend(["## Sector Breakdown", ""])
             if isinstance(sector_breakdown, dict):
-                sorted_sectors = sorted(sector_breakdown.items(), key=lambda x: x[1] if isinstance(x[1], (int, float)) else 0, reverse=True)
+                sorted_sectors = sorted(
+                    sector_breakdown.items(),
+                    key=lambda x: x[1] if isinstance(x[1], (int, float)) else 0,
+                    reverse=True,
+                )
                 for sector, count in sorted_sectors[:15]:
                     sections.append(f"- **{sector}**: {count}")
             sections.append("")
 
-        sections.extend(["## Outlook", "", "Review next month's expected policy calendar and monitor ongoing developments.", "", "---", f"*Generated at {now.isoformat()}*"])
+        sections.extend(
+            [
+                "## Outlook",
+                "",
+                "Review next month's expected policy calendar and monitor ongoing developments.",
+                "",
+                "---",
+                f"*Generated at {now.isoformat()}*",
+            ]
+        )
 
         return "\n".join(sections)

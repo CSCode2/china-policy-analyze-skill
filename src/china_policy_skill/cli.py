@@ -1,7 +1,6 @@
 import argparse
 import json
 import os
-import subprocess
 import sys
 
 
@@ -17,10 +16,16 @@ def run_daily_update():
 def wechat_search():
     from china_policy_skill.fetch.fetch_wechat import WeChatSearcher
 
-    parser = argparse.ArgumentParser(prog="cpi wechat-search", description="Search WeChat public accounts for policy articles")
+    parser = argparse.ArgumentParser(
+        prog="cpi wechat-search", description="Search WeChat public accounts for policy articles"
+    )
     parser.add_argument("query", help="Search keyword")
-    parser.add_argument("--account", "-a", help="Search within a specific account (e.g. 中国人民银行)")
-    parser.add_argument("--category", "-c", help="Search across accounts in a category (e.g. economy_finance)")
+    parser.add_argument(
+        "--account", "-a", help="Search within a specific account (e.g. 中国人民银行)"
+    )
+    parser.add_argument(
+        "--category", "-c", help="Search across accounts in a category (e.g. economy_finance)"
+    )
     parser.add_argument("--max", "-m", type=int, default=3, help="Max results (default: 3)")
     parser.add_argument("--fetch", "-f", action="store_true", help="Fetch full article content")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
@@ -30,14 +35,20 @@ def wechat_search():
 
     if args.account:
         if args.fetch:
-            articles = ws.search_by_account_and_fetch(args.account, keyword=args.query, max_results=args.max)
+            articles = ws.search_by_account_and_fetch(
+                args.account, keyword=args.query, max_results=args.max
+            )
         else:
             articles = ws.search_by_account(args.account, keyword=args.query, max_results=args.max)
     elif args.category:
         if args.fetch:
-            articles = ws.search_by_category_and_fetch(args.category, keyword=args.query, max_results=args.max)
+            articles = ws.search_by_category_and_fetch(
+                args.category, keyword=args.query, max_results=args.max
+            )
         else:
-            articles = ws.search_by_category(args.category, keyword=args.query, max_results=args.max)
+            articles = ws.search_by_category(
+                args.category, keyword=args.query, max_results=args.max
+            )
     else:
         if args.fetch:
             articles = ws.search_and_fetch(args.query, max_results=args.max)
@@ -47,7 +58,12 @@ def wechat_search():
     if args.json:
         data = []
         for a in articles:
-            item = {"title": a.title, "url": a.url, "abstract": a.abstract, "account": a.account_name}
+            item = {
+                "title": a.title,
+                "url": a.url,
+                "abstract": a.abstract,
+                "account": a.account_name,
+            }
             if a.markdown:
                 item["markdown"] = a.markdown
             data.append(item)

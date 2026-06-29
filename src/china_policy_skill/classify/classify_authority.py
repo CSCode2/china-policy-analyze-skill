@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Dict, List, Tuple
-
+from typing import Tuple
 
 _S_PATTERNS: Tuple[str, ...] = (
     "全国人民代表大会",

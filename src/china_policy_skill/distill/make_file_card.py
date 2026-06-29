@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from ..utils.dates import format_doc_citation
 
 
@@ -19,7 +17,9 @@ class FileCardGenerator:
         summary = doc_metadata.get("summary", "")
 
         topics_str = ", ".join(topics) if isinstance(topics, list) else str(topics)
-        phrases_str = ", ".join(policy_phrases) if isinstance(policy_phrases, list) else str(policy_phrases)
+        phrases_str = (
+            ", ".join(policy_phrases) if isinstance(policy_phrases, list) else str(policy_phrases)
+        )
 
         text_preview = processed_text[:500] if processed_text else ""
 
@@ -28,8 +28,8 @@ class FileCardGenerator:
         sections = [
             f"# {formatted_title}",
             "",
-            f"| Field | Value |",
-            f"|-------|-------|",
+            "| Field | Value |",
+            "|-------|-------|",
             f"| Source | {source_name} |",
             f"| Publish Date | {publish_date} |",
             f"| Document Number | {doc_number or 'N/A'} |",

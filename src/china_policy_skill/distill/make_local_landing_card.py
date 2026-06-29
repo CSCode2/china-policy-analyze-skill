@@ -22,7 +22,14 @@ class LocalLandingCardGenerator:
         if not documents:
             sections.append("No local policy documents found for this topic and region.")
             sections.append("")
-            sections.extend(["## National-Level Context", "", "Review national-level policy signals for this topic and assess regional applicability."])
+            sections.extend(
+                [
+                    "## National-Level Context",
+                    "",
+                    "Review national-level policy signals for this topic "
+                    "and assess regional applicability.",
+                ]
+            )
             return "\n".join(sections)
 
         local_docs = []
@@ -104,6 +111,14 @@ class LocalLandingCardGenerator:
                 sections.append(entry)
             sections.append("")
 
-        sections.extend(["## Implementation Notes", "", f"- Verify local implementing rules and deadlines for {region}.", f"- Check for regional pilot programs or special zones related to {topic}.", f"- Monitor local enforcement actions and compliance requirements."])
+        sections.extend(
+            [
+                "## Implementation Notes",
+                "",
+                f"- Verify local implementing rules and deadlines for {region}.",
+                f"- Check for regional pilot programs or special zones related to {topic}.",
+                "- Monitor local enforcement actions and compliance requirements.",
+            ]
+        )
 
         return "\n".join(sections)

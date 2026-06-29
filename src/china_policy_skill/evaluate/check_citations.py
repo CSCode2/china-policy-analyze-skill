@@ -37,9 +37,6 @@ class CitationChecker:
         combined_source = " ".join(source_texts).lower()
         combined_titles = " ".join(source_titles).lower()
 
-        citation_pattern = re.compile(r"\[(\d+)\]|\[来源\d*\]|\[Source\d*\]|\【[\d]+】", re.IGNORECASE)
-        citations = citation_pattern.findall(answer)
-
         sentences = re.split(r"[。！？.!?]\s*", answer)
         sentences = [s.strip() for s in sentences if s.strip()]
 
@@ -88,9 +85,45 @@ class CitationChecker:
         )
 
     def _extract_key_phrases(self, sentence: str) -> List[str]:
-        stopwords = {"的", "了", "在", "是", "和", "与", "也", "都", "将", "于", "对", "等", "为", "中", "或", "其", "及", "the", "a", "an", "is", "are", "was", "were", "in", "on", "at", "to", "for", "of", "and", "or", "by"}
+        stopwords = {
+            "的",
+            "了",
+            "在",
+            "是",
+            "和",
+            "与",
+            "也",
+            "都",
+            "将",
+            "于",
+            "对",
+            "等",
+            "为",
+            "中",
+            "或",
+            "其",
+            "及",
+            "the",
+            "a",
+            "an",
+            "is",
+            "are",
+            "was",
+            "were",
+            "in",
+            "on",
+            "at",
+            "to",
+            "for",
+            "of",
+            "and",
+            "or",
+            "by",
+        }
         words = re.findall(r"[\u4e00-\u9fff]{2,}|[a-zA-Z]{3,}", sentence)
         return [w for w in words if w not in stopwords]
 
     def _has_citation_marker(self, sentence: str) -> bool:
-        return bool(re.search(r"\[\d+\]|\【[\d]+】|\[Source\d*\]|\[来源\d*\]", sentence, re.IGNORECASE))
+        return bool(
+            re.search(r"\[\d+\]|\【[\d]+】|\[Source\d*\]|\[来源\d*\]", sentence, re.IGNORECASE)
+        )

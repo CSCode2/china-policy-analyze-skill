@@ -1,47 +1,114 @@
 from __future__ import annotations
 
-import yaml
-import re
 from typing import Dict, List, Optional
 
+import yaml
 
 _DEFAULT_LEXICON: Dict[str, dict] = {
-    "必须": {"strength": 5, "explanation": "Mandatory requirement with no flexibility", "stage": "implementation"},
-    "应当": {"strength": 4, "explanation": "Strong obligation, expected to be followed", "stage": "implementation"},
-    "严禁": {"strength": 5, "explanation": "Strictly prohibited, no exceptions", "stage": "enforcement"},
-    "不得": {"strength": 5, "explanation": "Must not, absolute prohibition", "stage": "enforcement"},
+    "必须": {
+        "strength": 5,
+        "explanation": "Mandatory requirement with no flexibility",
+        "stage": "implementation",
+    },
+    "应当": {
+        "strength": 4,
+        "explanation": "Strong obligation, expected to be followed",
+        "stage": "implementation",
+    },
+    "严禁": {
+        "strength": 5,
+        "explanation": "Strictly prohibited, no exceptions",
+        "stage": "enforcement",
+    },
+    "不得": {
+        "strength": 5,
+        "explanation": "Must not, absolute prohibition",
+        "stage": "enforcement",
+    },
     "禁止": {"strength": 5, "explanation": "Prohibited", "stage": "enforcement"},
-    "推进": {"strength": 3, "explanation": "Push forward, policy encouragement", "stage": "implementation"},
+    "推进": {
+        "strength": 3,
+        "explanation": "Push forward, policy encouragement",
+        "stage": "implementation",
+    },
     "推动": {"strength": 3, "explanation": "Promote or drive forward", "stage": "planning"},
     "鼓励": {"strength": 2, "explanation": "Encouraged but not required", "stage": "guidance"},
     "支持": {"strength": 2, "explanation": "Supported, favorable policy", "stage": "guidance"},
     "引导": {"strength": 2, "explanation": "Guide or steer in a direction", "stage": "guidance"},
     "探索": {"strength": 1, "explanation": "Explore or trial, low commitment", "stage": "pilot"},
     "试点": {"strength": 1, "explanation": "Pilot program, limited scope", "stage": "pilot"},
-    "研究": {"strength": 1, "explanation": "Under study, no action required yet", "stage": "research"},
-    "加快": {"strength": 3, "explanation": "Accelerate, signals urgency", "stage": "implementation"},
+    "研究": {
+        "strength": 1,
+        "explanation": "Under study, no action required yet",
+        "stage": "research",
+    },
+    "加快": {
+        "strength": 3,
+        "explanation": "Accelerate, signals urgency",
+        "stage": "implementation",
+    },
     "深化": {"strength": 3, "explanation": "Deepen existing reform", "stage": "implementation"},
-    "完善": {"strength": 3, "explanation": "Improve or perfect an existing system", "stage": "implementation"},
-    "落实": {"strength": 4, "explanation": "Implement or carry out existing policy", "stage": "implementation"},
-    "确保": {"strength": 4, "explanation": "Ensure, strong commitment to outcome", "stage": "implementation"},
-    "力争": {"strength": 3, "explanation": "Strive to achieve, target-oriented", "stage": "planning"},
+    "完善": {
+        "strength": 3,
+        "explanation": "Improve or perfect an existing system",
+        "stage": "implementation",
+    },
+    "落实": {
+        "strength": 4,
+        "explanation": "Implement or carry out existing policy",
+        "stage": "implementation",
+    },
+    "确保": {
+        "strength": 4,
+        "explanation": "Ensure, strong commitment to outcome",
+        "stage": "implementation",
+    },
+    "力争": {
+        "strength": 3,
+        "explanation": "Strive to achieve, target-oriented",
+        "stage": "planning",
+    },
     "统筹": {"strength": 3, "explanation": "Coordinate across areas", "stage": "planning"},
     "规范": {"strength": 3, "explanation": "Standardize or regulate", "stage": "implementation"},
-    "优化": {"strength": 3, "explanation": "Optimize, improve efficiency", "stage": "implementation"},
-    "加强": {"strength": 3, "explanation": "Strengthen, increase emphasis", "stage": "implementation"},
+    "优化": {
+        "strength": 3,
+        "explanation": "Optimize, improve efficiency",
+        "stage": "implementation",
+    },
+    "加强": {
+        "strength": 3,
+        "explanation": "Strengthen, increase emphasis",
+        "stage": "implementation",
+    },
     "积极": {"strength": 2, "explanation": "Actively pursue, positive tone", "stage": "guidance"},
     "稳妥": {"strength": 2, "explanation": "Prudent and steady approach", "stage": "guidance"},
     "有序": {"strength": 2, "explanation": "In an orderly manner", "stage": "planning"},
     "逐步": {"strength": 2, "explanation": "Step by step, gradual approach", "stage": "planning"},
-    "依法": {"strength": 4, "explanation": "According to law, legal basis required", "stage": "implementation"},
+    "依法": {
+        "strength": 4,
+        "explanation": "According to law, legal basis required",
+        "stage": "implementation",
+    },
     "严厉": {"strength": 5, "explanation": "Severe, strict enforcement", "stage": "enforcement"},
     "坚决": {"strength": 5, "explanation": "Resolute, no compromise", "stage": "enforcement"},
-    "全面": {"strength": 3, "explanation": "Comprehensive, across all areas", "stage": "implementation"},
+    "全面": {
+        "strength": 3,
+        "explanation": "Comprehensive, across all areas",
+        "stage": "implementation",
+    },
     "大力": {"strength": 3, "explanation": "Vigorously, high intensity", "stage": "implementation"},
     "着力": {"strength": 3, "explanation": "Focus efforts on", "stage": "implementation"},
-    "切实": {"strength": 4, "explanation": "Earnestly, concrete action expected", "stage": "implementation"},
+    "切实": {
+        "strength": 4,
+        "explanation": "Earnestly, concrete action expected",
+        "stage": "implementation",
+    },
     "严格": {"strength": 4, "explanation": "Strict, rigorous enforcement", "stage": "enforcement"},
-    "限期": {"strength": 5, "explanation": "Within a deadline, time-bound mandate", "stage": "enforcement"},
+    "限期": {
+        "strength": 5,
+        "explanation": "Within a deadline, time-bound mandate",
+        "stage": "enforcement",
+    },
     "取缔": {"strength": 5, "explanation": "Ban and eliminate", "stage": "enforcement"},
     "制止": {"strength": 5, "explanation": "Stop or prevent", "stage": "enforcement"},
 }
