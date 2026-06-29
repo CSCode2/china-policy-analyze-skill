@@ -1,7 +1,6 @@
-import re
 import time
 from collections import defaultdict
-from typing import Dict, Optional
+from typing import Dict
 from urllib.parse import urlparse
 
 
@@ -50,7 +49,12 @@ class RateLimiter:
                     from email.utils import parsedate_to_datetime
 
                     retry_date = parsedate_to_datetime(retry_after)
-                    wait_seconds = max(0, (retry_date - retry_date.utcnow().replace(tzinfo=retry_date.tzinfo)).total_seconds())
+                    wait_seconds = max(
+                        0,
+                        (
+                            retry_date - retry_date.utcnow().replace(tzinfo=retry_date.tzinfo)
+                        ).total_seconds(),
+                    )
                     self._retry_after[domain] = now + wait_seconds
                 except Exception:
                     self._retry_after[domain] = now + self.default_delay
@@ -68,8 +72,12 @@ class RateLimiter:
                             wait_seconds = max(0, reset_time - now_ts)
                             self._retry_after[domain] = time.monotonic() + wait_seconds
                         except ValueError:
-                            self._domain_delays[domain] = max(self._domain_delays[domain], self.default_delay * 2)
+                            self._domain_delays[domain] = max(
+                                self._domain_delays[domain], self.default_delay * 2
+                            )
                     else:
-                        self._domain_delays[domain] = max(self._domain_delays[domain], self.default_delay * 2)
+                        self._domain_delays[domain] = max(
+                            self._domain_delays[domain], self.default_delay * 2
+                        )
             except ValueError:
                 pass

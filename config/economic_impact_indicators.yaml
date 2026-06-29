@@ -143,6 +143,68 @@ categories:
           - "信用传导机制受阻"
           - "利率走廊调整"
 
+      domestic_demand_impact:
+        label: "内需(三驾马车)影响"
+        label_en: "Domestic Demand (Consumption & Investment) Impact"
+        metrics:
+          - name: "社会消费品零售总额同比增速"
+            name_en: "Retail Sales YoY Growth"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: 3.0
+            threshold_severe: 0.0
+          - name: "固定资产投资累计同比增速"
+            name_en: "Fixed Asset Investment YTD YoY Growth"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: 2.0
+            threshold_severe: 0.0
+          - name: "民间固定资产投资增速"
+            name_en: "Private FAI YoY Growth"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: 0.0
+            threshold_severe: -5.0
+        impact_channels:
+          - "居民收入预期走弱抑制消费"
+          - "企业盈利和信心下降抑制投资"
+          - "出口走弱通过收入效应传导至消费"
+          - "稳增长政策对基建投资的对冲作用"
+
+      real_estate_impact:
+        label: "房地产影响"
+        label_en: "Real Estate Impact"
+        metrics:
+          - name: "70个大中城市新建商品住宅价格同比"
+            name_en: "70-City New Home Price YoY"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: -2.0
+            threshold_severe: -5.0
+          - name: "商品房销售面积累计同比"
+            name_en: "Commercial Housing Sales Area YTD YoY"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: -10.0
+            threshold_severe: -20.0
+          - name: "房地产开发投资累计同比"
+            name_en: "Real Estate Development Investment YTD YoY"
+            unit: "percentage"
+            data_source: "国家统计局"
+            frequency: monthly
+            threshold_moderate: -5.0
+            threshold_severe: -10.0
+        impact_channels:
+          - "房价下行通过财富效应抑制消费"
+          - "土地出让收入下降冲击地方财政"
+          - "房地产投资收缩拖累固定资产投资"
+          - "保交楼和城市更新政策的对冲作用"
+
   trade_supply_chain:
     label: "贸易与供应链"
     label_en: "Trade and Supply Chain"

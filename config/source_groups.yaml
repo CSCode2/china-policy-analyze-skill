@@ -14,6 +14,8 @@ source_groups:
         include_all: true
       - category: project_credit_sources
         include_all: true
+      - category: financial_market_data_sources
+        include_all: true
     checks:
       - http_status
       - content_hash
@@ -41,6 +43,9 @@ source_groups:
         include_all: true
         filter: flagged_for_update
       - category: project_credit_sources
+        include_all: true
+        filter: flagged_for_update
+      - category: financial_market_data_sources
         include_all: true
         filter: flagged_for_update
     processing:
@@ -169,6 +174,9 @@ source_groups:
         include_all: true
         purpose: url_verification
       - category: local_information_lead_sources
+        include_all: true
+        purpose: url_verification
+      - category: financial_media_index_sources
         include_all: true
         purpose: url_verification
     processing:

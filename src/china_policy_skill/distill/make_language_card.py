@@ -64,7 +64,14 @@ class LanguageCardGenerator:
         elif avg_strength_rounded >= 0.5:
             strength_label = "Exploratory"
 
-        sections.extend([f"**Phrase**: {phrase}", "", f"**Average Strength**: {avg_strength_rounded}/5 ({strength_label})", ""])
+        sections.extend(
+            [
+                f"**Phrase**: {phrase}",
+                "",
+                f"**Average Strength**: {avg_strength_rounded}/5 ({strength_label})",
+                "",
+            ]
+        )
 
         if explanations:
             unique_explanations = list(dict.fromkeys(explanations))

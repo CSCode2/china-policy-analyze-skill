@@ -5,7 +5,6 @@ from typing import List
 
 from china_policy_skill.evaluate.run_eval import EvalResult
 
-
 _SENSITIVE_NUMBER_PATTERNS = [
     re.compile(r"\d{2,}[,.]?\d*%"),
     re.compile(r"\d{4}年"),
@@ -75,7 +74,12 @@ class HallucinationChecker:
                     numbers.extend(pat.findall(sentence))
                 number_backed = all(n.lower() in combined_source for n in numbers)
                 if not number_backed:
-                    flagged.append({"claim": sentence[:150], "reason": f"Number not found in sources: {numbers}"})
+                    flagged.append(
+                        {
+                            "claim": sentence[:150],
+                            "reason": f"Number not found in sources: {numbers}",
+                        }
+                    )
                     continue
 
             key_phrases = self._extract_key_phrases(sentence)
@@ -89,7 +93,9 @@ class HallucinationChecker:
             if coverage >= 0.4:
                 verified += 1
             else:
-                flagged.append({"claim": sentence[:150], "reason": f"Low source coverage: {coverage:.0%}"})
+                flagged.append(
+                    {"claim": sentence[:150], "reason": f"Low source coverage: {coverage:.0%}"}
+                )
 
         score = verified / len(sentences) if sentences else 1.0
         passed = score >= 0.8
@@ -103,6 +109,28 @@ class HallucinationChecker:
         )
 
     def _extract_key_phrases(self, sentence: str) -> List[str]:
-        stopwords = {"的", "了", "在", "是", "和", "与", "也", "都", "将", "于", "对", "等", "为", "中", "或", "其", "及", "这", "那", "有", "不"}
+        stopwords = {
+            "的",
+            "了",
+            "在",
+            "是",
+            "和",
+            "与",
+            "也",
+            "都",
+            "将",
+            "于",
+            "对",
+            "等",
+            "为",
+            "中",
+            "或",
+            "其",
+            "及",
+            "这",
+            "那",
+            "有",
+            "不",
+        }
         words = re.findall(r"[\u4e00-\u9fff]{2,}|[a-zA-Z]{3,}", sentence)
         return [w for w in words if w not in stopwords]

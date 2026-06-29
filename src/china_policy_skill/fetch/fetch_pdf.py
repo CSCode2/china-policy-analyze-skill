@@ -54,9 +54,7 @@ class PDFFetcher:
         result = PDFFetchResult(url=url)
 
         try:
-            response = self._session.get(
-                url, timeout=self.timeout, stream=True
-            )
+            response = self._session.get(url, timeout=self.timeout, stream=True)
             result.status_code = response.status_code
 
             if response.status_code >= 400:
@@ -67,7 +65,9 @@ class PDFFetcher:
             if content_length:
                 size_mb = int(content_length) / (1024 * 1024)
                 if size_mb > self.max_size_mb:
-                    result.error = f"File too large: {size_mb:.1f}MB exceeds {self.max_size_mb}MB limit"
+                    result.error = (
+                        f"File too large: {size_mb:.1f}MB exceeds {self.max_size_mb}MB limit"
+                    )
                     return result
 
             if not self._is_pdf_content(response):
@@ -80,7 +80,9 @@ class PDFFetcher:
             for chunk in response.iter_content(chunk_size=8192):
                 downloaded += len(chunk)
                 if downloaded > max_bytes:
-                    result.error = f"File too large: exceeded {self.max_size_mb}MB limit during download"
+                    result.error = (
+                        f"File too large: exceeded {self.max_size_mb}MB limit during download"
+                    )
                     return result
                 content += chunk
 
@@ -92,9 +94,7 @@ class PDFFetcher:
                     f.write(content)
                 result.file_path = save_to
             else:
-                tmp = tempfile.NamedTemporaryFile(
-                    suffix=".pdf", delete=False
-                )
+                tmp = tempfile.NamedTemporaryFile(suffix=".pdf", delete=False)
                 tmp.write(content)
                 tmp.flush()
                 tmp.close()

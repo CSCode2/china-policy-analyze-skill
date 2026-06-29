@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import List
 
-
 _OPPORTUNITY_PROFILES = {
     "general": {
         "label": "General Business",
@@ -33,7 +32,7 @@ class OpportunityCardGenerator:
         if not topic:
             return ""
 
-        profile = _OPORTUNITY_PROFILES.get(user_profile, _OPORTUNITY_PROFILES["general"])
+        profile = _OPPORTUNITY_PROFILES.get(user_profile, _OPPORTUNITY_PROFILES["general"])
         sections = [
             f"# Opportunity: {topic}",
             "",

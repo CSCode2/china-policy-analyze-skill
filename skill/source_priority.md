@@ -49,7 +49,7 @@ These are the central-level implementation bodies and official information chann
 - Supreme People's Court (最高人民法院) — judicial interpretations, guiding cases, typical cases
 - Supreme People's Procuratorate (最高人民检察院) — procuratorial guidance, typical cases
 - People's Daily (人民日报) — for leadership speech full text and editorial board articles
-- Xinhua News Agency (新华社) — for leadership speech full text and official releases
+- Xinhua News Agency (新华社) — for leadership speech full text and official releases (official site only: `news.cn`)
 - Qiushi (求是) — for Xi Jinping's articles and theoretical pieces
 - People.cn speech database (人民网领导人活动报道集) — for comprehensive speech records
 
@@ -170,6 +170,79 @@ These are commercial and non-official sources. They may provide leads, tips, or 
 - Never quote E-level paraphrases as if they were original wording
 - If an E-level source identifies a policy development, verify it with an S/A/B/C-level source before citing it
 - E-level sources about policy intent, infighting, or behind-the-scenes dynamics are never reliable as evidence
+
+---
+
+## Statistical & Macroeconomic Data Sources
+
+Official statistical and high-frequency macro data channels, slotted into the authority hierarchy above. **All series below are A-level (authoritative data) unless marked otherwise. Use only official data; if no official series exists for a metric, omit it rather than substitute a commercial estimate — the sole exception is explicitly-flagged endorsed media indices (see end of section).**
+
+### National Bureau of Statistics (NBS / 国家统计局) — A-level
+
+The single authoritative publisher for CPI, PPI, PMI, the "three horses" of demand, housing, and population aggregates.
+
+| Product | Covers | Frequency | Official channel |
+|---|---|---|---|
+| 国家数据 (National Data DB) | Every NBS series and its sub-items (national + regional) | continuous | `data.stats.gov.cn` (browser/API only — JS portal, not static-crawlable) |
+| 最新发布 / 数据解读 | Monthly indicator press releases + interpretation | monthly | `stats.gov.cn/sj/zxfb/`, `stats.gov.cn/sj/sjjd/` |
+| 中国统计年鉴 (China Statistical Yearbook) | Comprehensive annual compendium (年度数据) | annual | `stats.gov.cn/sj/ndsj/` |
+
+- Provincial statistical yearbooks (各省统计年鉴) live on provincial bureau sites — treat as **B-level** regional data.
+
+### Monthly headline indicators (capture sub-items, not just the headline)
+
+| Indicator | Sub-items to capture | Publisher | Frequency |
+|---|---|---|---|
+| CPI 居民消费价格 | 食品/非食品, 消费品/服务, 八大类, 核心CPI (扣除食品和能源) | NBS | monthly |
+| PPI 工业生产者价格 | 生产资料/生活资料, 购进价格 PPIRM | NBS | monthly |
+| PMI 采购经理指数 | 制造业PMI + 分项 (生产、新订单、新出口订单、从业人员、原材料库存、供应商配送时间…); 非制造业商务活动指数; 综合PMI产出指数 | **official PMI = NBS + 中国物流与采购联合会 (CFLP, `chinawuliu.com.cn`)** | monthly |
+| 城镇调查失业率 | 全国 / 31大城市 / 16–24岁青年 | NBS | monthly |
+
+### 三驾马车 (the "three horses" of demand) — A-level
+
+| Engine | Official series | Publisher | Frequency |
+|---|---|---|---|
+| 消费 Consumption | 社会消费品零售总额 (商品/餐饮, 城镇/乡村, 实物商品网上零售额) | NBS | monthly |
+| 投资 Investment | 固定资产投资(不含农户), 分制造业/基建/房地产, 民间投资 | NBS | monthly (YTD cumulative) |
+| 出口 Exports | 货物进出口 (by product/partner/trade mode) | **海关总署 GACC** (`customs.gov.cn`, ⚠️ WebFetch-blocked 412 — use NBS summary / 海关发布 WeChat); NBS publishes summary | monthly |
+
+### Real estate / housing (official high-frequency) — A-level
+
+| Series | Covers | Publisher | Frequency |
+|---|---|---|---|
+| 70个大中城市商品住宅销售价格变动情况 | New + resale home price index, MoM/YoY by city tier | NBS | monthly |
+| 全国房地产开发投资和销售情况 | 开发投资额, 商品房销售面积, 销售额, 待售面积, 到位资金 | NBS | monthly (YTD) |
+| Housing / real-estate policy | 房地产调控, 保障性住房, 城市更新 | 住建部 MOHURD (`mohurd.gov.cn`) | as issued |
+
+### Population & demographics — A-level
+
+| Domain | Series / channel | Department |
+|---|---|---|
+| 年度人口 / 人口普查 | year-end population, 出生率/自然增长率, age & urban-rural structure; decennial census (2020 = 七普) + 1% sample | NBS |
+| 出生人口 / 生育 | births, fertility, 卫生健康事业发展统计公报 | 国家卫健委 NHC (`nhc.gov.cn`) |
+| 婚姻登记 / 民政 | marriage & divorce registrations, 民政事业发展统计公报 | 民政部 MCA (`mca.gov.cn`) |
+| 户籍人口 | household registration | 公安部 MPS (`mps.gov.cn`, ⚠️ 521 blocked) |
+| 就业 / 社保 | employment, 参保人数 | 人社部 MOHRSS (`mohrss.gov.cn`, ⚠️ JS shell) |
+
+### Financial market data infrastructure — A-level
+
+Official / state-authorized market infrastructure for high-frequency financial data (rates, FX, bond yields, equity indices). Non-gov.cn domains, but authoritative for **market data**; for *policy*, still defer to S/A ministry sources (PBOC, MOF, CSRC, NFRA).
+
+| Source | Publishes | Channel |
+|---|---|---|
+| 中债 / 中央结算 (CCDC, ChinaBond) | 中债国债收益率曲线 (the official benchmark curve), bond valuation, 信用利差 | `chinabond.com.cn` |
+| 上交所 SSE / 深交所 SZSE | A-share indices, trading data, 上市公司公告, 北向资金 (沪/深股通), 融资融券 | `sse.com.cn`, `szse.cn` |
+| 中证指数 (CSI) | 沪深300 / 中证500 / 中证800 / 中证1000 indices, 成份/权重, 行业 PE — via official JSON API `csindex-home/perf/index-perf` (homepage is SPA) | `csindex.com.cn` |
+| 中金所 (CFFEX) | 股指期货 (IF/IC/IH/IM), 国债期货 (2/5/10Y), 持仓/成交/结算价 | `cffex.com.cn` |
+| 中国货币网 / CFETS (PBOC-affiliated) | 人民币汇率中间价, Shibor, 银行间利率, 银行间债券收益率, DR007 | `chinamoney.com.cn` |
+
+### Endorsed media indices (E-level — complementary cross-check only)
+
+Some privately-compiled indices carry strong institutional backing and are widely cited, but remain **E-level**: usable as a cross-check, **never** as a substitute for the official series, and never as standalone evidence.
+
+| Index | Compiler / methodology | Use |
+|---|---|---|
+| RatingDog 中国PMI — formerly 财新/Caixin China PMI, renamed Aug 2025 (RatingDog holds naming rights; **S&P Global** still compiles, ex-Markit) | Smaller, more SME- & export-oriented sample than NBS/CFLP PMI. Mfg PMI released 1st business day, services 3rd | Cross-check vs official NBS PMI; **always present alongside NBS PMI, labeled non-official, and flag the methodological divergence** (SME/export vs large-firm/SOE). Verify key conclusions against official data. |
 
 ---
 

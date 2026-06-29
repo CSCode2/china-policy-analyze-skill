@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Dict, Tuple
 
-
 _DOC_TYPE_PATTERNS: Dict[str, Tuple[str, ...]] = {
     "five_year_plan": (
         "五年规划",

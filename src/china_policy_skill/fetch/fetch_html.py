@@ -1,5 +1,5 @@
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Callable, List, Optional
 
 import requests
@@ -21,8 +21,15 @@ class FetchResult:
 
 class HTMLFetcher:
     _BROWSER_HEADERS = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/125.0.0.0 Safari/537.36"
+        ),
+        "Accept": (
+            "text/html,application/xhtml+xml,application/xml;q=0.9,"
+            "image/avif,image/webp,image/apng,*/*;q=0.8"
+        ),
         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
         "Accept-Encoding": "gzip, deflate, br",
         "Cache-Control": "no-cache",
@@ -114,7 +121,7 @@ class HTMLFetcher:
                 if response.status_code >= 500:
                     last_error = f"Server error: {response.status_code}"
                     if attempt < self.max_retries:
-                        wait = self.backoff_factor * (2 ** attempt)
+                        wait = self.backoff_factor * (2**attempt)
                         time.sleep(wait)
                         continue
                     result.error = last_error
@@ -137,13 +144,13 @@ class HTMLFetcher:
             except requests.exceptions.Timeout:
                 last_error = "Request timed out"
                 if attempt < self.max_retries:
-                    wait = self.backoff_factor * (2 ** attempt)
+                    wait = self.backoff_factor * (2**attempt)
                     time.sleep(wait)
                     continue
             except requests.exceptions.ConnectionError:
                 last_error = "Connection error"
                 if attempt < self.max_retries:
-                    wait = self.backoff_factor * (2 ** attempt)
+                    wait = self.backoff_factor * (2**attempt)
                     time.sleep(wait)
                     continue
             except requests.exceptions.RequestException as exc:

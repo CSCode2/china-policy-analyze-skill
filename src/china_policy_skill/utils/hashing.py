@@ -1,7 +1,7 @@
 import hashlib
 import json
 import os
-from typing import Dict, Optional
+from typing import Dict
 
 
 def content_hash(text: str) -> str:

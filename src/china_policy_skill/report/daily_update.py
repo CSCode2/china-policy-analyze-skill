@@ -46,7 +46,7 @@ class DailyUpdateGenerator:
                 doc_type = doc.get("doc_type", "Unknown")
                 by_type.setdefault(doc_type, []).append(doc)
 
-            sections.append(f"### By Authority Level")
+            sections.append("### By Authority Level")
             sections.append("")
             for level in sorted(by_authority.keys()):
                 docs = by_authority[level]
@@ -55,7 +55,7 @@ class DailyUpdateGenerator:
                     sections.append(self._format_doc_entry(doc))
                 sections.append("")
 
-            sections.append(f"### By Document Type")
+            sections.append("### By Document Type")
             sections.append("")
             for dtype in sorted(by_type.keys()):
                 docs = by_type[dtype]

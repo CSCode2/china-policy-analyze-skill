@@ -6,12 +6,9 @@ class PDFToMarkdown:
         self._use_pymupdf = self._check_pymupdf()
 
     def _check_pymupdf(self) -> bool:
-        try:
-            import fitz
+        import importlib.util
 
-            return True
-        except ImportError:
-            return False
+        return importlib.util.find_spec("fitz") is not None
 
     def _convert_with_pymupdf(self, pdf_path_or_bytes: Union[str, bytes]) -> str:
         import fitz
@@ -55,9 +52,10 @@ class PDFToMarkdown:
         return "\n\n---\n\n".join(pages)
 
     def _convert_with_pdfplumber(self, pdf_path_or_bytes: Union[str, bytes]) -> str:
-        import pdfplumber
-        import tempfile
         import os
+        import tempfile
+
+        import pdfplumber
 
         if isinstance(pdf_path_or_bytes, bytes):
             tmp = tempfile.NamedTemporaryFile(suffix=".pdf", delete=False)

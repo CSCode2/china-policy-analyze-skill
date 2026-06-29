@@ -1,8 +1,6 @@
 import os
 import tempfile
-from unittest.mock import MagicMock, patch
-
-import requests
+from unittest.mock import patch
 
 from china_policy_skill.fetch.fetch_wechat import (
     WeChatAccount,
@@ -10,7 +8,6 @@ from china_policy_skill.fetch.fetch_wechat import (
     WeChatSearcher,
     load_account_directory,
 )
-
 
 _SAMPLE_YAML = """\
 central_policy:

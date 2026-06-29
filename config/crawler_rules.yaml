@@ -63,6 +63,9 @@ rate_limits:
     xinhuanet.com:
       requests_per_minute: 15
       delay_between_requests_ms: 2000
+    news.cn:
+      requests_per_minute: 15
+      delay_between_requests_ms: 2000
 
 user_agent:
   primary: "ChinaPolicyAnalyzeBot/1.0 (+https://github.com/anomalyco/china-policy-analyze-skill; research-bot)"

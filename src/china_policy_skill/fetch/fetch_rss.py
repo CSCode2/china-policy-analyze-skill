@@ -1,7 +1,6 @@
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Optional
-from urllib.parse import urljoin
 
 import requests
 

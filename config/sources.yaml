@@ -95,7 +95,7 @@ central_policy_sources:
   encoding: utf-8
 - name: 新华网
   name_en: Xinhua News Agency
-  url: http://www.xinhuanet.com
+  url: https://www.news.cn
   level: A
   priority: 2
   topics:
@@ -105,6 +105,8 @@ central_policy_sources:
   - 外交声明
   crawl_frequency: daily
   encoding: utf-8
+  note: 新华社官方网站，canonical主域名为news.cn(原www.xinhuanet.com仍可访问且指向同一站点)。仅用官网，不使用微信公众号等其他渠道。
+  status: ok
 - name: 人民网
   name_en: People's Daily Online
   url: http://www.people.com.cn
@@ -150,16 +152,55 @@ ministry_sources:
   topics:
   - GDP
   - CPI
+  - 核心CPI
+  - CPI八大类
   - PPI
+  - PMI采购经理指数
+  - 制造业PMI
+  - 非制造业PMI
+  - 综合PMI产出指数
   - 工业增加值
   - 社会消费品零售总额
   - 固定资产投资
+  - 民间投资
+  - 房地产开发投资和销售
+  - 70个大中城市住宅销售价格
   - 进出口
   - 人口数据
+  - 人口普查
+  - 出生人口
   - 就业数据
+  - 城镇调查失业率
+  - 国民经济运行月度数据
+  - 中国统计年鉴
+  column_urls:
+  - https://www.stats.gov.cn/sj/zxfb/
+  - https://www.stats.gov.cn/sj/sjjd/
+  - https://www.stats.gov.cn/sj/ndsj/
+  note: NBS是CPI、PPI、PMI、社会消费品零售总额、固定资产投资、70个大中城市住宅销售价格、房地产开发投资和销售、人口数据(含人口普查)等指标的官方发布机构。各指标细分项(如CPI八大类与核心CPI、PMI分项、商品房销售面积/销售额)通过国家数据库data.stats.gov.cn查询；月度新闻稿见sj/zxfb/(最新发布)与sj/sjjd/(数据解读)；中国统计年鉴见sj/ndsj/(年度数据)。PMI由NBS与中国物流与采购联合会(CFLP)联合发布。注：data.stats.gov.cn为JS渲染门户(会跳转至/dg/website/page.html)，需浏览器或数据接口访问，sj/各栏目页可直接抓取。
   crawl_frequency: daily
   encoding: utf-8
   status: ok
+- name: 中国物流与采购联合会
+  name_en: China Federation of Logistics & Purchasing (CFLP)
+  url: http://www.chinawuliu.com.cn
+  level: A
+  priority: 2
+  topics:
+  - 制造业PMI
+  - 非制造业PMI
+  - 综合PMI产出指数
+  - PMI分项指数
+  - 中国大宗商品指数CBMI
+  - 物流业景气指数LPI
+  - 中国公路物流运价指数
+  column_urls:
+  - http://www.chinawuliu.com.cn/zt/pmi/
+  - http://www.clic.org.cn
+  crawl_frequency: monthly
+  encoding: utf-8
+  note: 官方PMI由国家统计局服务业调查中心与中国物流与采购联合会(CFLP)联合发布，具体调查与编制由其下属中国物流信息中心(CLIC, clic.org.cn)承担；PMI专题见 chinawuliu.com.cn/zt/pmi/。发布PMI及其分项(生产、新订单、新出口订单、积压订单、产成品库存、采购量、进口、主要原材料购进价格、出厂价格、原材料库存、从业人员、供应商配送时间、生产经营活动预期)。非gov.cn但属官方授权统计发布渠道，权威数值以NBS同步发布为准。仅支持http；https证书与域名不匹配(SEC_E_WRONG_PRINCIPAL)，站点响应较慢。
+  status: ok(http_only; https证书无效; 响应慢)
 - name: 人民银行
   name_en: People's Bank of China (PBOC)
   url: https://www.pbc.gov.cn
@@ -1144,6 +1185,122 @@ local_information_lead_sources:
   encoding: utf-8
   status: ok
   note: 商业便民信息平台，只可作为发现地方政策和办事信息的线索；引用前必须提取原发文机关、文件日期和官方链接并回查政府官网，未完成官方验证时不得作为政策证据
+financial_media_index_sources:
+- name: RatingDog中国PMI
+  name_en: RatingDog China PMI (S&P Global; formerly Caixin China PMI)
+  url: https://www.pmi.spglobal.com
+  level: E
+  priority: 5
+  topics:
+  - RatingDog中国制造业PMI
+  - RatingDog中国服务业PMI
+  - RatingDog中国综合PMI
+  - 财新PMI(旧称)
+  crawl_frequency: monthly
+  encoding: utf-8
+  verification_url: https://www.stats.gov.cn/sj/zxfb/
+  note: 该指数原名"财新中国PMI"(财新PMI)，自2025年8月起更名为"RatingDog中国PMI"——RatingDog购得标普全球冠名权，但编制方仍为标普全球(S&P Global，原Markit)，方法学与样本不变(偏向中小及出口型企业)，与国家统计局/CFLP官方PMI口径不同。制造业PMI每月首个工作日发布，服务业PMI每月第三个工作日发布。属E级有强力背书的媒体指数，只能作为对NBS官方PMI的交叉参考线索，不得作为官方数据或政策依据单独引用；引用时必须同时给出NBS官方PMI数值并标注两者口径差异，关键结论必须回查官方来源。pmi.spglobal.com对自动化客户端返回403(反爬)，浏览器可正常访问。
+  status: 403(anti_bot)
+financial_market_data_sources:
+- name: 中债-中央结算公司
+  name_en: ChinaBond / China Central Depository & Clearing (CCDC)
+  url: https://www.chinabond.com.cn
+  level: A
+  priority: 2
+  topics:
+  - 中债国债收益率曲线
+  - 债券估值
+  - 国债收益率
+  - 地方政府债
+  - 债券发行与托管
+  - 信用利差
+  crawl_frequency: daily
+  encoding: utf-8
+  note: 中央国债登记结算有限责任公司(CCDC)运营的中国债券信息网，是中债国债收益率曲线与债券估值的官方编制发布机构(财政部、央行采用其国债收益率曲线为定价基准)。非gov.cn但属国家级金融市场基础设施。
+  status: ok
+- name: 上海证券交易所
+  name_en: Shanghai Stock Exchange (SSE)
+  url: https://www.sse.com.cn
+  level: A
+  priority: 2
+  topics:
+  - 上证指数
+  - 科创板
+  - 市场交易数据
+  - 上市公司公告
+  - 沪股通北向资金
+  - 债券与基金
+  crawl_frequency: daily
+  encoding: utf-8
+  note: 证监会监管下的法定证券交易所(自律监管机构)，发布官方行情、指数、上市公司信息披露与沪股通数据。非gov.cn但属官方授权市场运营与披露机构。
+  status: ok
+- name: 深圳证券交易所
+  name_en: Shenzhen Stock Exchange (SZSE)
+  url: https://www.szse.cn
+  level: A
+  priority: 2
+  topics:
+  - 深证成指
+  - 创业板
+  - 市场交易数据
+  - 上市公司公告
+  - 深股通北向资金
+  - 债券与基金
+  crawl_frequency: daily
+  encoding: utf-8
+  note: 证监会监管下的法定证券交易所，发布官方行情、指数、上市公司信息披露与深股通数据。非gov.cn但属官方授权市场运营与披露机构。注：部分自动化TLS客户端(如node fetch)对其证书链报错，浏览器与curl(schannel)正常握手返回200。
+  status: ok(部分自动化客户端TLS证书链报错)
+- name: 中国货币网
+  name_en: China Money Network / China Foreign Exchange Trade System (CFETS)
+  url: https://www.chinamoney.com.cn
+  level: A
+  priority: 2
+  topics:
+  - 人民币汇率中间价
+  - Shibor
+  - 银行间同业拆借利率
+  - 银行间债券收益率
+  - 外汇市场行情
+  - 货币市场行情
+  crawl_frequency: daily
+  encoding: utf-8
+  note: 中国外汇交易中心(全国银行间同业拆借中心，央行直属)运营，是人民币汇率中间价、Shibor、银行间利率与债券收益率的官方发布渠道。非gov.cn但属央行直属金融市场基础设施。
+  status: ok
+- name: 中证指数有限公司
+  name_en: China Securities Index Co. (CSI)
+  url: https://www.csindex.com.cn
+  level: A
+  priority: 2
+  topics:
+  - 沪深300指数
+  - 中证500指数
+  - 中证800指数
+  - 中证1000指数
+  - 指数成份与权重
+  - 行业市盈率
+  column_urls:
+  - https://www.csindex.com.cn/csindex-home/perf/index-perf
+  crawl_frequency: daily
+  encoding: utf-8
+  note: 上交所与深交所合资的官方指数机构。网站首页为JS渲染门户(不可直接抓取)，但官方数据通过公开JSON接口提供：指数行情 /csindex-home/perf/index-perf?indexCode=000300&startDate=YYYYMMDD&endDate=YYYYMMDD 返回JSON(沪深300/中证500/中证800/中证1000等)，另有成份股、权重、行业市盈率。机器可读，满足抓取要求。非gov.cn但属交易所授权指数运营机构。
+  status: ok(JSON API可用; 首页JS渲染)
+- name: 中国金融期货交易所
+  name_en: China Financial Futures Exchange (CFFEX)
+  url: http://www.cffex.com.cn
+  level: A
+  priority: 2
+  topics:
+  - 股指期货
+  - 沪深300股指期货IF
+  - 中证500股指期货IC
+  - 上证50股指期货IH
+  - 中证1000股指期货IM
+  - 国债期货
+  - 持仓与成交数据
+  crawl_frequency: daily
+  encoding: utf-8
+  note: 证监会监管下的法定金融期货交易所，发布股指期货(IF/IC/IH/IM)与国债期货(2/5/10年)的行情、结算价、持仓与成交数据。非gov.cn但属官方授权市场运营机构。仅支持http；https握手失败(SEC_E_INVALID_TOKEN)。
+  status: ok(http_only; https握手失败)
 foreign_trade_policy_sources:
 - name: 外交部
   name_en: Ministry of Foreign Affairs (MFA)

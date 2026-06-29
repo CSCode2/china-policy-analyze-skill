@@ -1,9 +1,5 @@
 from __future__ import annotations
 
-from typing import List
-
-from ..utils.dates import format_doc_citation
-
 
 class CaseCardGenerator:
     def generate(self, case_data: dict) -> str:

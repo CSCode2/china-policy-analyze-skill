@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from datetime import datetime
 from typing import List
 
 from ..utils.dates import format_doc_citation
@@ -63,11 +62,25 @@ class PolicySignalCardGenerator:
         elif max_strength >= 1:
             signal_direction = "Exploratory"
 
-        sections.append(f"Based on {doc_count} document(s), the policy signal for **{topic}** is **{signal_direction}**.")
+        sections.append(
+            f"Based on {doc_count} document(s), the policy signal for **{topic}** "
+            f"is **{signal_direction}**."
+        )
         if latest_date:
             sections.append(f"Latest document date: {latest_date}.")
 
-        sections.extend(["", "## Signal Strength", "", f"| Metric | Value |", f"|--------|-------|", f"| Max Strength Level | {max_strength}/5 |", f"| Signal Direction | {signal_direction} |", f"| Document Count | {doc_count} |"])
+        sections.extend(
+            [
+                "",
+                "## Signal Strength",
+                "",
+                "| Metric | Value |",
+                "|--------|-------|",
+                f"| Max Strength Level | {max_strength}/5 |",
+                f"| Signal Direction | {signal_direction} |",
+                f"| Document Count | {doc_count} |",
+            ]
+        )
 
         sections.extend(["", "## Authority Distribution", ""])
         for level in sorted(authority_dist.keys()):

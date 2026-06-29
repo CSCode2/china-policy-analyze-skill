@@ -114,7 +114,14 @@ class EvalRunner:
             result = checker.check(answer, sources)
             results.append(result)
         if not cases:
-            results.append(EvalResult(check_name="citation_check", passed=True, score=1.0, details="No cases to evaluate"))
+            results.append(
+                EvalResult(
+                    check_name="citation_check",
+                    passed=True,
+                    score=1.0,
+                    details="No cases to evaluate",
+                )
+            )
         return results
 
     def run_recency_check(self) -> List[EvalResult]:
@@ -130,7 +137,14 @@ class EvalRunner:
             result = checker.check(answer, sources, max_age_days=max_age)
             results.append(result)
         if not cases:
-            results.append(EvalResult(check_name="recency_check", passed=True, score=1.0, details="No cases to evaluate"))
+            results.append(
+                EvalResult(
+                    check_name="recency_check",
+                    passed=True,
+                    score=1.0,
+                    details="No cases to evaluate",
+                )
+            )
         return results
 
     def run_hallucination_check(self) -> List[EvalResult]:
@@ -145,7 +159,14 @@ class EvalRunner:
             result = checker.check(answer, sources)
             results.append(result)
         if not cases:
-            results.append(EvalResult(check_name="hallucination_check", passed=True, score=1.0, details="No cases to evaluate"))
+            results.append(
+                EvalResult(
+                    check_name="hallucination_check",
+                    passed=True,
+                    score=1.0,
+                    details="No cases to evaluate",
+                )
+            )
         return results
 
     def run_policy_language_check(self) -> List[EvalResult]:
@@ -164,7 +185,14 @@ class EvalRunner:
             passed = score >= 0.8
             if passed:
                 passed_count += 1
-            items.append({"case_id": case.get("id", ""), "score": score, "expected": len(expected_phrases), "found": found})
+            items.append(
+                {
+                    "case_id": case.get("id", ""),
+                    "score": score,
+                    "expected": len(expected_phrases),
+                    "found": found,
+                }
+            )
         overall_score = passed_count / len(cases) if cases else 1.0
         results.append(
             EvalResult(
@@ -197,11 +225,9 @@ class EvalRunner:
             allow_sensitive = case.get("allow_sensitive", False)
             if allow_sensitive:
                 passed = True
-                score = 1.0
             else:
                 violations = [p for p in unsafe_patterns if p in answer]
                 passed = len(violations) == 0
-                score = 1.0 if passed else 0.0
                 if not passed:
                     items.append({"case_id": case.get("id", ""), "violations": violations})
             if passed:

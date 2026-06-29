@@ -12,7 +12,10 @@ class HTMLToMarkdown:
         "//*[@id='zoom']",
         "//*[contains(@class, 'article-content')]",
         "//*[contains(@class, 'pages') and not(contains(@class, 'pagination'))]",
-        "//*[contains(@class, 'content') and not(contains(@class, 'nav')) and not(contains(@class, 'sidebar')) and not(contains(@class, 'footer'))]",
+        "//*[contains(@class, 'content') "
+        "and not(contains(@class, 'nav')) "
+        "and not(contains(@class, 'sidebar')) "
+        "and not(contains(@class, 'footer'))]",
         "//*[@id='content']",
         "//*[@role='main']",
         "//article",
@@ -21,7 +24,11 @@ class HTMLToMarkdown:
     NOISE_TAGS = {"nav", "footer", "header", "aside", "script", "style", "noscript"}
 
     NOISE_CLASS_PATTERNS = [
-        "sidebar", "footer", "navigation", "menu", "advertisement",
+        "sidebar",
+        "footer",
+        "navigation",
+        "menu",
+        "advertisement",
     ]
 
     def _build_tree(self, html: str) -> etree._Element:
@@ -36,7 +43,8 @@ class HTMLToMarkdown:
                     parent.remove(el)
 
         for el in tree.xpath(
-            "//*[@role='navigation' or @role='banner' or @role='contentinfo' or @role='complementary']"
+            "//*[@role='navigation' or @role='banner' "
+            "or @role='contentinfo' or @role='complementary']"
         ):
             parent = el.getparent()
             if parent is not None:
@@ -74,9 +82,28 @@ class HTMLToMarkdown:
             bullets="-",
             code_language="",
             convert=[
-                "table", "p", "a", "h1", "h2", "h3", "h4", "h5", "h6",
-                "ul", "ol", "li", "blockquote", "pre", "code", "strong",
-                "em", "br", "hr", "dl", "dt", "dd",
+                "table",
+                "p",
+                "a",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "ul",
+                "ol",
+                "li",
+                "blockquote",
+                "pre",
+                "code",
+                "strong",
+                "em",
+                "br",
+                "hr",
+                "dl",
+                "dt",
+                "dd",
             ],
         )
 
