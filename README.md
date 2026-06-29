@@ -31,11 +31,12 @@
 
 ---
 
-基于 120+ 官方权威来源的自动化采集，<br>
-覆盖国务院、20+ 部委、31 个省级政府、26 个重点城市，<br>
-以及外交部、商务部、海关总署等对外贸易政策来源，<br>
+基于 190+ 官方权威来源的自动化采集，<br>
+覆盖国务院、34 部委、31 个省级政府、27 个省会城市+港澳，<br>
+以及财政部关税司、白宫、美联储、日本银行等外贸与外部宏观政策来源，<br>
 国台办、国防部、海警局等外部环境与地缘风险观察来源，<br>
-和 OFAC、BIS、USTR 等国际经贸规则来源。<br>
+OFAC、BIS、USTR 等国际经贸规则来源，<br>
+和中债/上交所/深交所/中金所等金融市场数据基础设施。<br>
 部分官网不可达时自动回退至 103 个权威微信公众号获取同一政策全文。
 
 [看效果](#效果示例) · [安装](#安装) · [采集了什么](#采集了什么) · [蒸馏了什么](#蒸馏了什么) · [数据来源](#数据来源)
@@ -425,7 +426,7 @@
 | **法律法规** | 法律、行政法规、司法解释 | 国家法律法规数据库、两高 |
 | **五年规划** | 十四五/十五五规划纲要 | 中国政府网 |
 | **领导人讲话** | 重要讲话、指示批示 | 人民网讲话数据库、求是网 |
-| **经济数据** | GDP、CPI、社融、进出口 | 统计局、央行、海关总署 |
+| **经济数据** | GDP、CPI、PMI、社零、FAI、70城房价、社融、进出口 | 统计局、央行、海关总署 |
 | **司法案例** | 指导性案例、典型案例 | 人民法院案例库、裁判文书网 |
 | **地方法规** | 省市政府规章、地方标准 | 31省+22市官网 |
 
@@ -444,6 +445,8 @@
 | **教育与人才** | 教育部、科技部 | 学科调整、双减、研究生教育 |
 | **地缘风险与外部环境观察** | 外交部、国防部、国台办、海警局 | 台海、南海、中美关系、制裁 |
 | **国际经贸与外部规则观察** | OFAC、BIS、USTR、DoD | 实体清单、出口管制、301调查 |
+| **外部宏观政策** | 白宫、美联储、美国财政部、日本银行、欧洲央行 | 利率决议、行政行动、对华政策 |
+| **金融市场数据** | 中债/CCDC、上交所、深交所、中证指数、中金所、CFETS | 收益率曲线、指数、汇率中间价、期货 |
 
 ---
 
@@ -503,7 +506,7 @@
 
 ## 实在想看英文？
 
-China Policy Analyze Skill is an open-source system that automates policy text collection, structural interpretation, and risk observation from 180+ authoritative Chinese sources and international primary sources. It turns dense policy documents into understandable daily briefings with evidence-level annotations (E0–E5), scenario analysis, and 7 types of structured distillation cards.
+China Policy Analyze Skill is an open-source system that automates policy text collection, structural interpretation, and risk observation from 190+ authoritative Chinese sources and international primary sources. It turns dense policy documents into understandable daily briefings with evidence-level annotations (E0–E5), scenario analysis, and 7 types of structured distillation cards.
 
 ---
 
@@ -553,13 +556,14 @@ python -m pytest tests/ -q
 
 **本仓库由 Hermes Agent 自动维护。** 以下任务会定时运行，自动采集新政策、更新语料库、生成分析报告，并通过 PR 合入仓库：
 
-| 任务 | 频率 | 做什么 |
-|------|------|--------|
-| 政策监测 | 每日 06:00 UTC | 采集最新政策文本、生成日报，提交 PR |
-| 外贸政策监测 | 每日 07:00 UTC | 重外贸、海关、外汇、制裁来源，提交 PR |
-| 地缘风险与外部环境观察 | 每日 07:30 UTC | 重台海、南海、中美、制裁清单，提交 PR |
-| 政策蒸馏 | 每周一 07:30 UTC | 生成7种结构化卡片、周报，提交 PR |
-| 技能维护 | 每月1日 08:00 UTC | 校准评分、审查推理框架，提交 PR |
+| 任务 | 时间(CST) | 做什么 | 脚本 |
+|------|----------|--------|------|
+| 政策监测 | 每日 06:00 | 采集36个部委源最新政策文本、生成日报，提交 PR | `daily_cron.sh` → `_run_daily_update.py` |
+| 外贸+外部宏观政策监测 | 每日 07:00 | 采集财政部关税司、美国财政部、美联储、联邦公报、日本银行来源，提交 PR | `foreign_macro_cron.sh` → `_run_foreign_macro.py` |
+| 地缘风险与外部环境观察 | 每日 07:30 | 台海、南海、中美、制裁清单信号监测，提交 PR | (Agent WebFetch) |
+| 地方政策监控 | 每日 18:00 | 41个城市政府源4天轮换(10城市/天)+本地宝E级线索，提交 PR | `local_policy_cron.sh` → `_run_local_policy.py` |
+| 政策蒸馏 | 每周一 07:30 | 生成7种结构化卡片、周报，提交 PR | (Agent) |
+| 技能维护 | 每月1日 08:00 | 校准评分、审查推理框架、测试站点可用性，提交 PR | (Agent) |
 
 ### 你的 Agent 如何自动更新这个 Skill
 
@@ -597,7 +601,7 @@ china-policy-analyze-skill/
 │   ├── evidence_level.md           # 证据等级定义
 │   └── ...更多
 ├── config/
-│   ├── sources.yaml          # 180+ 数据源注册表
+│   ├── sources.yaml          # 190+ 数据源注册表
 │   ├── importance_rules.yaml # 重要性评分规则
 │   ├── topic_taxonomy.yaml   # 主题分类体系
 │   └── ...更多
@@ -610,8 +614,12 @@ china-policy-analyze-skill/
 │   ├── report/               # 日报/周报/月报生成
 │   └── utils/                # 去重、哈希等工具
 ├── scripts/
-│   ├── _run_daily_update.py  # 每日更新主脚本
-│   ├── run_daily_update.sh   # 入口(shell)
+│   ├── _run_daily_update.py     # 中国部委源每日采集(36源)
+│   ├── _run_foreign_macro.py    # 外部宏观源采集(美财政部/美联储/联邦公报/日银行)
+│   ├── _run_local_policy.py     # 地方城市源采集(41城市4天轮换)
+│   ├── daily_cron.sh            # 政策监测一体化脚本(采集→PR→合并)
+│   ├── foreign_macro_cron.sh    # 外部宏观一体化脚本
+│   ├── local_policy_cron.sh     # 地方政策一体化脚本
 │   └── ...更多
 ├── eval/                     # 评估测试用例
 ├── reports/                  # 生成的报告(不入版本控制)
@@ -628,7 +636,7 @@ china-policy-analyze-skill/
 
 ### 部委级（A级）
 
-发改委 · 财政部 · 央行 · 工信部 · 科技部 · 商务部 · 国家民委 · 国家安全部公开渠道 · 水利部 · 海关总署 · 税务总局 · 统计局 · 金融监管总局 · 证监会 · 外汇局 · 市场监管总局 · 人社部 · 教育部 · 司法部 · 民政部 · 自然资源部 · 生态环境部 · 住建部 · 交通运输部 · 农业农村部 · 文旅部 · 卫健委 · 应急管理部 · 医保局 · 能源局 · 审计署
+发改委 · 财政部 · 央行 · 工信部 · 科技部 · 商务部 · 国家民委 · 国家安全部公开渠道 · 水利部 · 中国物流与采购联合会(CFLP) · 海关总署 · 税务总局 · 统计局 · 金融监管总局 · 证监会 · 外汇局 · 市场监管总局 · 人社部 · 教育部 · 司法部 · 民政部 · 自然资源部 · 生态环境部 · 住建部 · 交通运输部 · 农业农村部 · 文旅部 · 卫健委 · 应急管理部 · 医保局 · 能源局 · 审计署 · 国家数据局
 
 ### 司法执法（A级）
 
@@ -657,6 +665,14 @@ china-policy-analyze-skill/
 ### 外部宏观政策（FP级）
 
 白宫 · 美联储 · 美国财政部 · 美国商务部 · 美国联邦公报 · 特朗普Truth Social · 日本银行 · 日本首相官邸 · 日本财务省 · 日本经济产业省 · 欧洲央行 · 欧盟委员会贸易总司 · 英格兰银行 · 加拿大银行
+
+### 金融市场数据基础设施（A级 — 市场数据）
+
+中债/中央结算公司(CCDC) · 上海证券交易所(SSE) · 深圳证券交易所(SZSE) · 中国货币网/CFETS(央行直属) · 中证指数有限公司(CSI) · 中国金融期货交易所(CFFEX)
+
+### 交叉验证媒体指数（E级 — 仅作参考）
+
+RatingDog中国PMI(原财新PMI, S&P Global编制) — 偏向中小企业/出口型样本，仅作NBS官方PMI交叉参考，不得单独引用
 
 ### 微信公众号（官网不可达时的备选渠道）
 
