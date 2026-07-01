@@ -161,6 +161,10 @@ ministry_sources:
   - 综合PMI产出指数
   - 工业增加值
   - 社会消费品零售总额
+  - 商品零售额
+  - 餐饮收入
+  - 城镇和乡村消费品零售额
+  - 网上商品和服务零售额
   - 固定资产投资
   - 民间投资
   - 房地产开发投资和销售
@@ -174,10 +178,11 @@ ministry_sources:
   - 国民经济运行月度数据
   - 中国统计年鉴
   column_urls:
+  - https://www.stats.gov.cn/sj/zxfbhjd/
   - https://www.stats.gov.cn/sj/zxfb/
   - https://www.stats.gov.cn/sj/sjjd/
   - https://www.stats.gov.cn/sj/ndsj/
-  note: NBS是CPI、PPI、PMI、社会消费品零售总额、固定资产投资、70个大中城市住宅销售价格、房地产开发投资和销售、人口数据(含人口普查)等指标的官方发布机构。各指标细分项(如CPI八大类与核心CPI、PMI分项、商品房销售面积/销售额)通过国家数据库data.stats.gov.cn查询；月度新闻稿见sj/zxfb/(最新发布)与sj/sjjd/(数据解读)；中国统计年鉴见sj/ndsj/(年度数据)。PMI由NBS与中国物流与采购联合会(CFLP)联合发布。注：data.stats.gov.cn为JS渲染门户(会跳转至/dg/website/page.html)，需浏览器或数据接口访问，sj/各栏目页可直接抓取。
+  note: NBS是CPI、PPI、PMI、社会消费品零售总额、固定资产投资、70个大中城市住宅销售价格、房地产开发投资和销售、人口数据(含人口普查)等指标的官方发布机构。社零月度原始表及相关XLS下载从sj/zxfbhjd/(最新发布和解读聚合)进入，覆盖总额、商品零售、餐饮收入、城镇/乡村、网上商品和服务零售等分项；历史发布与解读另见sj/zxfb/、sj/sjjd/。各指标细分项通过国家数据库data.stats.gov.cn/easyquery.htm?cn=A01查询；中国统计年鉴见sj/ndsj/(年度数据)。PMI由NBS与中国物流与采购联合会(CFLP)联合发布。注：data.stats.gov.cn为JS渲染门户，需浏览器或数据接口访问，不列为静态抓取目标；sj/各栏目页可直接抓取。
   crawl_frequency: daily
   encoding: utf-8
   status: ok
@@ -211,16 +216,21 @@ ministry_sources:
   - 利率政策
   - 存款准备金
   - 社融数据
+  - 社会融资规模增量
+  - 社会融资规模存量
+  - 地区社会融资规模增量
   - 信贷数据
   - 汇率政策
   - 金融稳定
   - 央行新闻发布会
   column_urls:
+  - https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html
+  - https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html
   - https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html
   - https://www.pbc.gov.cn/rmyh/105208/index.html
   - https://www.pbc.gov.cn/tiaofasi/144941/index.html
   - https://www.pbc.gov.cn/rmyh/105145/index.html
-  note: Short paths like /goutongjiaoliu/ return 403. Must use full column paths from homepage.
+  note: 社融官方源为调查统计司的统计数据总入口(按年度提供社会融资规模增量、存量及地区增量的HTML/XLS/PDF)和数据解读列表(月度社融报告)。年度直达路径会随年份变化，应从稳定的116319/index.html发现当年“社会融资规模”入口，不写死年度URL。Short paths like /goutongjiaoliu/ return 403. Must use full column paths from homepage.
   crawl_frequency: daily
   encoding: utf-8
   status: ok
