@@ -1,72 +1,12 @@
-#!/usr/bin/env python3
-"""
-MFA Geopolitical Risk Monitor Script
-Extracts latest MFA article links for risk observation generation.
-"""
-
-import re
-import json
-from datetime import datetime
-from china_policy_skill.fetch.fetch_html import HTMLFetcher
-
-def main():
-    # Initialize fetcher
-    fetcher = HTMLFetcher()
-    
-    # Fetch MFA homepage
-    print("Fetching MFA homepage...")
-    try:
-        html = fetcher.fetch("https://www.mfa.gov.cn/").text
-    except Exception as e:
-        print(json.dumps({"error": str(e)}))
-        return
-    
-    # Clean HTML for regex matching
-    html = html.replace('\r', '').replace('\n', ' ').replace('\t', ' ')
-    
-    # Extract article links using regex patterns
-    patterns = {
-        'spokesperson': r'href="(\./fyrbt_673021/\d{6}/t\d+_\d+\.shtml)"',
-        'ministry_news': r'href="(\./wjbxw_new/\d{6}/t\d+_\d+\.shtml)"',
-        'important_news': r'href="(\./zyxw/\d{6}/t\d+_\d+\.shtml)"',
-        'leadership_activities': r'href="(\./wjbzhd/\d{6}/t\d+_\d+\.shtml)"'
-    }
-    
-    found_links = {}
-    for key, pattern in patterns.items():
-        matches = re.findall(pattern, html)
-        # Remove the ./ prefix and build full URL
-        full_urls = []
-        for match in matches:
-            url = match.replace('./', 'https://www.mfa.gov.cn/')
-            full_urls.append(url)
-        if full_urls:
-            found_links[key] = full_urls
-    
-    # Also extract article IDs from JHSJK for leader-to-leader calls
-    print("Fetching JHSJK homepage for leader calls...")
-    try:
-        jhsjk_html = fetcher.fetch("https://jhsjk.people.cn/")
-        # Extract article IDs
-        ids = re.findall(r'href="/article/(\d+)"', jhsjk_html)
-        unique_ids = list(set(ids))[:10]  # Take up to 10 unique IDs
-        jhsjk_articles = [f"https://jhsjk.people.cn/article/{aid}" for aid in unique_ids]
-        found_links['jhsjk_leader_calls'] = jhsjk_articles
-    except Exception as e:
-        print(json.dumps({"error": str(e)}))
-        return
-    
-    # Output results
-    result = {
-        "timestamp": datetime.utcnow().isoformat(),
-        "spokesperson_links": found_links.get('spokesperson', []),
-        "ministry_news_links": found_links.get('ministry_news', []),
-        "important_news_links": found_links.get('important_news', []),
-        "leadership_activity_links": found_links.get('leadership_activities', []),
-        "jhsjk_leader_call_links": found_links.get('jhsjk_leader_calls', [])
-    }
-    
-    print(json.dumps(result, ensure_ascii=False))
-
-if __name__ == "__main__":
-    main()
+1|#!/usr/bin/env python3
+     2|\"\"\"
+     3|MFA Geopolitical Risk Monitor Script
+     4|Extracts latest MFA article links for risk observation generation.
+     5|\"\"\"
+     6|
+     7|import re
+     8|import json
+     9|from datetime import datetime
+    10|from china_policy_skill.fetch.fetch_html import HTMLFetcher
+     11|
+     12|def main():\n    # Initialize fetcher\n    fetcher = HTMLFetcher()\n    \n    # Fetch MFA homepage\n    print(\"Fetching MFA homepage...\")\n    try:\n        html = fetcher.fetch(\"https://www.mfa.gov.cn/\").text\n    except Exception as e:\n        print(json.dumps({\"error\": str(e)}))\n        return\n    \n    # Clean HTML for regex matching\n    html = html.replace('\\r', '').replace('\\n', ' ').replace('\\t', ' ')\n    \n    # Extract article links using regex patterns\n    patterns = {\n        'spokesperson': r'href=\"(\\./fyrbt_673021/\\d{6}/t\\d+_\\d+\\.shtml)\"',\n        'ministry_news': r'href=\"(\\./wjbxw_new/\\d{6}/t\\d+_\\d+\\.shtml)\"',\n        'important_news': r'href=\"(\\./zyxw/\\d{6}/t\\d+_\\d+\\.shtml)\"',\n        'leadership_activities': r'href=\"(\\./wjbzhd/\\d{6}/t\\d+_\\d+\\.shtml)\"'\n    }\n    \n    found_links = {}\n    for key, pattern in patterns.items():\n        matches = re.findall(pattern, html)\n        # Remove the ./ prefix and build full URL\n        full_urls = []\n        for match in matches:\n            url = match.replace('./', 'https://www.mfa.gov.cn/')\n            full_urls.append(url)\n        if full_urls:\n            found_links[key] = full_urls\n    \n    # Also extract article IDs from JHSJK for leader-to-leader calls\n    print(\"Fetching JHSJK homepage for leader calls...\")\n    try:\n        jhsjk_html = fetcher.fetch(\"https://jhsjk.people.cn/\").text\n        # Extract article IDs\n        ids = re.findall(r'href=\"/article/(\\d+)\"', jhsjk_html)\n        unique_ids = list(set(ids))[:10]  # Take up to 10 unique IDs\n        jhsjk_articles = [f\"https://jhsjk.people.cn/article/{aid}\" for aid in unique_ids]\n        found_links['jhsjk_leader_calls'] = jhsjk_articles\n    except Exception as e:\n        print(json.dumps({\"error\": str(e)}))\n        return\n    \n    # Output results\n    result = {\n        \"timestamp\": datetime.utcnow().isoformat(),\n        \"spokesperson_links\": found_links.get('spokesperson', []),\n        \"ministry_news_links\": found_links.get('ministry_news', []),\n        \"important_news_links\": found_links.get('important_news', []),\n        \"leadership_activity_links\": found_links.get('leadership_activities', []),\n        \"jhsjk_leader_call_links\": found_links.get('jhsjk_leader_calls', [])\n    }\n    \n    print(json.dumps(result, ensure_ascii=False))\n\nif __name__ == \"__main__\":\n    main()

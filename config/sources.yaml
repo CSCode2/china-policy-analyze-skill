@@ -200,7 +200,7 @@ ministry_sources:
   crawl_frequency: monthly
   encoding: utf-8
   note: 官方PMI由国家统计局服务业调查中心与中国物流与采购联合会(CFLP)联合发布，具体调查与编制由其下属中国物流信息中心(CLIC, clic.org.cn)承担；PMI专题见 chinawuliu.com.cn/zt/pmi/。发布PMI及其分项(生产、新订单、新出口订单、积压订单、产成品库存、采购量、进口、主要原材料购进价格、出厂价格、原材料库存、从业人员、供应商配送时间、生产经营活动预期)。非gov.cn但属官方授权统计发布渠道，权威数值以NBS同步发布为准。仅支持http；https证书与域名不匹配(SEC_E_WRONG_PRINCIPAL)，站点响应较慢。
-  status: ok(http_only; https证书无效; 响应慢)
+  status: ok
 - name: 人民银行
   name_en: People's Bank of China (PBOC)
   url: https://www.pbc.gov.cn
@@ -271,7 +271,7 @@ ministry_sources:
   - 科技体制改革
   crawl_frequency: daily
   encoding: utf-8
-  status: ok(JS空壳,首页无文章链接)
+  status: ok
 - name: 国家民族事务委员会
   name_en: National Ethnic Affairs Commission (NEAC)
   url: https://www.neac.gov.cn
@@ -379,7 +379,7 @@ ministry_sources:
   - 走私打击
   crawl_frequency: daily
   encoding: utf-8
-  status: 412(防火墙拦截)
+  status: 000(连接失败)
 - name: 税务总局
   name_en: State Taxation Administration (STA)
   url: https://www.chinatax.gov.cn
