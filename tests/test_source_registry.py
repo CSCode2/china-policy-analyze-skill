@@ -152,6 +152,26 @@ def test_audited_sources_use_current_canonical_urls():
     assert _source_by_name("乌鲁木齐")["url"] == "https://www.wlmq.gov.cn"
 
 
+def test_social_financing_and_retail_sales_use_official_data_columns():
+    nbs = _source_by_name("国家统计局")
+    pbc = _source_by_name("人民银行")
+
+    assert "社会消费品零售总额" in nbs["topics"]
+    assert "https://www.stats.gov.cn/sj/zxfbhjd/" in nbs["column_urls"]
+    assert "data.stats.gov.cn/easyquery.htm?cn=A01" in nbs["note"]
+
+    assert "社会融资规模增量" in pbc["topics"]
+    assert "社会融资规模存量" in pbc["topics"]
+    assert (
+        "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html"
+        in pbc["column_urls"]
+    )
+    assert (
+        "https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html"
+        in pbc["column_urls"]
+    )
+
+
 def test_bendibao_is_lead_only_and_requires_official_verification():
     registry = _load_yaml(SOURCES_PATH)
     bendibao = next(

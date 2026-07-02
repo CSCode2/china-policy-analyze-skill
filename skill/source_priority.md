@@ -184,7 +184,8 @@ The single authoritative publisher for CPI, PPI, PMI, the "three horses" of dema
 | Product | Covers | Frequency | Official channel |
 |---|---|---|---|
 | 国家数据 (National Data DB) | Every NBS series and its sub-items (national + regional) | continuous | `data.stats.gov.cn` (browser/API only — JS portal, not static-crawlable) |
-| 最新发布 / 数据解读 | Monthly indicator press releases + interpretation | monthly | `stats.gov.cn/sj/zxfb/`, `stats.gov.cn/sj/sjjd/` |
+| 最新发布和解读聚合 | Monthly indicator press releases, original tables/downloads + interpretation | monthly | `stats.gov.cn/sj/zxfbhjd/` |
+| 历史发布 / 数据解读 | Historical indicator press releases + interpretation | monthly | `stats.gov.cn/sj/zxfb/`, `stats.gov.cn/sj/sjjd/` |
 | 中国统计年鉴 (China Statistical Yearbook) | Comprehensive annual compendium (年度数据) | annual | `stats.gov.cn/sj/ndsj/` |
 
 - Provincial statistical yearbooks (各省统计年鉴) live on provincial bureau sites — treat as **B-level** regional data.
@@ -202,7 +203,7 @@ The single authoritative publisher for CPI, PPI, PMI, the "three horses" of dema
 
 | Engine | Official series | Publisher | Frequency |
 |---|---|---|---|
-| 消费 Consumption | 社会消费品零售总额 (商品/餐饮, 城镇/乡村, 实物商品网上零售额) | NBS | monthly |
+| 消费 Consumption | 社会消费品零售总额 (商品/餐饮, 城镇/乡村, 网上商品和服务零售额) | NBS (`stats.gov.cn/sj/zxfbhjd/`; full series in `data.stats.gov.cn`) | monthly |
 | 投资 Investment | 固定资产投资(不含农户), 分制造业/基建/房地产, 民间投资 | NBS | monthly (YTD cumulative) |
 | 出口 Exports | 货物进出口 (by product/partner/trade mode) | **海关总署 GACC** (`customs.gov.cn`, ⚠️ WebFetch-blocked 412 — use NBS summary / 海关发布 WeChat); NBS publishes summary | monthly |
 
@@ -223,6 +224,15 @@ The single authoritative publisher for CPI, PPI, PMI, the "three horses" of dema
 | 婚姻登记 / 民政 | marriage & divorce registrations, 民政事业发展统计公报 | 民政部 MCA (`mca.gov.cn`) |
 | 户籍人口 | household registration | 公安部 MPS (`mps.gov.cn`, ⚠️ 521 blocked) |
 | 就业 / 社保 | employment, 参保人数 | 人社部 MOHRSS (`mohrss.gov.cn`, ⚠️ JS shell) |
+
+### People's Bank of China (PBOC / 中国人民银行) — A-level
+
+The authoritative publisher for aggregate financing to the real economy (AFRE / 社会融资规模). Use the stable index pages below; discover the current-year detail page from the statistics index rather than hard-coding a year-specific URL.
+
+| Product | Covers | Frequency | Official channel |
+|---|---|---|---|
+| 社会融资规模统计数据 | 增量、存量、地区增量; HTML/XLS/PDF | monthly / quarterly | `pbc.gov.cn/diaochatongjisi/116219/116319/index.html` |
+| 社会融资规模数据解读 | Monthly flow/stock reports and methodology notes | monthly | `pbc.gov.cn/diaochatongjisi/116219/116225/index.html` |
 
 ### Financial market data infrastructure — A-level
 
