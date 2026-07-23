@@ -1,0 +1,54 @@
+model:
+  default: nvidia/nemotron-3-nano-30b-a3b:free
+  provider: openrouter
+  base_url: https://openrouter.ai/api/v1
+terminal:
+  backend: local
+  cwd: /path/to/china-policy-analyze-skill
+  timeout: 300
+  env_passthrough: '[]'
+agent:
+  max_turns: 60
+  reasoning_effort: none
+  tool_use_enforcement: auto
+compression:
+  enabled: true
+  threshold: 0.5
+  target_ratio: 0.2
+  protect_last_n: 20
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  memory_char_limit: 2200
+  user_char_limit: 1375
+display:
+  streaming: true
+  tool_progress: all
+file_read_max_chars: 100000
+tool_output:
+  max_bytes: 50000
+  max_lines: 2000
+  max_line_length: 2000
+auxiliary:
+  compression:
+    base_url: https://openrouter.ai/api/v1
+    model: nvidia/nemotron-3-nano-30b-a3b:free
+  vision:
+    base_url: https://openrouter.ai/api/v1
+    model: nvidia/nemotron-3-nano-30b-a3b:free
+  web_extract:
+    base_url: https://openrouter.ai/api/v1
+    model: nvidia/nemotron-3-nano-30b-a3b:free
+security:
+  tirith_enabled: false
+privacy:
+  redact_pii: true
+session_reset:
+  mode: both
+  idle_minutes: 1440
+  at_hour: 4
+code_execution:
+  timeout: 300
+  max_tool_calls: 50
+delegation:
+  max_iterations: 50
